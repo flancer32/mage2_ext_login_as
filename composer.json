@@ -1,0 +1,21 @@
+{
+  "name": "flancer32/mage2_ext_login_as",
+  "description": "'Login As' module for Magento 2.",
+  "type": "magento2-module",
+  "homepage": "https://github.com/flancer32/mage2_ext_login_as",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Alex Gusev",
+      "email": "flancer64@gmail.com"
+    }
+  ],
+  "autoload": {
+    "files": [
+      "src/registration.php"
+    ],
+    "psr-4": {
+      "Flancer32\\LoginAs\\": "src/"
+    }
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "require": {
+    "flancer32/mage2_ext_login_as": "dev-master"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/flancer32/mage2_ext_login_as"
+    }
+  ],
+  "autoload-dev": {
+    "psr-4": {
+      "Flancer32\\LoginAs\\Test\\": "../dev/fw"
+    }
+  },
+  "minimum-stability": "dev"
+}
