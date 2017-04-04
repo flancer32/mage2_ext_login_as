@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
-        <route id="fl32_login_as" frontName="fl32_login_as">
+        <route id="fl32_login_as" frontName="loginAs">
             <module name="Flancer32_LoginAs"/>
         </route>
     </router>
