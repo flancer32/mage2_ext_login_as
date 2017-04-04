@@ -3,10 +3,8 @@
  * Get one JSON file (arg #1), unset keys read from text file (arg. #2) and merge with other JSON file (arg. #3).
  * Backup first JSON and save result with the same name (as first JSON).
  */
-/* include autoload to use composer's modules in this utility */
-require_once(__DIR__ . '/../work/vendor/autoload.php');
 
-if($argc >= 3) {
+if ($argc >= 3) {
     /* parse arguments: $src $additions */
     $fileComposer = $argv[1];
     $fileUnset = $argv[2];
@@ -15,9 +13,7 @@ if($argc >= 3) {
     $main = load_json($fileComposer);
     /* Load list to filter extra data and unset it */
     $unset = load_json($fileUnset);
-    foreach($unset as $item) {
-        unset($main[$item]);
-    }
+    unset_node($main, $unset);
     /* load additional options */
     $opts = load_json($fileOpts);
     /* merge both JSONs and save as source with suffix '.merged' */
@@ -34,8 +30,39 @@ if($argc >= 3) {
 }
 return;
 
+/**
+ * Unset node in source array.
+ *
+ * @param array $sourceArr
+ * @param mixed $node
+ */
+function unset_node(&$sourceArr, $node)
+{
+    if (is_array($node)) {
+        foreach ($node as $key => $item) {
+            if (isset($sourceArr[$key])) {
+                unset_node($sourceArr[$key], $item);
+            } elseif (!is_array($item) && isset($sourceArr[$item])) {
+                unset_node($sourceArr, $item);
+            } else {
+                unset_node($sourceArr, $item);
+            }
+        }
+    } else {
+        if (isset($sourceArr[$node])) {
+            unset($sourceArr[$node]);
+        }
+    }
+}
 
-function load_json($file) {
+/**
+ * Load file with JSON and parse into array.
+ *
+ * @param string $file
+ * @return mixed
+ */
+function load_json($file)
+{
     $jsonFile = file_get_contents($file);
     $result = json_decode($jsonFile, true);
     return $result;

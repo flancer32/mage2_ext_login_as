@@ -32,6 +32,6 @@ script:
 notifications:
   email:
     recipients:
-      - flancer64@gmail.com
+      - alex@flancer64.com
     on_success: change # [always|never|change], default: change
     on_failure: change # [always|never|change], default: change

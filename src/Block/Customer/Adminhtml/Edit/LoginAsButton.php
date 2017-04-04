@@ -1,13 +1,10 @@
 <?php
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
+
 namespace Flancer32\LoginAs\Block\Customer\Adminhtml\Edit;
 
 use Magento\Customer\Api\AccountManagementInterface;
+use Magento\Customer\Block\Adminhtml\Edit\GenericButton;
 use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
-use \Magento\Customer\Block\Adminhtml\Edit\GenericButton;
 
 class LoginAsButton extends GenericButton implements ButtonProviderInterface
 {
@@ -27,8 +24,7 @@ class LoginAsButton extends GenericButton implements ButtonProviderInterface
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
         AccountManagementInterface $customerAccountManagement
-    )
-    {
+    ) {
         parent::__construct($context, $registry);
         $this->customerAccountManagement = $customerAccountManagement;
     }
