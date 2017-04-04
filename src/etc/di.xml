@@ -2,16 +2,15 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
-
-    <!-- Samples. Is not used in the module. -->
-
-    <!--<preference for="Flancer32\Sample\InterfaceDefinition"-->
-    <!--type="Flancer32\Sample\ClassImplementation"/>-->
-
-    <!--<type name="Flancer32\Sample\ClassImplementation">-->
-    <!--<arguments>-->
-    <!--<argument name="conn" xsi:type="object">Magento\Framework\App\ResourceConnection\Proxy</argument>-->
-    <!--</arguments>-->
-    <!--</type>-->
+    <!-- ********************** -->
+    <!-- Console (CLI Commands) -->
+    <!-- ********************** -->
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="fl32_loginas_init_customers" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Init\Customers</item>
+            </argument>
+        </arguments>
+    </type>
 
 </config>

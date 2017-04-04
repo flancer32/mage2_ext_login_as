@@ -145,6 +145,8 @@ mkdir -p ${DIR_MAGE}/var/generation
 mkdir -p ${DIR_MAGE}/var/log
 
 if [ ${MODE} != ${MODE_LIVE} ] && [ ${MODE} != ${MODE_PILOT} ]; then
+    echo "Initialize test customers."
+    php ${DIR_MAGE}/bin/magento init:customers
     echo "Switch Magento 2 instance into 'developer' mode, reindex data, run cron jobs and disable cache."
     php ${DIR_MAGE}/bin/magento deploy:mode:set developer
     php ${DIR_MAGE}/bin/magento indexer:reindex
