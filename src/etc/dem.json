@@ -33,9 +33,9 @@
                   },
                   "Key": {
                     "alias": "key",
-                    "comment": "Unique search key to get redirection data.",
+                    "comment": "Unique search key to get redirection data: date (8 chars) + time (6 chars) + md5 hash(32 chars).",
                     "nullable": false,
-                    "type": {"text": {"length": 64}}
+                    "type": {"text": {"length": 46}}
                   }
                 },
                 "index": {
