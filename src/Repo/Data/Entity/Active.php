@@ -50,7 +50,7 @@ class Active
 
     public function getPrimaryKeyAttrs()
     {
-        return [self::A_ID];
+        return [self::A_KEY];
     }
 
     /**

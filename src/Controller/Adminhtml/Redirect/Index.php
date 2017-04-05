@@ -32,7 +32,7 @@ class Index
         $entity->setUserRef($userId);
         $entity->setKey($key);
         $actId = $this->repoActive->create($entity);
-        $this->repoActive->getById($actId);
+        $this->repoActive->getById($key);
         /* redirect to frontend using search key for the activity */
 
     }
