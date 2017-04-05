@@ -30,10 +30,17 @@
                     "comment": "Reference to the admin user.",
                     "nullable": false,
                     "type": {"integer": {"unsigned": true}}
+                  },
+                  "Key": {
+                    "alias": "key",
+                    "comment": "Unique search key to get redirection data.",
+                    "nullable": false,
+                    "type": {"text": {"length": 64}}
                   }
                 },
                 "index": {
-                  "primary": {"type": "primary", "aliases": ["id"]}
+                  "primary": {"type": "primary", "aliases": ["id"]},
+                  "byKey": {"type": "unique", "aliases": ["key"]}
                 },
                 "relation": {
                   "toMageCustomer": {

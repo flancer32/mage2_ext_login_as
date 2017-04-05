@@ -14,6 +14,7 @@ class Active
      */
     const A_CUST_REF = 'customer_ref';
     const A_ID = 'id';
+    const A_KEY = 'key';
     const A_USER_REF = 'user_ref';
     /**
      * Entity name is a composition of the "package.package.entity" aliases from DEM.
@@ -35,6 +36,15 @@ class Active
     public function getId()
     {
         $result = parent::get(self::A_ID);
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    public function getKey()
+    {
+        $result = parent::get(self::A_KEY);
         return $result;
     }
 
@@ -66,6 +76,14 @@ class Active
     public function setId($data)
     {
         parent::set(self::A_ID, $data);
+    }
+
+    /**
+     * @param string $data
+     */
+    public function setKey($data)
+    {
+        parent::set(self::A_KEY, $data);
     }
 
     /**
