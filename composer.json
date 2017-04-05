@@ -10,6 +10,10 @@
       "email": "alex@flancer64.com"
     }
   ],
+  "require": {
+    "flancer32/mage2_ext_repo": "dev-master",
+    "flancer32/php_data_object": "dev-master"
+  },
   "autoload": {
     "files": [
       "src/registration.php"
