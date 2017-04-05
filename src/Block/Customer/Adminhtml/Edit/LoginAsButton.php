@@ -2,36 +2,24 @@
 
 namespace Flancer32\LoginAs\Block\Customer\Adminhtml\Edit;
 
-use Magento\Customer\Api\AccountManagementInterface;
-use Magento\Customer\Block\Adminhtml\Edit\GenericButton;
-use Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface;
+use Flancer32\LoginAs\Config as Cfg;
 
-class LoginAsButton extends GenericButton implements ButtonProviderInterface
+class LoginAsButton
+    extends \Magento\Customer\Block\Adminhtml\Edit\GenericButton
+    implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
-    /**
-     * @var AccountManagementInterface
-     */
+    /** @var \Magento\Customer\Api\AccountManagementInterface */
     protected $customerAccountManagement;
 
-    /**
-     * Constructor
-     *
-     * @param \Magento\Backend\Block\Widget\Context $context
-     * @param \Magento\Framework\Registry $registry
-     * @param AccountManagementInterface $customerAccountManagement
-     */
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
-        AccountManagementInterface $customerAccountManagement
+        \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement
     ) {
         parent::__construct($context, $registry);
         $this->customerAccountManagement = $customerAccountManagement;
     }
 
-    /**
-     * @return array
-     */
     public function getButtonData()
     {
         $customerId = $this->getCustomerId();
@@ -54,6 +42,8 @@ class LoginAsButton extends GenericButton implements ButtonProviderInterface
      */
     public function getLoginAsUrl()
     {
-        return $this->getUrl('*/*/fl32LoginAs', ['id' => $this->getCustomerId()]);
+        $route = Cfg::ROUTE_NAME_ADMIN_LOGINAS . '/redirect/';
+        $id = $this->getCustomerId();
+        return $this->getUrl($route, [\Flancer32\LoginAs\Controller\Adminhtml\Redirect\Index::REQ_PARAM_ID => $id]);
     }
 }
