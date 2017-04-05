@@ -13,12 +13,6 @@
                 "alias": "act",
                 "comment": "Registry for active 'LoginAs' transitions.",
                 "attribute": {
-                  "Id": {
-                    "alias": "id",
-                    "comment": "Record ID.",
-                    "nullable": false,
-                    "type": {"integer": {"unsigned": true, "autoincrement": true}}
-                  },
                   "CustomerRef": {
                     "alias": "customer_ref",
                     "comment": "Reference to the customer.",
@@ -39,8 +33,7 @@
                   }
                 },
                 "index": {
-                  "primary": {"type": "primary", "aliases": ["id"]},
-                  "byKey": {"type": "unique", "aliases": ["key"]}
+                  "primary": {"type": "primary", "aliases": ["key"]}
                 },
                 "relation": {
                   "toMageCustomer": {
