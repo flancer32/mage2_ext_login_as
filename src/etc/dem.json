@@ -1,0 +1,63 @@
+{
+  "dBEAR": {
+    "package": {
+      "Flancer32": {
+        "alias": "fl32",
+        "comment": "Root namespace for 'Flancer32' vendor.",
+        "package": {
+          "LoginAs": {
+            "alias": "loginas",
+            "comment": "Top level package for LoginAs module.",
+            "entity": {
+              "Active": {
+                "alias": "act",
+                "comment": "Registry for active 'LoginAs' transitions.",
+                "attribute": {
+                  "Id": {
+                    "alias": "id",
+                    "comment": "Record ID.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                  },
+                  "CustomerRef": {
+                    "alias": "customer_ref",
+                    "comment": "Reference to the customer.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  },
+                  "UserRef": {
+                    "alias": "user_ref",
+                    "comment": "Reference to the admin user.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true}}
+                  }
+                },
+                "index": {
+                  "primary": {"type": "primary", "aliases": ["id"]}
+                },
+                "relation": {
+                  "toMageCustomer": {
+                    "own": {"aliases": ["customer_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "customer_entity"},
+                      "aliases": ["entity_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  },
+                  "toAdminUser": {
+                    "own": {"aliases": ["user_ref"]},
+                    "reference": {
+                      "entity": {"completeAlias": "admin_user"},
+                      "aliases": ["user_id"]
+                    },
+                    "action": {"delete": "restrict", "update": "restrict"}
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
