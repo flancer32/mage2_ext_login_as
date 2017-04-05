@@ -47,7 +47,8 @@ class Index
     protected function generateKey($custId, $userId)
     {
         $now = date('YmdHis');
-        $source = "cust:$custId;user:$userId;at:$now";
+        $rand = rand();
+        $source = "cust:$custId;user:$userId;at:$now;rand:$rand";
         $result = $now . md5($source);
         return $result;
     }
