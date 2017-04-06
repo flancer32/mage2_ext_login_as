@@ -30,7 +30,7 @@ class LoginAsButton
                 'label' => __('Login As'),
                 'class' => 'fl32-login-as',
                 'id' => 'customer-edit-fl32-login-as-button',
-                'on_click' => sprintf("location.href = '%s';", $this->getLoginAsUrl()),
+                'on_click' => sprintf("window.open('%s','_blank');", $this->getLoginAsUrl()),
                 'sort_order' => 100,
             ];
         }

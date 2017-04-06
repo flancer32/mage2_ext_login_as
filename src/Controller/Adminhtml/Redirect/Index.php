@@ -2,6 +2,8 @@
 
 namespace Flancer32\LoginAs\Controller\Adminhtml\Redirect;
 
+use Flancer32\LoginAs\Config as Cfg;
+
 /**
  * Register admin user's redirection request in 'active' registry.
  */
@@ -9,16 +11,20 @@ class Index
     extends \Magento\Backend\App\Action
 {
     const REQ_PARAM_ID = 'id';
+    /** @var \Magento\Store\Model\StoreManagerInterface */
+    protected $manStore;
     /** @var \Flancer32\LoginAs\Repo\Entity\IActive */
     protected $repoActive;
 
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
-    ) {
-        parent::__construct($context);
-        $this->repoActive = $repoActive;
-    }
+public function __construct(
+    \Magento\Backend\App\Action\Context $context,
+    \Magento\Store\Model\StoreManagerInterface $manStore,
+    \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
+) {
+    parent::__construct($context);
+    $this->manStore = $manStore;
+    $this->repoActive = $repoActive;
+}
 
     public function execute()
     {
@@ -31,10 +37,17 @@ class Index
         $entity->setCustomerRef($custId);
         $entity->setUserRef($userId);
         $entity->setKey($key);
-        $actId = $this->repoActive->create($entity);
-        $this->repoActive->getById($key);
+        $this->repoActive->create($entity);
+        $saved = $this->repoActive->getById($key);
         /* redirect to frontend using search key for the activity */
-
+        $keySaved = $saved->getKey();
+        /* redirect admin user to the front redirector */
+        $resultRedirect = $this->resultRedirectFactory->create();
+        $route = Cfg::ROUTE_NAME_FRONT_LOGINAS . '/redirect/';
+        $store = $this->manStore->getStore();
+        $url = $store->getUrl($route, [\Flancer32\LoginAs\Controller\Redirect\Index::REQ_PARAM_KEY => $keySaved]);
+        $resultRedirect->setUrl($url);
+        return $resultRedirect;
     }
 
     /**

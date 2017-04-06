@@ -31,15 +31,6 @@ class Active
     }
 
     /**
-     * @return int
-     */
-    public function getId()
-    {
-        $result = parent::get(self::A_ID);
-        return $result;
-    }
-
-    /**
      * @return string
      */
     public function getKey()
@@ -68,14 +59,6 @@ class Active
     public function setCustomerRef($data)
     {
         parent::set(self::A_CUST_REF, $data);
-    }
-
-    /**
-     * @param int $data
-     */
-    public function setId($data)
-    {
-        parent::set(self::A_ID, $data);
     }
 
     /**
