@@ -74,7 +74,7 @@
                     "alias": "date",
                     "comment": "Datestamp for the event.",
                     "nullable": false,
-                    "type": "datetime"
+                    "type": {"datetime": {}}
                   }
                 },
                 "index": {
