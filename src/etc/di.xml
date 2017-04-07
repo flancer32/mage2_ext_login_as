@@ -21,5 +21,9 @@
             for="\Flancer32\LoginAs\Repo\Entity\IActive"
             type="\Flancer32\LoginAs\Repo\Entity\Active"/>
 
+    <preference
+            for="\Flancer32\LoginAs\Repo\Entity\ILog"
+            type="\Flancer32\LoginAs\Repo\Entity\Log"/>
+
 
 </config>

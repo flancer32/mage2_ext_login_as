@@ -58,6 +58,12 @@
                 "alias": "log",
                 "comment": "Log for login events.",
                 "attribute": {
+                  "Id": {
+                    "alias": "id",
+                    "comment": "Instance ID.",
+                    "nullable": false,
+                    "type": {"integer": {"unsigned": true, "autoincrement": true}}
+                  },
                   "CustomerRef": {
                     "alias": "customer_ref",
                     "comment": "Reference to the customer.",
@@ -78,7 +84,7 @@
                   }
                 },
                 "index": {
-                  "primary": {"type": "primary", "aliases": ["customer_ref", "user_ref"]}
+                  "primary": {"type": "primary", "aliases": ["id"]}
                 },
                 "relation": {
                   "toMageCustomer": {
