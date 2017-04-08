@@ -1,4 +1,6 @@
 /.idea/
+/.buildpath
+/.project
 /atlassian-ide-plugin.xml
 /composer.lock
 /deploy_cfg.sh
