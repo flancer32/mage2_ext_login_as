@@ -14,6 +14,7 @@ class Log
      */
     const A_CUST_REF = 'customer_ref';
     const A_DATE = 'date';
+    const A_ID = 'id';
     const A_USER_REF = 'user_ref';
     /**
      * Entity name is a composition of the "package.package.entity" aliases from DEM.
@@ -35,6 +36,15 @@ class Log
     public function getDate()
     {
         $result = parent::get(self::A_DATE);
+        return $result;
+    }
+
+    /**
+     * @return int
+     */
+    public function getId()
+    {
+        $result = parent::get(self::A_ID);
         return $result;
     }
 
@@ -66,6 +76,14 @@ class Log
     public function setDate($data)
     {
         parent::set(self::A_DATE, $data);
+    }
+
+    /**
+     * @param int $data
+     */
+    public function setId($data)
+    {
+        parent::set(self::A_ID, $data);
     }
 
     /**

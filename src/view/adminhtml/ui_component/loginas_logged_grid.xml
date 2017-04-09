@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <!-- First part (loginas_logged_grid.) should be the same as name of this XML file -->
+            <item name="provider" xsi:type="string">loginas_logged_grid.ds_for_logged_grid</item>
+            <item name="deps" xsi:type="string">loginas_logged_grid.ds_for_logged_grid</item>
+        </item>
+        <item name="spinner" xsi:type="string">columns_for_logged_grid</item>
+    </argument>
+
+    <dataSource name="ds_for_logged_grid">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">\Flancer32\LoginAs\Ui\DataProvider\Logged</argument>
+            <argument name="name" xsi:type="string">ds_for_logged_grid</argument>
+        </argument>
+    </dataSource>
+
+    <columns name="columns_for_logged_grid">
+        <column name="Id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+        <column name="CustEmail">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Customer</item>
+                </item>
+            </argument>
+        </column>
+        <column name="CustNameFirst">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Customer First</item>
+                </item>
+            </argument>
+        </column>
+        <column name="CustNameLast">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Customer Last</item>
+                </item>
+            </argument>
+        </column>
+        <column name="AdminEmail">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">User</item>
+                </item>
+            </argument>
+        </column>
+        <column name="AdminNameFirst">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">User First</item>
+                </item>
+            </argument>
+        </column>
+        <column name="AdminNameLast">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">User Last</item>
+                </item>
+            </argument>
+        </column>
+        <column name="DateLogged">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Logged At</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+
+</listing>
