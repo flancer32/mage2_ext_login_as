@@ -14,6 +14,17 @@
     </type>
 
 
+    <!-- ******************** -->
+    <!-- Plugins/Interceptors -->
+    <!-- ******************** -->
+    <type name="\Magento\Customer\Ui\Component\Listing\Column\Actions">
+        <!-- Add 'Login As' action to customers grid -->
+        <plugin name="fl32_loginas_plugin"
+                type="\Flancer32\LoginAs\Plugin\Customer\Ui\Component\Listing\Column\Actions"
+                sortOrder="512" disabled="false"/>
+    </type>
+
+
     <!-- ************ -->
     <!-- Repositories -->
     <!-- ************ -->
