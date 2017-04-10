@@ -23,6 +23,12 @@
                 type="\Flancer32\LoginAs\Plugin\Customer\Ui\Component\Listing\Column\Actions"
                 sortOrder="512" disabled="false"/>
     </type>
+    <type name="\Magento\Sales\Ui\Component\Listing\Column\ViewAction">
+        <!-- Add 'Login As' action to sales orders grid -->
+        <plugin name="fl32_loginas_plugin"
+                type="\Flancer32\LoginAs\Plugin\Sales\Ui\Component\Listing\Column\ViewAction"
+                sortOrder="512" disabled="false"/>
+    </type>
 
 
     <!-- ************ -->
