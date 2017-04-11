@@ -33,7 +33,7 @@ class Customers
     protected function configure()
     {
         parent::configure();
-        $this->setName('init:customers');
+        $this->setName('fl32:init:customers');
         $this->setDescription("Create test customers for 'Flancer32_LoginAs' module.");
         /* Magento related config (Object Manager) */
         /** @var \Magento\Framework\App\State $appState */

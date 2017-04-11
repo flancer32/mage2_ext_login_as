@@ -10,10 +10,17 @@ namespace Flancer32\LoginAs;
 class Config
 {
     const ACL_CUSTOMER_LOGGED_AS = 'admin_customer_loggedAs';
-
+    const ACL_ROLE_FULL = 'full_access';
+    const ACL_ROLE_LOGIN = 'login_only';
+    const ACL_ROLE_LOGS = 'logs_only';
+    /**
+     * Magento entities.
+     */
     const ENTITY_ADMIN_USER = 'admin_user';
     const ENTITY_CUSTOMER = 'customer_entity';
-
+    /**
+     * Magento entities attributes.
+     */
     const E_ADMIN_USER_A_EMAIL = 'email';
     const E_ADMIN_USER_A_FIRSTNAME = 'firstname';
     const E_ADMIN_USER_A_LASTNAME = 'lastname';
@@ -32,9 +39,17 @@ class Config
     const E_CUSTOMER_A_LASTNAME = 'lastname';
     const E_CUSTOMER_A_PASS_HASH = 'password_hash';
     const E_CUSTOMER_A_WEBSITE_ID = 'website_id';
-
+    /**
+     * Adminhtml menu items.
+     */
     const MENU_CUSTOMER_LOGGED_AS = self::ACL_CUSTOMER_LOGGED_AS;
+    /**
+     * This module's name.
+     */
     const MODULE = 'Flancer32_LoginAs';
+    /**
+     * Magento routes.
+     */
     const ROUTE_NAME_ADMIN_LOGINAS = 'loginas';
     const ROUTE_NAME_FRONT_LOGINAS = 'loginas';
 

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Customer::customer">
+                    <resource id="Flancer32_LoginAs::login" title="Login As Customer" translate="title" sortOrder="100"/>
+                    <resource id="Flancer32_LoginAs::logs" title="Access &quot;LoginAs&quot; logs" translate="title" sortOrder="200"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

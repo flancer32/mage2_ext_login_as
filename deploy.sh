@@ -150,8 +150,9 @@ if [ ${MODE} != ${MODE_LIVE} ] && [ ${MODE} != ${MODE_PILOT} ]; then
     php ${DIR_MAGE}/bin/magento indexer:reindex
     php ${DIR_MAGE}/bin/magento cron:run
     php ${DIR_MAGE}/bin/magento cache:disable
-    echo "Initialize test customers."
-    php ${DIR_MAGE}/bin/magento init:customers
+    echo "Initialize test data."
+    php ${DIR_MAGE}/bin/magento fl32:init:customers
+    php ${DIR_MAGE}/bin/magento fl32:init:users
 fi
 
 if [ -z "${LOCAL_OWNER}" ] || [ -z "${LOCAL_GROUP}" ] || [ -z "${DIR_MAGE}" ]; then
