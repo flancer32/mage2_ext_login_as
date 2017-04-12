@@ -15,17 +15,13 @@ class Check
 {
     const RES_ROLES = 'roles';
 
-    /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Acl */
-    protected $subAcl;
     /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles */
     protected $subRoles;
 
 
     public function __construct(
-        \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Acl $subAcl,
         \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles $subRoles
     ) {
-        $this->subAcl = $subAcl;
         $this->subRoles = $subRoles;
     }
 

@@ -10,9 +10,21 @@ namespace Flancer32\LoginAs;
 class Config
 {
     const ACL_CUSTOMER_LOGGED_AS = 'admin_customer_loggedAs';
+    /**#@+
+     * Codes for ACL Roles.
+     */
     const ACL_ROLE_FULL = 'full_access';
     const ACL_ROLE_LOGIN = 'login_only';
     const ACL_ROLE_LOGS = 'logs_only';
+    /**$#- */
+
+    /**#@+
+     * See './etc/acl.xml'
+     */
+    const ACL_RULE_LOGS = 'Flancer32_LoginAs::logs';
+    const ACL_RULE_LOGIN_AS = 'Flancer32_LoginAs::login';
+    /**$#- */
+
     /**
      * Magento entities.
      */

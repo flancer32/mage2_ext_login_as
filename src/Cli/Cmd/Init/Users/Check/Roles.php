@@ -7,6 +7,7 @@
 namespace Flancer32\LoginAs\Cli\Cmd\Init\Users\Check;
 
 use \Flancer32\LoginAs\Config as Cfg;
+use \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles\Acl as SubAcl;
 
 /**
  * Get existing ACL Roles and create new ones if required.
@@ -24,11 +25,32 @@ class Roles
         Cfg::ACL_ROLE_LOGIN => 'Flancer32 LoginAs Login Only',
         Cfg::ACL_ROLE_LOGS => 'Flancer32 LoginAs Logs Only'
     ];
+    /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles\Acl */
+    protected $subAcl;
 
     public function __construct(
-        \Magento\Authorization\Model\Role $modRole
+        \Magento\Authorization\Model\Role $modRole,
+        \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles\Acl $subAcl
     ) {
         $this->modRole = $modRole;
+        $this->subAcl = $subAcl;
+    }
+
+    /**
+     * @param array $rolesToCreate [$roleName => $roleCode, ...]
+     */
+    protected function createMissedRoles($rolesToCreate)
+    {
+        $result = [];
+        foreach ($rolesToCreate as $roleName => $roleCode) {
+            $this->modRole->unsetData();
+            $this->modRole->setRoleName($roleName);
+            $this->modRole->setRoleType(self::ROLE_TYPE_GROUP);
+            $this->modRole->getResource()->save($this->modRole);
+            $roleId = $this->modRole->getId();
+            $result[$roleCode] = $roleId;
+        }
+        return $result;
     }
 
     public function exec(\Flancer32\Lib\Data $ctx)
@@ -58,24 +80,10 @@ class Roles
         $result = array_merge($result, $created);
 
         /* walk through roles and check ACL resources assigned */
+        $ctcAcl = new \Flancer32\Lib\Data([SubAcl::CTX_ROLES_MAP => $result]);
+        $this->subAcl->exec($ctcAcl);
+
         /* save result to context */
         $ctx->set(self::RES_ROLES_MAP, $result);
-    }
-
-    /**
-     * @param array $rolesToCreate [$roleName => $roleCode, ...]
-     */
-    protected function createMissedRoles($rolesToCreate)
-    {
-        $result = [];
-        foreach ($rolesToCreate as $roleName => $roleCode) {
-            $this->modRole->unsetData();
-            $this->modRole->setRoleName($roleName);
-            $this->modRole->setRoleType(self::ROLE_TYPE_GROUP);
-            $this->modRole->getResource()->save($this->modRole);
-            $roleId = $this->modRole->getId();
-            $result[$roleCode] = $roleId;
-        }
-        return $result;
     }
 }
