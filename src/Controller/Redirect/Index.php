@@ -9,8 +9,6 @@ class Index
     extends \Magento\Framework\App\Action\Action
 {
     const REQ_PARAM_KEY = 'key';
-    /** @var \Magento\Framework\Controller\Result\RedirectFactory */
-    protected $factRedirect;
     /** @var \Flancer32\LoginAs\Repo\Entity\IActive */
     protected $repoActive;
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
@@ -22,14 +20,12 @@ class Index
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\Controller\Result\RedirectFactory $factRedirect,
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCust,
         \Flancer32\LoginAs\Repo\Entity\IActive $repoActive,
         \Flancer32\LoginAs\Repo\Entity\ILog $repoLog,
         \Magento\Customer\Model\Session $session
     ) {
         parent::__construct($context);
-        $this->factRedirect = $factRedirect;
         $this->repoCust = $repoCust;
         $this->repoActive = $repoActive;
         $this->repoLog = $repoLog;
@@ -59,7 +55,7 @@ class Index
         $log->setDate($date);
         $this->repoLog->create($log);
         /* redirect authenticated customer to the homepage */
-        $resultRedirect = $this->factRedirect->create();
+        $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setPath('customer/account');
         return $resultRedirect;
     }

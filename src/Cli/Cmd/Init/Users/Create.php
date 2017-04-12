@@ -53,6 +53,12 @@ class Create
             $userCreated = true;
         } else {
             $userCreated = false;
+            /* check role ID */
+            $role = $user->getRole();
+            if ($role->getId() != $roleId) {
+                $user->setRoleId($roleId);
+                $user->save();
+            }
         }
 
         /* place results back to context */
