@@ -80,8 +80,8 @@ class Roles
         $result = array_merge($result, $created);
 
         /* walk through roles and check ACL resources assigned */
-        $ctcAcl = new \Flancer32\Lib\Data([SubAcl::CTX_ROLES_MAP => $result]);
-        $this->subAcl->exec($ctcAcl);
+        $ctxAcl = new \Flancer32\Lib\Data([SubAcl::CTX_ROLES_MAP => $result]);
+        $this->subAcl->exec($ctxAcl);
 
         /* save result to context */
         $ctx->set(self::RES_ROLES_MAP, $result);
