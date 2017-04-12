@@ -15,12 +15,15 @@ class Actions
 {
     /** @var \Magento\Framework\UrlInterface */
     protected $url;
+    /** @var \Magento\Framework\AuthorizationInterface */
+    protected $authorization;
 
     public function __construct(
-        \Magento\Framework\UrlInterface $url
+        \Magento\Framework\UrlInterface $url,
+        \Magento\Framework\AuthorizationInterface $authorization
     ) {
         $this->url = $url;
-
+        $this->authorization = $authorization;
     }
 
     public function afterPrepareDataSource(
@@ -32,16 +35,20 @@ class Actions
             isset($result['data']['items']) &&
             is_array($result['data']['items'])
         ) {
-            foreach ($result['data']['items'] as &$item) {
-                $entityId = $item['entity_id'];
-                $url = $this->getLoginAsUrl($entityId);
-                $actions = isset($item['actions']) ? $item['actions'] : [];
-                $actions['loginas'] = [
-                    'href' => $this->url->getUrl($url),
-                    'label' => __('Login As'),
-                    'target' => '_blank'
-                ];
-                $item['actions'] = $actions;
+            /* check ACL */
+            $isAllowed = $this->authorization->isAllowed(Cfg::ACL_RULE_LOGIN_AS);
+            if ($isAllowed) {
+                foreach ($result['data']['items'] as &$item) {
+                    $entityId = $item['entity_id'];
+                    $url = $this->getLoginAsUrl($entityId);
+                    $actions = isset($item['actions']) ? $item['actions'] : [];
+                    $actions['loginas'] = [
+                        'href' => $this->url->getUrl($url),
+                        'label' => __('Login As'),
+                        'target' => '_blank'
+                    ];
+                    $item['actions'] = $actions;
+                }
             }
         }
         return $result;

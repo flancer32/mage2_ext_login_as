@@ -27,11 +27,10 @@ class Users
 
     /** @var \Magento\Framework\ObjectManagerInterface */
     protected $manObj;
-    /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create */
-    protected $subCreate;
     /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check */
     protected $subCheck;
-
+    /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create */
+    protected $subCreate;
     /**
      * Hardcoded data for initial test users.
      */
@@ -98,15 +97,17 @@ class Users
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        /* check ACL Roles and get IDs */
-        /* create context for process */
+        $output->writeln('<info>Create tests users and roles for \'Flancer32_LoginAs\' module.<info>');
+        /* check ACL Roles and get IDs (create context for process) */
         $ctx = new \Flancer32\Lib\Data();
         $this->subCheck->exec($ctx);
+        /* get result from context */
         $mapRoles = $ctx->get(SubCheck::RES_ROLES);
 
-        /* create users */
+        /* Create users or update user's roles */
         foreach ($this->users as $user) {
             $username = $user[self::A_NAME_USER];
+            $password = $user[self::A_PASSWORD];
             $roleId = $mapRoles[$user[self::A_ROLE]];
             $output->writeln("Create user '$username'...");
             /* create context for process */
@@ -123,7 +124,7 @@ class Users
 
             /* analyze results */
             if ($isCreated) {
-                $output->writeln("User '$username' is created.");
+                $output->writeln("User '$username' with password '$password' is created.");
             } else {
                 $output->writeln("User '$username' already exists.");
             }

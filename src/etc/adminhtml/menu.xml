@@ -9,6 +9,6 @@
                 sortOrder="100"
                 parent="Magento_Customer::customer"
                 action="loginas/logged"
-                resource="Magento_Customer::customer"/>
+                resource="Flancer32_LoginAs::logs"/>
     </menu>
 </config>

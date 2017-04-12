@@ -10,6 +10,8 @@ class LoginAsButton
 {
     /** @var \Magento\Customer\Api\AccountManagementInterface */
     protected $customerAccountManagement;
+    /** @var \Magento\Framework\AuthorizationInterface */
+    protected $authorization;
 
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
@@ -17,22 +19,26 @@ class LoginAsButton
         \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement
     ) {
         parent::__construct($context, $registry);
+        $this->authorization = $context->getAuthorization();
         $this->customerAccountManagement = $customerAccountManagement;
     }
 
     public function getButtonData()
     {
-        $customerId = $this->getCustomerId();
-        $canModify = $customerId && !$this->customerAccountManagement->isReadonly($this->getCustomerId());
         $data = [];
-        if ($customerId && $canModify) {
-            $data = [
-                'label' => __('Login As'),
-                'class' => 'fl32-login-as',
-                'id' => 'customer-edit-fl32-login-as-button',
-                'on_click' => sprintf("window.open('%s','_blank');", $this->getLoginAsUrl()),
-                'sort_order' => 100,
-            ];
+        $isAllowed = $this->authorization->isAllowed(Cfg::ACL_RULE_LOGIN_AS);
+        if ($isAllowed) {
+            $customerId = $this->getCustomerId();
+            $canModify = $customerId && !$this->customerAccountManagement->isReadonly($this->getCustomerId());
+            if ($customerId && $canModify) {
+                $data = [
+                    'label' => __('Login As'),
+                    'class' => 'fl32-login-as',
+                    'id' => 'customer-edit-fl32-login-as-button',
+                    'on_click' => sprintf("window.open('%s','_blank');", $this->getLoginAsUrl()),
+                    'sort_order' => 100,
+                ];
+            }
         }
         return $data;
     }
