@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="fl32_loginas" translate="label"
+                sortOrder="1024" showInDefault="1" showInWebsite="0" showInStore="0">
+            <label>Login As</label>
+            <tab>customer</tab>
+            <resource>Magento_Customer::customer</resource>
+            <group id="controls" translate="label"
+                    sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>UI Controls</label>
+                <field id="customer_form_button" translate="label comment" type="select"
+                        sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use on Customer Form</label>
+                    <comment>Display "Login As" button in customer details.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="customers_grid_action" translate="label comment" type="select"
+                        sortOrder="200" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use on Customers Grid</label>
+                    <comment>Display "Login As" action in customers grid.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="orders_grid_action" translate="label comment" type="select"
+                        sortOrder="300" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Use on Sales Orders Grid</label>
+                    <comment>Display "Login As" action in sales orders grid.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

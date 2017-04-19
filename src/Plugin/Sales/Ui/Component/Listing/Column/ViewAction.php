@@ -13,17 +13,21 @@ use Flancer32\LoginAs\Config as Cfg;
  */
 class ViewAction
 {
-    /** @var \Magento\Framework\UrlInterface */
-    protected $url;
     /** @var \Magento\Framework\AuthorizationInterface */
     protected $authorization;
+    /** @var \Flancer32\LoginAs\Helper\Config */
+    protected $hlpCfg;
+    /** @var \Magento\Framework\UrlInterface */
+    protected $url;
 
     public function __construct(
         \Magento\Framework\UrlInterface $url,
-        \Magento\Framework\AuthorizationInterface $authorization
+        \Magento\Framework\AuthorizationInterface $authorization,
+        \Flancer32\LoginAs\Helper\Config $hlpCfg
     ) {
         $this->url = $url;
         $this->authorization = $authorization;
+        $this->hlpCfg = $hlpCfg;
     }
 
     public function afterPrepareDataSource(
@@ -35,9 +39,10 @@ class ViewAction
             isset($result['data']['items']) &&
             is_array($result['data']['items'])
         ) {
-            /* check ACL */
+            /* check ACL & store configuration */
             $isAllowed = $this->authorization->isAllowed(Cfg::ACL_RULE_LOGIN_AS);
-            if ($isAllowed) {
+            $isConfigured = $this->hlpCfg->getControlsSalesOrdersGridAction();
+            if ($isAllowed && $isConfigured) {
                 foreach ($result['data']['items'] as &$item) {
                     $entityId = $item['customer_id'];
                     $url = $this->getLoginAsUrl($entityId);

@@ -8,26 +8,32 @@ class LoginAsButton
     extends \Magento\Customer\Block\Adminhtml\Edit\GenericButton
     implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
-    /** @var \Magento\Customer\Api\AccountManagementInterface */
-    protected $customerAccountManagement;
     /** @var \Magento\Framework\AuthorizationInterface */
     protected $authorization;
+    /** @var \Magento\Customer\Api\AccountManagementInterface */
+    protected $customerAccountManagement;
+    /** @var \Flancer32\LoginAs\Helper\Config */
+    protected $hlpCfg;
 
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Framework\Registry $registry,
-        \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement
+        \Magento\Customer\Api\AccountManagementInterface $customerAccountManagement,
+        \Flancer32\LoginAs\Helper\Config $hlpCfg
     ) {
         parent::__construct($context, $registry);
         $this->authorization = $context->getAuthorization();
         $this->customerAccountManagement = $customerAccountManagement;
+        $this->hlpCfg = $hlpCfg;
     }
 
     public function getButtonData()
     {
         $data = [];
+        /* check ACL & store configuration */
         $isAllowed = $this->authorization->isAllowed(Cfg::ACL_RULE_LOGIN_AS);
-        if ($isAllowed) {
+        $isConfigured = $this->hlpCfg->getControlsCustomerFormButton();
+        if ($isAllowed && $isConfigured) {
             $customerId = $this->getCustomerId();
             $canModify = $customerId && !$this->customerAccountManagement->isReadonly($this->getCustomerId());
             if ($customerId && $canModify) {
