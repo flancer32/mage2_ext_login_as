@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <fl32_loginas>
+            <controls>
+                <customer_form_button>1</customer_form_button>
+                <customers_grid_action>1</customers_grid_action>
+                <orders_grid_action>1</orders_grid_action>
+            </controls>
+        </fl32_loginas>
+    </default>
+</config>
