@@ -20,16 +20,12 @@ class Builder
     /**
      * Attributes aliases.
      */
-    const A_ADMIN_EMAIL = 'AdminEmail';
-    const A_ADMIN_NAME_FIRST = 'AdminNameFirst';
-    const A_ADMIN_NAME_LAST = 'AdminNameLast';
-    const A_CUST_EMAIL = 'CustEmail';
-    const A_CUST_NAME_FIRST = 'CustNameFirst';
-    const A_CUST_NAME_LAST = 'CustNameLast';
+    const A_ADMIN = 'Admin';
+    const A_CUSTOMER = 'Customer';
     const A_DATE_LOGGED = 'DateLogged';
     const A_ID = 'Id';
-    const A_ID_ADMIN = 'IdAdmin';
-    const A_ID_CUST = 'IdCust';
+    const A_ID_ADMIN = 'AdminId';
+    const A_ID_CUST = 'CustId';
 
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $conn;
@@ -76,20 +72,28 @@ class Builder
         $tbl = $this->resource->getTableName(Cfg::ENTITY_CUSTOMER);
         $as = $asCust;
         $on = $asCust . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asLog . '.' . Log::A_CUST_REF;
+        $first = $as . '.' . Cfg::E_CUSTOMER_A_FIRSTNAME;
+        $last = $as . '.' . Cfg::E_CUSTOMER_A_LASTNAME;
+        $email = $as . '.' . Cfg::E_CUSTOMER_A_EMAIL;
+        $expValue = "CONCAT($first, ' ', $last, ' <', $email, '>')";
+        $exp = new \Flancer32\Lib\Repo\Repo\Query\Expression($expValue);
         $cols = [
-            self::A_CUST_EMAIL => Cfg::E_CUSTOMER_A_EMAIL,
-            self::A_CUST_NAME_FIRST => Cfg::E_CUSTOMER_A_FIRSTNAME,
-            self::A_CUST_NAME_LAST => Cfg::E_CUSTOMER_A_LASTNAME
+            self::A_ID_CUST => Cfg::E_CUSTOMER_A_ENTITY_ID,
+            self::A_CUSTOMER => $exp
         ];
         $result->joinLeft([$as => $tbl], $on, $cols);
         /* LEFT JOIN admin_user */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_ADMIN_USER);
         $as = $asAdm;
         $on = $asAdm . '.' . Cfg::E_ADMIN_USER_A_USER_ID . '=' . $asLog . '.' . Log::A_USER_REF;
+        $first = $as . '.' . Cfg::E_ADMIN_USER_A_FIRSTNAME;
+        $last = $as . '.' . Cfg::E_ADMIN_USER_A_LASTNAME;
+        $email = $as . '.' . Cfg::E_ADMIN_USER_A_EMAIL;
+        $expValue = "CONCAT($first, ' ', $last, ' <', $email, '>')";
+        $exp = new \Flancer32\Lib\Repo\Repo\Query\Expression($expValue);
         $cols = [
-            self::A_ADMIN_EMAIL => Cfg::E_CUSTOMER_A_EMAIL,
-            self::A_ADMIN_NAME_FIRST => Cfg::E_ADMIN_USER_A_FIRSTNAME,
-            self::A_ADMIN_NAME_LAST => Cfg::E_ADMIN_USER_A_LASTNAME
+            self::A_ID_ADMIN => Cfg::E_ADMIN_USER_A_USER_ID,
+            self::A_ADMIN => $exp
         ];
         $result->joinLeft([$as => $tbl], $on, $cols);
         return $result;

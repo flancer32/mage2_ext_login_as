@@ -19,54 +19,61 @@
         </argument>
     </dataSource>
 
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
     <columns name="columns_for_logged_grid">
         <column name="Id">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="sorting" xsi:type="string">desc</item>
-                    <item name="label" xsi:type="string" translate="true">ID</item>
+                    <item name="label" xsi:type="string" translate="true">Log ID</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="filter" xsi:type="string">textRange</item>
                 </item>
             </argument>
         </column>
-        <column name="CustEmail">
+        <column name="Customer">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Customer</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                    <item name="filter" xsi:type="string">text</item>
                 </item>
             </argument>
         </column>
-        <column name="CustNameFirst">
+        <column name="CustId">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Customer First</item>
+                    <item name="label" xsi:type="string" translate="true">Customer ID</item>
+                    <item name="sortOrder" xsi:type="number">120</item>
+                    <item name="filter" xsi:type="string">textRange</item>
                 </item>
             </argument>
         </column>
-        <column name="CustNameLast">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">Customer Last</item>
-                </item>
-            </argument>
-        </column>
-        <column name="AdminEmail">
+        <column name="Admin">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">User</item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="filter" xsi:type="string">text</item>
                 </item>
             </argument>
         </column>
-        <column name="AdminNameFirst">
+        <column name="AdminId">
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">User First</item>
-                </item>
-            </argument>
-        </column>
-        <column name="AdminNameLast">
-            <argument name="data" xsi:type="array">
-                <item name="config" xsi:type="array">
-                    <item name="label" xsi:type="string" translate="true">User Last</item>
+                    <item name="label" xsi:type="string" translate="true">User ID</item>
+                    <item name="sortOrder" xsi:type="number">140</item>
+                    <item name="filter" xsi:type="string">textRange</item>
                 </item>
             </argument>
         </column>
@@ -74,6 +81,8 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Logged At</item>
+                    <item name="sortOrder" xsi:type="number">150</item>
+                    <item name="filter" xsi:type="string">dateRange</item>
                 </item>
             </argument>
         </column>
