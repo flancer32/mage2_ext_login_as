@@ -11,6 +11,10 @@ class Logged
 {
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $conn;
+    /** @var \Flancer32\Lib\Repo\Helper\Data\Adapter\ClauseSet\ApiSearchCriteria */
+    protected $hlpAdpClauses;
+    /** @var \Flancer32\Lib\Repo\Helper\Repo\Query\ClauseSet\Processor */
+    protected $hlpClauseProc;
     /** @var \Flancer32\LoginAs\Repo\Query\Grid\Logged\Builder */
     protected $qbldGrid;
     /** @var \Magento\Framework\App\ResourceConnection */
@@ -24,6 +28,8 @@ class Logged
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         \Magento\Framework\UrlInterface $url,
+        \Flancer32\Lib\Repo\Helper\Data\Adapter\ClauseSet\ApiSearchCriteria $hlpAdpClauses,
+        \Flancer32\Lib\Repo\Helper\Repo\Query\ClauseSet\Processor $hlpClauseProc,
         \Flancer32\LoginAs\Repo\Query\Grid\Logged\Builder $qbldGrid
     ) {
         $primaryFieldName = 'id';
@@ -48,15 +54,24 @@ class Logged
             $data);
         $this->resource = $resource;
         $this->conn = $resource->getConnection();
+        $this->hlpAdpClauses = $hlpAdpClauses;
+        $this->hlpClauseProc = $hlpClauseProc;
         $this->qbldGrid = $qbldGrid;
     }
 
     public function getData()
     {
+        /* Magento API criteria */
+        $criteria = $this->getSearchCriteria();
+        $clauses = $this->hlpAdpClauses->getClauseSet($criteria);
+
+
         $qTotal = $this->qbldGrid->getCountQuery();
+        $this->hlpClauseProc->exec($qTotal, $clauses);
         $totals = $this->conn->fetchOne($qTotal);
 
         $qItems = $this->qbldGrid->getSelectQuery();
+        $this->hlpClauseProc->exec($qItems, $clauses);
         $items = $this->conn->fetchAll($qItems);
         $result = [
             'items' => $items,
