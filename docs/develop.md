@@ -17,7 +17,7 @@ section (_My Account / Connect / Developer / Secure Keys_) and generate pair of 
 
 ## Run deployment script
 
-    $ sh deploy.sh work
+    $ sh deploy.sh
     There is deployment configuration in /home/alex/work/prj/mage2_ext_login_as/config.work.sh.
     Deployment is started in the 'work' mode.
     Re-create '/home/alex/work/prj/mage2_ext_login_as/work' folder.

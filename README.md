@@ -1,5 +1,19 @@
 # "Login As Customer" extension for Magento 2.
 
+
+
+## Description
+
+This extension adds ability for backend users (adminhtml) to log in as customers (frontend).
+
+### Features
+* Login button on customer form;
+* Login links on "Customers" & "Sale Orders" grids;
+* Login events log;
+* ACL configuration;
+
+
+
 ## Install
 
 ### From console
@@ -20,3 +34,9 @@ $ bin/magento setup:di:compile
     "flancer32/mage2_ext_login_as": "dev-master"
   }
 ```
+
+### Development version
+
+See [here](./docs/develop.md).
+
+
