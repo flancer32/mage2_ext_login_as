@@ -26,6 +26,7 @@ class Builder
     const A_ID = 'Id';
     const A_ID_ADMIN = 'AdminId';
     const A_ID_CUST = 'CustId';
+    const A_TOTAL = 'Total';
 
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $conn;
@@ -41,14 +42,18 @@ class Builder
 
     public function getCountQuery(\Flancer32\Lib\Repo\Repo\Query\IBuilder $qbuild = null)
     {
-        $asLog = self::AS_TBL_LOG;
-        $result = $this->conn->select();
-        /* SELECT FROM fl32_loginas_log */
-        $tbl = $this->resource->getTableName(Log::ENTITY_NAME);
-        $as = $asLog;
-        $exp = new \Magento\Rule\Model\Condition\Sql\Expression("COUNT(" . Log::A_ID . ")");
-        $cols = [$exp];
-        $result->from([$as => $tbl], $cols);
+        $result = $this->getSelectQuery($qbuild);
+        $columns = $result->getPart('columns');
+        $exp = 'COUNT(' . self::AS_TBL_LOG . '.' . \Flancer32\LoginAs\Repo\Data\Entity\Log::A_ID . ')';
+        $expTotal = new \Flancer32\Lib\Repo\Repo\Query\Expression($exp);
+        $colTotal = [
+            self::AS_TBL_LOG,
+            $expTotal,
+            self::A_TOTAL
+        ];
+        /* Total column shold be the first */
+        array_unshift($columns, $colTotal);
+        $result->setPart('columns', $columns);
         return $result;
     }
 

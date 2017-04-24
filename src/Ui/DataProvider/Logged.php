@@ -65,9 +65,8 @@ class Logged
         $criteria = $this->getSearchCriteria();
         $clauses = $this->hlpAdpClauses->getClauseSet($criteria);
 
-
         $qTotal = $this->qbldGrid->getCountQuery();
-        $this->hlpClauseProc->exec($qTotal, $clauses);
+        $this->hlpClauseProc->exec($qTotal, $clauses, true);
         $totals = $this->conn->fetchOne($qTotal);
 
         $qItems = $this->qbldGrid->getSelectQuery();
