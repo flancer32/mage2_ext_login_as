@@ -41,7 +41,7 @@ class InstallSchema
         $demEntity = $demPackage->get('/entity/Active');
         $this->toolDem->createEntity($entityAlias, $demEntity);
 
-        /* Active */
+        /* Log */
         $entityAlias = \Flancer32\LoginAs\Repo\Data\Entity\Log::ENTITY_NAME;
         $demEntity = $demPackage->get('/entity/Log');
         $this->toolDem->createEntity($entityAlias, $demEntity);

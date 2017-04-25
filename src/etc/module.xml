@@ -4,6 +4,7 @@
     <module name="Flancer32_LoginAs" setup_version="0.1.0">
 
         <sequence>
+            <module name="Magento_Backend"/>
             <module name="Magento_Customer"/>
         </sequence>
     </module>
