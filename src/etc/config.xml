@@ -5,8 +5,8 @@
         <fl32_loginas>
             <controls>
                 <customer_form_button>1</customer_form_button>
-                <customers_grid_action>1</customers_grid_action>
-                <orders_grid_action>1</orders_grid_action>
+                <customers_grid_action>0</customers_grid_action>
+                <orders_grid_action>0</orders_grid_action>
             </controls>
         </fl32_loginas>
     </default>
