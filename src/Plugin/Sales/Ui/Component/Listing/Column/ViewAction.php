@@ -49,8 +49,7 @@ class ViewAction
                     $actions = isset($item['actions']) ? $item['actions'] : [];
                     $actions['loginas'] = [
                         'href' => $this->url->getUrl($url),
-                        'label' => __('Login As'),
-                        'target' => '_blank'
+                        'label' => __('Login As')
                     ];
                     $item['actions'] = $actions;
                 }
