@@ -10,6 +10,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="fl32_loginas_init_customers" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Init\Customers</item>
                 <item name="fl32_loginas_init_users" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Init\Users</item>
+                <item name="fl32_loginas_logs_cleanup" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Logs\Cleanup</item>
             </argument>
         </arguments>
     </type>
@@ -38,10 +39,16 @@
     <preference
             for="\Flancer32\LoginAs\Repo\Entity\IActive"
             type="\Flancer32\LoginAs\Repo\Entity\Active"/>
-
     <preference
             for="\Flancer32\LoginAs\Repo\Entity\ILog"
             type="\Flancer32\LoginAs\Repo\Entity\Log"/>
 
+
+    <!-- ******** -->
+    <!-- Services -->
+    <!-- ******** -->
+    <preference
+            for="\Flancer32\LoginAs\Service\ICleanup"
+            type="\Flancer32\LoginAs\Service\Cleanup"/>
 
 </config>

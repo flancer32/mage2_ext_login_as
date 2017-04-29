@@ -30,6 +30,22 @@
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
             </group>
+            <group id="logs_cleanup" translate="label"
+                    sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Cleanup Logs</label>
+                <field id="enabled" translate="label comment" type="select"
+                        sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Clean up "Login As" Logs</label>
+                    <comment>Enable "Login As" logs clean up by cron (daily).</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="days_old" translate="label comment" type="text"
+                        sortOrder="200" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Older than (days)</label>
+                    <comment>Clean up log events older then XX days (not less then 3).</comment>
+                </field>
+
+            </group>
         </section>
     </system>
 </config>

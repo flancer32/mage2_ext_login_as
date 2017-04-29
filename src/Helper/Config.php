@@ -13,6 +13,8 @@ namespace Flancer32\LoginAs\Helper;
 class Config
 {
 
+    const DEF_LOGS_CLEANUP_MIN_DAYS = 3;
+
     /** @var \Magento\Framework\App\Config\ScopeConfigInterface */
     protected $scopeConfig;
 
@@ -54,6 +56,30 @@ class Config
     public function getControlsSalesOrdersGridAction()
     {
         $result = $this->scopeConfig->getValue('fl32_loginas/controls/orders_grid_action');
+        $result = filter_var($result, FILTER_VALIDATE_BOOLEAN);
+        return $result;
+    }
+
+    /**
+     * How old (in days) log records should be cleaned.
+     * @return int
+     */
+    public function getLogsCleanupDaysOld()
+    {
+        $result = $this->scopeConfig->getValue('fl32_loginas/logs_cleanup/days_old');
+        $result = filter_var($result, FILTER_VALIDATE_INT);
+        if ($result < self::DEF_LOGS_CLEANUP_MIN_DAYS) $result = self::DEF_LOGS_CLEANUP_MIN_DAYS;
+        return $result;
+    }
+
+    /**
+     * Enable/disable "Login As" logs cleaning.
+     *
+     * @return bool
+     */
+    public function getLogsCleanupEnabled()
+    {
+        $result = $this->scopeConfig->getValue('fl32_loginas/logs_cleanup/enabled');
         $result = filter_var($result, FILTER_VALIDATE_BOOLEAN);
         return $result;
     }

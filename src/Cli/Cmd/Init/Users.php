@@ -16,7 +16,7 @@ use \Flancer32\LoginAs\Config as Cfg;
  * Create test admin users for development deployment.
  */
 class Users
-    extends \Symfony\Component\Console\Command\Command
+    extends \Flancer32\LoginAs\Cli\Cmd\Base
 {
     const A_EMAIL = 'email';
     const A_NAME_FIRST = 'first';
@@ -24,9 +24,6 @@ class Users
     const A_NAME_USER = 'name';
     const A_PASSWORD = 'password';
     const A_ROLE = 'role';
-
-    /** @var \Magento\Framework\ObjectManagerInterface */
-    protected $manObj;
     /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check */
     protected $subCheck;
     /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create */
@@ -66,11 +63,9 @@ class Users
         \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create $subCreate,
         \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check $subCheck
     ) {
-        /* object manager is used in __construct/configure */
-        $this->manObj = $manObj;
+        parent::__construct($manObj);
         $this->subCreate = $subCreate;
         $this->subCheck = $subCheck;
-        parent::__construct();
     }
 
     protected function configure()
@@ -78,21 +73,6 @@ class Users
         parent::configure();
         $this->setName('fl32:init:users');
         $this->setDescription("Create test users for 'Flancer32_LoginAs' module.");
-        /* Magento related config (Object Manager) */
-        /** @var \Magento\Framework\App\State $appState */
-        $appState = $this->manObj->get(\Magento\Framework\App\State::class);
-        try {
-            /* area code should be set only once */
-            $appState->getAreaCode();
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            /* exception will be thrown if no area code is set */
-            $areaCode = \Magento\Framework\App\Area::AREA_ADMIN;
-            $appState->setAreaCode($areaCode);
-            /** @var \Magento\Framework\ObjectManager\ConfigLoaderInterface $configLoader */
-            $configLoader = $this->manObj->get(\Magento\Framework\ObjectManager\ConfigLoaderInterface::class);
-            $config = $configLoader->load($areaCode);
-            $this->manObj->configure($config);
-        }
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
