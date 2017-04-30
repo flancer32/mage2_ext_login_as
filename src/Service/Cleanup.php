@@ -14,16 +14,20 @@ class Cleanup
     protected $conn;
     /** @var \Flancer32\LoginAs\Helper\Config */
     protected $hlpConfig;
+    /** @var \Psr\Log\LoggerInterface */
+    protected $logger;
     /** @var \Flancer32\LoginAs\Repo\Entity\ILog */
     protected $repoLog;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
 
     public function __construct(
+        \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\App\ResourceConnection $resource,
         \Flancer32\LoginAs\Helper\Config $hlpConfig,
         \Flancer32\LoginAs\Repo\Entity\ILog $repoLog
     ) {
+        $this->logger = $logger;
         $this->resource = $resource;
         $this->conn = $resource->getConnection();
         $this->hlpConfig = $hlpConfig;
@@ -41,10 +45,12 @@ class Cleanup
         }
         $time = strtotime("-$days day");
         $date = date('Y-m-d H:i:s', $time);
+        $this->logger->debug("Clean up 'LoginAs' logs older than $date.");
         /* remove old logs */
         $quoted = $this->conn->quote($date);
         $where = Log::A_DATE . '<=' . $quoted;
         $deleted = $this->repoLog->delete($where);
+        $this->logger->debug("Total '$deleted' records are cleand up from 'LoginAs' log.");
         $result->deleted = $deleted;
         return $result;
     }
