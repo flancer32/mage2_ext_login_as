@@ -47,8 +47,9 @@ class ViewAction
                     $entityId = $item['customer_id'];
                     $url = $this->getLoginAsUrl($entityId);
                     $actions = isset($item['actions']) ? $item['actions'] : [];
-                    $actions['loginas'] = [
-                        'href' => $this->url->getUrl($url),
+                    $actions[Cfg::GRID_ACTION_NAME] = [
+                        /* use 'url' instead of 'href' to activate Flancer32_LoginAs/ui/js/grid/columns/actions.defaultCallback() */
+                        'url' => $this->url->getUrl($url),
                         'label' => __('Login As')
                     ];
                     $item['actions'] = $actions;

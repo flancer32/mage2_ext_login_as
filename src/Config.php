@@ -62,6 +62,9 @@ class Config
     const E_CUSTOMER_A_WEBSITE_ID = 'website_id';
     /**$#- */
 
+    /** action name/index used in grids (customers, sales) */
+    const GRID_ACTION_NAME = 'loginas';
+
     /**
      * Adminhtml menu items.
      */
@@ -75,5 +78,4 @@ class Config
      */
     const ROUTE_NAME_ADMIN_LOGINAS = 'loginas';
     const ROUTE_NAME_FRONT_LOGINAS = 'loginas';
-
 }
