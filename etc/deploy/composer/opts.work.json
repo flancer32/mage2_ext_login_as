@@ -10,7 +10,7 @@
   ],
   "autoload-dev": {
     "psr-4": {
-      "Flancer32\\LoginAs\\Test\\": "../dev/fw"
+      "Flancer32\\LoginAs\\Test\\": "dev/fw"
     }
   },
   "minimum-stability": "dev"
