@@ -18,7 +18,7 @@
       "registration.php"
     ],
     "psr-4": {
-      "Flancer32\\LoginAs\\": "./"
+      "Flancer32\\LoginAs\\": ""
     }
   }
 }
