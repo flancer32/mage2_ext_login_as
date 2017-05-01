@@ -11,14 +11,14 @@
     }
   ],
   "require": {
-    "flancer32/mage2_ext_repo": "^0.1"
+    "flancer32/mage2_ext_repo": "dev-master"
   },
   "autoload": {
     "files": [
-      "src/registration.php"
+      "registration.php"
     ],
     "psr-4": {
-      "Flancer32\\LoginAs\\": "src/"
+      "Flancer32\\LoginAs\\": "./"
     }
   }
 }

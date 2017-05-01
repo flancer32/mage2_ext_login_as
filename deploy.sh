@@ -24,10 +24,8 @@ case "$1" in
 esac
 
 # Folders shortcuts
-DIR_SRC=${DIR_ROOT}/src             # folder with sources
-DIR_DEPLOY=${DIR_ROOT}/deploy       # folder with deployment templates
-DIR_MAGE=${DIR_ROOT}/${MODE}        # root folder for Magento application
-DIR_BIN=${DIR_ROOT}/bin             # root folder for shell scripts
+DIR_DEPLOY=${DIR_ROOT}/etc/deploy       # folder with deployment templates
+DIR_MAGE=${DIR_ROOT}/${MODE}            # root folder for Magento application
 
 # check configuration file exists and load deployment config (db connection, Magento installation opts, etc.).
 FILE_CFG=${DIR_ROOT}/config.${MODE}.sh
