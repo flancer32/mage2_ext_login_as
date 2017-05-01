@@ -36,7 +36,7 @@ $ bin/magento setup:di:compile
 
 ```json
   "require": {
-    "flancer32/mage2_ext_login_as": "dev-master"
+    "flancer32/mage2_ext_login_as": "^0.1"
   }
 ```
 
