@@ -11,8 +11,7 @@
     }
   ],
   "require": {
-    "flancer32/mage2_ext_repo": "dev-master",
-    "flancer32/php_data_object": "dev-master"
+    "flancer32/mage2_ext_repo": "^0.1"
   },
   "autoload": {
     "files": [
