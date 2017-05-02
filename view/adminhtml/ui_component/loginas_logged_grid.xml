@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <!-- First part (loginas_logged_grid.) should be the same as name of this XML file -->
+            <item name="provider" xsi:type="string">loginas_logged_grid.ds_for_logged_grid</item>
+            <item name="deps" xsi:type="string">loginas_logged_grid.ds_for_logged_grid</item>
+        </item>
+        <item name="spinner" xsi:type="string">columns_for_logged_grid</item>
+    </argument>
+
+    <dataSource name="ds_for_logged_grid">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">\Flancer32\LoginAs\Ui\DataProvider\Logged</argument>
+            <argument name="name" xsi:type="string">ds_for_logged_grid</argument>
+        </argument>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">false</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filters name="listing_filters"/>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="columns_for_logged_grid">
+        <column name="Id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Log ID</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                </item>
+            </argument>
+        </column>
+        <column name="Customer">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Customer</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                    <item name="filter" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </column>
+        <column name="CustId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Customer ID</item>
+                    <item name="sortOrder" xsi:type="number">120</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                </item>
+            </argument>
+        </column>
+        <column name="Admin">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">User</item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="filter" xsi:type="string">text</item>
+                </item>
+            </argument>
+        </column>
+        <column name="AdminId">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">User ID</item>
+                    <item name="sortOrder" xsi:type="number">140</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                </item>
+            </argument>
+        </column>
+        <column name="DateLogged">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Logged At</item>
+                    <item name="sortOrder" xsi:type="number">150</item>
+                    <item name="filter" xsi:type="string">dateRange</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+
+</listing>

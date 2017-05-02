@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
+    <router id="admin">
+
+        <route id="fl32_login_as_route" frontName="loginas">
+            <module name="Flancer32_LoginAs"/>
+        </route>
+
+    </router>
+</config>

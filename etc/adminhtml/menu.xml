@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Flancer32_LoginAs::customer_logged"
+                title="Logged As"
+                translate="title"
+                module="Flancer32_LoginAs"
+                sortOrder="100"
+                parent="Magento_Customer::customer"
+                action="loginas/logged"
+                resource="Flancer32_LoginAs::logs"/>
+    </menu>
+</config>
