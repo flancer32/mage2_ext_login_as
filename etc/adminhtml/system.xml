@@ -7,7 +7,7 @@
                 sortOrder="1024" showInDefault="1" showInWebsite="0" showInStore="0">
             <label>Login As</label>
             <tab>customer</tab>
-            <resource>Magento_Customer::customer</resource>
+            <resource>Magento_Customer::config_customer</resource>
             <group id="controls" translate="label"
                     sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>UI Controls</label>
@@ -44,7 +44,6 @@
                     <label>Older than (days)</label>
                     <comment>Clean up log events older then XX days (not less then 3).</comment>
                 </field>
-
             </group>
         </section>
     </system>

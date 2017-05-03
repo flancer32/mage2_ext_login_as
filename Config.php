@@ -22,8 +22,10 @@ class Config
     /**#@+
      * See './etc/acl.xml'
      */
+    const ACL_RULE_CONFIG = 'Flancer32_LoginAs::config';
     const ACL_RULE_LOGIN_AS = 'Flancer32_LoginAs::login';
     const ACL_RULE_LOGS = 'Flancer32_LoginAs::logs';
+
     /**$#- */
 
     /**#@+

@@ -112,7 +112,6 @@ class Acl
             'Magento_Backend::stores',
             'Magento_Backend::stores_settings',
             'Magento_Config::config',
-            'Magento_Customer::config_customer',
             'Magento_Customer::customer',
             'Magento_Customer::manage',
             'Magento_Sales::actions_view',
@@ -120,6 +119,7 @@ class Acl
             'Magento_Sales::sales',
             'Magento_Sales::sales_operation',
             'Magento_Sales::sales_order',
+            Cfg::ACL_RULE_CONFIG,
             Cfg::ACL_RULE_LOGIN_AS
         ];
     }

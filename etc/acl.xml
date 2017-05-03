@@ -8,6 +8,13 @@
                     <resource id="Flancer32_LoginAs::login" title="Login As Customer" translate="title" sortOrder="100"/>
                     <resource id="Flancer32_LoginAs::logs" title="Access &quot;LoginAs&quot; logs" translate="title" sortOrder="200"/>
                 </resource>
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Flancer32_LoginAs::config" title="&quot;LoginAs&quot; Section" translate="title" sortOrder="100"/>
+                        </resource>
+                    </resource>
+                </resource>
             </resource>
         </resources>
     </acl>
