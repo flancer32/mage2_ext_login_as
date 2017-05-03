@@ -11,7 +11,9 @@
                 <resource id="Magento_Backend::stores">
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
-                            <resource id="Flancer32_LoginAs::config" title="&quot;LoginAs&quot; Section" translate="title" sortOrder="100"/>
+                            <resource id="Magento_Customer::config_customer">
+                                <resource id="Flancer32_LoginAs::config" title="&quot;LoginAs&quot; Section" translate="title" sortOrder="100"/>
+                            </resource>
                         </resource>
                     </resource>
                 </resource>

@@ -112,6 +112,7 @@ class Acl
             'Magento_Backend::stores',
             'Magento_Backend::stores_settings',
             'Magento_Config::config',
+            'Magento_Customer::config_customer',
             'Magento_Customer::customer',
             'Magento_Customer::manage',
             'Magento_Sales::actions_view',
