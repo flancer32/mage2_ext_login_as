@@ -31,7 +31,7 @@
                 </field>
             </group>
             <group id="logs_cleanup" translate="label"
-                    sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
+                    sortOrder="200" showInDefault="1" showInWebsite="0" showInStore="0">
                 <label>Cleanup Logs</label>
                 <field id="enabled" translate="label comment" type="select"
                         sortOrder="100" showInDefault="1" showInWebsite="0" showInStore="0">
