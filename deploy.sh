@@ -130,7 +130,16 @@ then
     --db-user="${DB_USER}" \
     ${MAGE_DBPASS} \
     # 'MAGE_DBPASS' should be placed on the last position to prevent failures if this var is empty.
+
+    # post instal DB setup
+    mysql -u ${DB_USER}  ${MYSQL_PASS} -D ${DB_NAME} -e "REPLACE core_config_data SET scope=\"default\", scope_id=0, path=\"fl32_loginas/controls/customer_form_button\", value=1;"
+    mysql -u ${DB_USER}  ${MYSQL_PASS} -D ${DB_NAME} -e "REPLACE core_config_data SET scope=\"default\", scope_id=0, path=\"fl32_loginas/controls/orders_grid_action\", value=1;"
+    mysql -u ${DB_USER}  ${MYSQL_PASS} -D ${DB_NAME} -e "REPLACE core_config_data SET scope=\"default\", scope_id=0, path=\"fl32_loginas/controls/customer_form_button\", value=1;"
+    mysql -u ${DB_USER}  ${MYSQL_PASS} -D ${DB_NAME} -e "REPLACE core_config_data SET scope=\"default\", scope_id=0, path=\"fl32_loginas/logs_cleanup/enabled\", value=1;"
+    mysql -u ${DB_USER}  ${MYSQL_PASS} -D ${DB_NAME} -e "REPLACE core_config_data SET scope=\"default\", scope_id=0, path=\"fl32_loginas/logs_cleanup/days_old\", value=32;"
+
 fi
+
 
 ## =========================================================================
 #   Post installation setup.
