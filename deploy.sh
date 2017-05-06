@@ -11,6 +11,9 @@
 CUR_DIR="$PWD"
 DIR_ROOT="$( cd "$( dirname "$0" )" && pwd )"
 
+# update sources
+git pull
+
 # Available deployment modes ('work' only mode is used in the sample)
 MODE_WORK=work
 MODE_PILOT=pilot
