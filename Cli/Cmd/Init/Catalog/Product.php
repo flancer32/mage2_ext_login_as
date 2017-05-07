@@ -74,14 +74,15 @@ class Product
         $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE);
         $product->setUrlKey(self::DEF_PROD_SKU); // use SKU as URL Key
         $saved = $this->repoProd->save($product);
+        $result = $prodId = $saved->getId();
         /* create inventory data */
         /** @var \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem */
         $stockItem = $this->manObj->create(\Magento\CatalogInventory\Api\Data\StockItemInterface::class);
         $stockItem->setQty(self::DEF_PROD_QTY);
         $stockItem->setIsInStock(true);
+        $stockItem->setProductId($prodId);
         $this->repoStockItem->save($stockItem);
         /* return product ID */
-        $result = $saved->getId();
         return $result;
     }
 
