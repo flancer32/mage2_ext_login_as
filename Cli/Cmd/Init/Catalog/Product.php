@@ -21,6 +21,7 @@ class Product
     const DEF_PROD_SKU = 'demo001';
     const DEF_PROD_WEIGHT = '0.5';
     const DEF_PROD_QTY = 1024;
+    const DEF_STOCK_ID = 1;
     /** @var   \Magento\Framework\ObjectManagerInterface */
     protected $manObj;
     /** @var \Magento\Catalog\Api\AttributeSetRepositoryInterface */
@@ -74,16 +75,21 @@ class Product
         $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE);
         $product->setUrlKey(self::DEF_PROD_SKU); // use SKU as URL Key
         $saved = $this->repoProd->save($product);
-        $result = $prodId = $saved->getId();
+        $prodId = $saved->getId();
         /* create inventory data */
+        /** @var \Magento\CatalogInventory\Api\StockItemCriteriaInterface $crit */
+        $crit = $this->manObj->create(\Magento\CatalogInventory\Api\StockItemCriteriaInterface::class);
+        $crit->setProductsFilter($prodId);
+        $stockId = self::DEF_STOCK_ID;
+        $crit->addFilter('byStock', \Magento\CatalogInventory\Api\Data\StockItemInterface::STOCK_ID, $stockId);
+        $stockItems = $this->repoStockItem->getList($crit);
         /** @var \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem */
-        $stockItem = $this->manObj->create(\Magento\CatalogInventory\Api\Data\StockItemInterface::class);
+        $stockItem = reset($stockItems);
         $stockItem->setQty(self::DEF_PROD_QTY);
         $stockItem->setIsInStock(true);
-        $stockItem->setProductId($prodId);
         $this->repoStockItem->save($stockItem);
         /* return product ID */
-        return $result;
+        return $prodId;
     }
 
     public function exec(\Flancer32\Lib\Data $ctx)
