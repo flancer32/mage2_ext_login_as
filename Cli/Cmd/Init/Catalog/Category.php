@@ -18,7 +18,7 @@ use \Flancer32\LoginAs\Config as Cfg;
 class Category
 {
     /** Context variable to return ID of the found/created demo category. */
-    const CTX_CAT_ID = 'categoryId';
+    const CTX_CAT_ID = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog::CTX_CAT_ID;
     /** Name of the demo category.  */
     const DEF_CAT_NAME = 'Demo';
     /** @var   \Magento\Framework\ObjectManagerInterface */

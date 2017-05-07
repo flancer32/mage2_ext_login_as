@@ -14,27 +14,32 @@ use Magento\Catalog\Api\Data\ProductInterface;
 class Product
 {
     /** Context variable to return ID of the found/created demo product. */
-    const CTX_PROD_ID = 'productId';
+    const CTX_PROD_ID = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog::CTX_PROD_ID;
     /** attributes of the demo product.  */
     const DEF_PROD_NAME = 'Demo Product';
     const DEF_PROD_PRICE = '12.34';
     const DEF_PROD_SKU = 'demo001';
     const DEF_PROD_WEIGHT = '0.5';
+    const DEF_PROD_QTY = 1024;
     /** @var   \Magento\Framework\ObjectManagerInterface */
     protected $manObj;
     /** @var \Magento\Catalog\Api\AttributeSetRepositoryInterface */
     protected $repoAttrSet;
     /** @var \Magento\Catalog\Api\ProductRepositoryInterface */
     protected $repoProd;
+    /** @var \Magento\CatalogInventory\Api\StockItemRepositoryInterface */
+    protected $repoStockItem;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Catalog\Api\AttributeSetRepositoryInterface $repoAttrSet,
-        \Magento\Catalog\Api\ProductRepositoryInterface $repoProd
+        \Magento\Catalog\Api\ProductRepositoryInterface $repoProd,
+        \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem
     ) {
         $this->manObj = $manObj;
         $this->repoAttrSet = $repoAttrSet;
         $this->repoProd = $repoProd;
+        $this->repoStockItem = $repoStockItem;
     }
 
 
@@ -69,6 +74,12 @@ class Product
         $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE);
         $product->setUrlKey(self::DEF_PROD_SKU); // use SKU as URL Key
         $saved = $this->repoProd->save($product);
+        /* create inventory data */
+        /** @var \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem */
+        $stockItem = $this->manObj->create(\Magento\CatalogInventory\Api\Data\StockItemInterface::class);
+        $stockItem->setQty(self::DEF_PROD_QTY);
+        $stockItem->setIsInStock(true);
+        $this->repoStockItem->save($stockItem);
         /* return product ID */
         $result = $saved->getId();
         return $result;
@@ -76,18 +87,14 @@ class Product
 
     public function exec(\Flancer32\Lib\Data $ctx)
     {
-        $isDemoProdFound = false;
-//        $rootNode = $this->modTree->getRootNode();
-//        $children = $rootNode->getAllChildNodes();
-//        /** @var \Magento\Framework\Data\Tree\Node $child */
-//        foreach ($children as $child) {
-//            $name = $child->getName();
-//            if ($name == self::DEF_PROD_NAME) {
-//                $isDemoProdFound = true;
-//                $prodId = $child->getId();
-//            }
-//        }
-        if (!$isDemoProdFound) {
+        $found = null;
+        try {
+            $found = $this->repoProd->get(self::DEF_PROD_SKU, true);
+            $prodId = $found->getId();
+        } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
+            /* do nothing */
+        }
+        if (!$found) {
             $prodId = $this->create();
         }
         $ctx->set(self::CTX_PROD_ID, $prodId);

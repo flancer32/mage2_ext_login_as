@@ -18,19 +18,25 @@ use \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Product as SubProduct;
 class Catalog
     extends \Flancer32\LoginAs\Cli\Cmd\Base
 {
+    const CTX_CAT_ID = 'categoryId';
+    const CTX_PROD_ID = 'productId';
     /** @var  \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Category */
     protected $subCategory;
     /** @var  \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Product */
     protected $subProduct;
+    /** @var  \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Link */
+    protected $subLink;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Category $subCategory,
-        \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Product $subProduct
+        \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Product $subProduct,
+        \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Link $subLink
     ) {
         parent::__construct($manObj);
         $this->subCategory = $subCategory;
         $this->subProduct = $subProduct;
+        $this->subLink = $subLink;
     }
 
     protected function configure()
@@ -45,8 +51,8 @@ class Catalog
         $output->writeln('<info>Create test categories & products for \'Flancer32_LoginAs\' module.<info>');
         $ctx = new \Flancer32\Lib\Data();
         $this->subCategory->exec($ctx);
-        $catId = $ctx->get(SubCategory::CTX_CAT_ID);
         $this->subProduct->exec($ctx);
+        $this->subLink->exec($ctx);
         $output->writeln('<info>Command is completed.<info>');
     }
 
