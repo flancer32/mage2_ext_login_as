@@ -18,10 +18,9 @@ class Product
     /** attributes of the demo product.  */
     const DEF_PROD_NAME = 'Demo Product';
     const DEF_PROD_PRICE = '12.34';
+    const DEF_PROD_QTY = 1024;
     const DEF_PROD_SKU = 'demo001';
     const DEF_PROD_WEIGHT = '0.5';
-    const DEF_PROD_QTY = 1024;
-    const DEF_STOCK_ID = 1;
     /** @var   \Magento\Framework\ObjectManagerInterface */
     protected $manObj;
     /** @var \Magento\Catalog\Api\AttributeSetRepositoryInterface */
@@ -49,7 +48,7 @@ class Product
      *
      * @return int ID of the created product.
      */
-    public function create()
+    protected function createProduct()
     {
         /**
          * Retrieve attribute set ID.
@@ -76,20 +75,27 @@ class Product
         $product->setUrlKey(self::DEF_PROD_SKU); // use SKU as URL Key
         $saved = $this->repoProd->save($product);
         $prodId = $saved->getId();
-        /* create inventory data */
+        /* return product ID */
+        return $prodId;
+    }
+
+    /**
+     * Create inventory data.
+     *
+     * @param int $prodId
+     */
+    protected function createStockItem($prodId)
+    {
         /** @var \Magento\CatalogInventory\Api\StockItemCriteriaInterface $crit */
         $crit = $this->manObj->create(\Magento\CatalogInventory\Api\StockItemCriteriaInterface::class);
         $crit->setProductsFilter($prodId);
-        $stockId = self::DEF_STOCK_ID;
-        $crit->addFilter('byStock', \Magento\CatalogInventory\Api\Data\StockItemInterface::STOCK_ID, $stockId);
-        $stockItems = $this->repoStockItem->getList($crit);
+        $found = $this->repoStockItem->getList($crit);
+        $items = $found->getItems();
         /** @var \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem */
-        $stockItem = reset($stockItems);
+        $stockItem = reset($items);
         $stockItem->setQty(self::DEF_PROD_QTY);
         $stockItem->setIsInStock(true);
         $this->repoStockItem->save($stockItem);
-        /* return product ID */
-        return $prodId;
     }
 
     public function exec(\Flancer32\Lib\Data $ctx)
@@ -102,7 +108,8 @@ class Product
             /* do nothing */
         }
         if (!$found) {
-            $prodId = $this->create();
+            $prodId = $this->createProduct();
+            $this->createStockItem($prodId);
         }
         $ctx->set(self::CTX_PROD_ID, $prodId);
     }
