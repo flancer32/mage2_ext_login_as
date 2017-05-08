@@ -10,6 +10,7 @@
             <argument name="commands" xsi:type="array">
                 <item name="fl32_loginas_init_catalog" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Init\Catalog</item>
                 <item name="fl32_loginas_init_customers" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Init\Customers</item>
+                <item name="fl32_loginas_init_sales" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Init\Sales</item>
                 <item name="fl32_loginas_init_users" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Init\Users</item>
                 <item name="fl32_loginas_logs_cleanup" xsi:type="object">\Flancer32\LoginAs\Cli\Cmd\Logs\Cleanup</item>
             </argument>

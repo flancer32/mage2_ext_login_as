@@ -15,6 +15,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Customers
     extends \Flancer32\LoginAs\Cli\Cmd\Base
 {
+    const DEF_CUST_01_EMAIL = 'alex@flancer64.com';
+    const DEF_CUST_01_FIRST = 'Alex';
+    const DEF_CUST_01_LAST = 'Gusev';
+    const DEF_CUST_02_EMAIL = 'alex@flancer32.com';
+    const DEF_CUST_02_FIRST = 'John';
+    const DEF_CUST_02_LAST = 'Doe';
+
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
     protected $repoCust;
 
@@ -37,15 +44,15 @@ class Customers
     {
         /** @var \Magento\Customer\Api\Data\CustomerInterface $cust */
         $cust = $this->manObj->create(\Magento\Customer\Api\Data\CustomerInterface::class);
-        $cust->setEmail('alex@flancer64.com');
-        $cust->setFirstname('Alex');
-        $cust->setLastname('Gusev');
+        $cust->setEmail(self::DEF_CUST_01_EMAIL);
+        $cust->setFirstname(self::DEF_CUST_01_FIRST);
+        $cust->setLastname(self::DEF_CUST_01_LAST);
         $this->repoCust->save($cust);
 
         $cust = $this->manObj->create(\Magento\Customer\Api\Data\CustomerInterface::class);
-        $cust->setEmail('alex@flancer32.com');
-        $cust->setFirstname('John');
-        $cust->setLastname('Doe');
+        $cust->setEmail(self::DEF_CUST_02_EMAIL);
+        $cust->setFirstname(self::DEF_CUST_02_FIRST);
+        $cust->setLastname(self::DEF_CUST_02_LAST);
         $this->repoCust->save($cust);
 
         $output->writeln('<info>Command is completed.<info>');
