@@ -6,7 +6,7 @@
 namespace Flancer32\LoginAs\Cron\Logs;
 
 /**
- * Clean up "LoginAs" logs by cron.
+ * Clean up "LoginAs" logs and active registry by cron.
  */
 class Cleanup
 {
@@ -33,9 +33,10 @@ class Cleanup
         if ($enabled) {
             $req = new \Flancer32\LoginAs\Service\Cleanup\Request();
             $resp = $this->callCleanup->execute($req);
-            $deleted = $resp->deleted;
-            if ($deleted > 0) {
-                $this->logger->warning("Total '$deleted' records are cleaned from 'LoginAs' log by cron.");
+            $delAct = $resp->deletedActive;
+            $delLog = $resp->deletedLog;
+            if ($delLog > 0) {
+                $this->logger->warning("Total '$delLog' log and '$delAct' active records are cleaned from 'LoginAs' tables by cron.");
             }
         }
     }

@@ -60,9 +60,11 @@ class Cleanup
         $output->writeln("<info>Clean up \"Login As\" logs older then '$days' days.<info>");
         $req = new \Flancer32\LoginAs\Service\Cleanup\Request();
         $req->daysToLeave = $days;
+        /** @var \Flancer32\LoginAs\Service\Cleanup\Response $resp */
         $resp = $this->callCleanup->execute($req);
-        $deleted = $resp->deleted;
-        $output->writeln("<info>Command is completed. Total '$deleted' records are deleted.<info>");
+        $delActive = $resp->deletedActive;
+        $delLog = $resp->deletedLog;
+        $output->writeln("<info>Command is completed. Total '$delLog' log records and '$delActive' active records are deleted.<info>");
     }
 
 }
