@@ -70,5 +70,10 @@ $ bin/magento module:uninstall Flancer32_Repo Flancer32_LoginAs
 $ composer remove flancer32/php_data_object
 $ bin/magento setup:upgrade
 $ bin/magento setup:di:compile
+```
 
+Remove `auth.json` file and it's copy at the end:
+
+ ```bash
+$ rm ./auth.json ./var/composer_home/auth.json
 ```
