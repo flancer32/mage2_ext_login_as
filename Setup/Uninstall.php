@@ -26,12 +26,12 @@ class Uninstall
 
         /* Active */
         $entityAlias = \Flancer32\LoginAs\Repo\Data\Entity\Active::ENTITY_NAME;
-        $tbl = $this > $this->resource->getTableName($entityAlias);
+        $tbl = $this->resource->getTableName($entityAlias);
         $conn->dropTable($tbl);
 
         /* Log */
         $entityAlias = \Flancer32\LoginAs\Repo\Data\Entity\Log::ENTITY_NAME;
-        $tbl = $this > $this->resource->getTableName($entityAlias);
+        $tbl = $this->resource->getTableName($entityAlias);
         $conn->dropTable($tbl);
 
 
