@@ -72,7 +72,7 @@ $ bin/magento setup:upgrade
 $ bin/magento setup:di:compile
 ```
 
-Remove `auth.json` file and it's copy at the end:
+Be patient, uninstall process (`bin/magento module:uninstall ...`) takes about 2-4 minutes. Remove `auth.json` file and it's copy at the end:
 
  ```bash
 $ rm ./auth.json ./var/composer_home/auth.json
