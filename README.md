@@ -66,14 +66,16 @@ You need an authentication keys for `https://repo.magento.com/` to uninstall any
 Then run these commands to completely uninstall `Flancer32_LoginAs` module: 
 ```bash
 $ cd ${DIR_MAGE_ROOT}   
-$ bin/magento module:uninstall Flancer32_Repo Flancer32_LoginAs
+$ bin/magento module:uninstall Flancer32_Repo Flancer32_LoginAs         // *
 $ composer remove flancer32/php_data_object
 $ bin/magento setup:upgrade
 $ bin/magento setup:di:compile
 ```
 
-Be patient, uninstall process (`bin/magento module:uninstall ...`) takes about 2-4 minutes. Remove `auth.json` file and it's copy at the end:
+\* - [this](https://github.com/magento/magento2/commit/16506521b55c41846e4d37e7cdf4a3ba05660a21) fix should be presented in Magento to uninstall multiple modules at once.
+
+Be patient, uninstall process (`bin/magento module:uninstall ...`) takes about 2-4 minutes. Remove `auth.json` file at the end:
 
  ```bash
-$ rm ./auth.json ./var/composer_home/auth.json
+$ rm ./auth.json
 ```
