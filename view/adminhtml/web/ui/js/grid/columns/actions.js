@@ -3,8 +3,9 @@
  */
 define([
     "jquery",
+    'ko',
     "uiGridColumnsActions"
-], function ($, Component) {
+], function ($, ko, Component) {
     "use strict"
 
     var ACTION_LOGINAS = 'loginas' // see \Flancer32\LoginAs\Config::GRID_ACTION_NAME
@@ -18,6 +19,13 @@ define([
                 /* open action link in new tab/window */
                 var url = action.url
                 window.open(url, '_blank');
+                /* then collapse all action panels */
+                var actionPanels = $('div.action-select-wrap')
+                actionPanels.each(function (index) {
+                    var ctx = ko.contextFor(this)
+                    if (ctx && ctx.$collapsible) ctx.$collapsible.close()
+                })
+
             } else {
                 /* use parent function  */
                 this.__proto__.defaultCallback(actionIndex, recordId, action)
