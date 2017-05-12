@@ -37,7 +37,7 @@ class Create
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Store\Model\StoreManagerInterface $manStore,
-        \Magento\Quote\Model\QuoteManagement $manQuote,
+        \Magento\Quote\Model\QuoteManagement\Proxy $manQuote,
         \Magento\Quote\Model\QuoteFactory $factQuote,
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCustomer,
         \Magento\Catalog\Api\ProductRepositoryInterface $repoProduct
