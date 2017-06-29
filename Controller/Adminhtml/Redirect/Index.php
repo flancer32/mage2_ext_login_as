@@ -15,16 +15,24 @@ class Index
     protected $manStore;
     /** @var \Flancer32\LoginAs\Repo\Entity\IActive */
     protected $repoActive;
+    /** @var \Magento\Framework\Url */
+    protected $hlpUrl;
+    /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
+    protected $repoCust;
 
-public function __construct(
-    \Magento\Backend\App\Action\Context $context,
-    \Magento\Store\Model\StoreManagerInterface $manStore,
-    \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
-) {
-    parent::__construct($context);
-    $this->manStore = $manStore;
-    $this->repoActive = $repoActive;
-}
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Store\Model\StoreManagerInterface $manStore,
+        \Magento\Framework\Url $factUrl,
+        \Magento\Customer\Api\CustomerRepositoryInterface $repoCust,
+        \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
+    ) {
+        parent::__construct($context);
+        $this->manStore = $manStore;
+        $this->hlpUrl = $factUrl;
+        $this->repoCust = $repoCust;
+        $this->repoActive = $repoActive;
+    }
 
     public function execute()
     {
@@ -44,8 +52,11 @@ public function __construct(
         /* redirect admin user to the front redirector */
         $resultRedirect = $this->resultRedirectFactory->create();
         $route = Cfg::ROUTE_NAME_FRONT_LOGINAS . '/redirect/';
-        $store = $this->manStore->getStore();
-        $url = $store->getUrl($route, [\Flancer32\LoginAs\Controller\Redirect\Index::REQ_PARAM_KEY => $keySaved]);
+        /* get store ID for the customer or use default store */
+        $customer = $this->repoCust->getById($custId);
+        $storeId = $customer->getStoreId();
+        $this->hlpUrl->setScope($storeId);
+        $url = $this->hlpUrl->getUrl($route, [\Flancer32\LoginAs\Controller\Redirect\Index::REQ_PARAM_KEY => $keySaved]);
         $resultRedirect->setUrl($url);
         return $resultRedirect;
     }
