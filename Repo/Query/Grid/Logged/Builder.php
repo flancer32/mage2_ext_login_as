@@ -17,6 +17,12 @@ class Builder
     const AS_TBL_ADMIN = 'adm'; // default connection
     const AS_TBL_CUSTOMER = 'cust';
     const AS_TBL_LOG = 'log';
+
+    public function build(\Flancer32\Lib\Repo\Fw\Db\Select $source = null)
+    {
+        // TODO: Implement build() method.
+    }
+
     /**
      * Attributes aliases.
      */
