@@ -11,7 +11,7 @@
     }
   ],
   "require": {
-    "flancer32/mage2_ext_repo": "dev-master"
+    "flancer32/mage2_ext_repo": "dev-SUPPLZ-133"
   },
   "autoload": {
     "files": [
