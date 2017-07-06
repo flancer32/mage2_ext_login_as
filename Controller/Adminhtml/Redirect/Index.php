@@ -11,28 +11,24 @@ class Index
     extends \Magento\Backend\App\Action
 {
     const REQ_PARAM_ID = 'id';
+    /** @var \Magento\Framework\Url */
+    protected $hlpUrl;
     /** @var \Magento\Store\Model\StoreManagerInterface */
     protected $manStore;
     /** @var \Flancer32\LoginAs\Repo\Entity\IActive */
     protected $repoActive;
-    /** @var \Magento\Framework\Url */
-    protected $hlpUrl;
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
     protected $repoCust;
 
-    public function __construct(
-        \Magento\Backend\App\Action\Context $context,
-        \Magento\Store\Model\StoreManagerInterface $manStore,
-        \Magento\Framework\Url $factUrl,
-        \Magento\Customer\Api\CustomerRepositoryInterface $repoCust,
-        \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
-    ) {
-        parent::__construct($context);
-        $this->manStore = $manStore;
-        $this->hlpUrl = $factUrl;
-        $this->repoCust = $repoCust;
-        $this->repoActive = $repoActive;
-    }
+public function __construct(
+    \Magento\Backend\App\Action\Context $context,
+    \Magento\Store\Model\StoreManagerInterface $manStore,
+    \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
+) {
+    parent::__construct($context);
+    $this->manStore = $manStore;
+    $this->repoActive = $repoActive;
+}
 
     public function execute()
     {
@@ -55,9 +51,10 @@ class Index
         /* get store ID for the customer or use default store */
         $customer = $this->repoCust->getById($custId);
         $storeId = $customer->getStoreId();
-        $this->hlpUrl->setScope($storeId);
-        $url = $this->hlpUrl->getUrl($route, [\Flancer32\LoginAs\Controller\Redirect\Index::REQ_PARAM_KEY => $keySaved]);
-        $resultRedirect->setUrl($url);
+        $url = $this->hlpUrl;
+        $url->setScope($storeId);
+        $goto = $url->getUrl($route, [\Flancer32\LoginAs\Controller\Redirect\Index::REQ_PARAM_KEY => $keySaved]);
+        $resultRedirect->setUrl($goto);
         return $resultRedirect;
     }
 
