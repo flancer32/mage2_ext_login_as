@@ -20,15 +20,19 @@ class Index
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
     protected $repoCust;
 
-public function __construct(
-    \Magento\Backend\App\Action\Context $context,
-    \Magento\Store\Model\StoreManagerInterface $manStore,
-    \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
-) {
-    parent::__construct($context);
-    $this->manStore = $manStore;
-    $this->repoActive = $repoActive;
-}
+    public function __construct(
+        \Magento\Backend\App\Action\Context $context,
+        \Magento\Store\Model\StoreManagerInterface $manStore,
+        \Magento\Framework\Url $factUrl,
+        \Magento\Customer\Api\CustomerRepositoryInterface $repoCust,
+        \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
+    ) {
+        parent::__construct($context);
+        $this->manStore = $manStore;
+        $this->hlpUrl = $factUrl;
+        $this->repoCust = $repoCust;
+        $this->repoActive = $repoActive;
+    }
 
     public function execute()
     {
