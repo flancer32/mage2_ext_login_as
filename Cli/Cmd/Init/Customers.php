@@ -46,6 +46,8 @@ class Customers
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->checkAreaCode();
+
         /** @var \Magento\Customer\Api\Data\CustomerInterface $cust */
         $cust = $this->manObj->create(\Magento\Customer\Api\Data\CustomerInterface::class);
         $cust->setEmail(self::DEF_CUST_01_EMAIL);

@@ -48,6 +48,7 @@ class Catalog
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Create test categories & products for \'Flancer32_LoginAs\' module.<info>');
+        $this->checkAreaCode();
         $ctx = new \Flancer32\Lib\Data();
         $this->subCategory->exec($ctx);
         $this->subProduct->exec($ctx);
