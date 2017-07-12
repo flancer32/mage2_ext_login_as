@@ -35,6 +35,7 @@ class Sales
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Create test sale orders for \'Flancer32_LoginAs\' module.<info>');
+        $this->checkAreaCode();
         $ctx = new \Flancer32\Lib\Data();
         $this->subCreate->exec($ctx);
         $output->writeln('<info>Command is completed.<info>');
