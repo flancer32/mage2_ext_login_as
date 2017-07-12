@@ -23,24 +23,4 @@ abstract class Base
         $this->manObj = $manObj;
         parent::__construct();
     }
-
-    protected function configure()
-    {
-        parent::configure();
-        /* Magento related config (Object Manager) */
-        /** @var \Magento\Framework\App\State $appState */
-        $appState = $this->manObj->get(\Magento\Framework\App\State::class);
-        try {
-            /* area code should be set only once */
-            $appState->getAreaCode();
-        } catch (\Magento\Framework\Exception\LocalizedException $e) {
-            /* exception will be thrown if no area code is set */
-            $areaCode = \Magento\Framework\App\Area::AREA_ADMIN;
-            $appState->setAreaCode($areaCode);
-            /** @var \Magento\Framework\ObjectManager\ConfigLoaderInterface $configLoader */
-            $configLoader = $this->manObj->get(\Magento\Framework\ObjectManager\ConfigLoaderInterface::class);
-            $config = $configLoader->load($areaCode);
-            $this->manObj->configure($config);
-        }
-    }
 }

@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Create test customers for development deployment.
  */
 class Customers
-    extends \Flancer32\LoginAs\Cli\Cmd\Base
+    extends \Symfony\Component\Console\Command\Command
 {
     const DEF_CUST_01_EMAIL = 'alex@flancer64.com';
     const DEF_CUST_01_FIRST = 'Alex';
@@ -22,6 +22,9 @@ class Customers
     const DEF_CUST_02_FIRST = 'John';
     const DEF_CUST_02_LAST = 'Doe';
 
+    /** @var \Magento\Framework\ObjectManagerInterface */
+    protected $manObj;
+
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
     protected $repoCust;
 
@@ -29,7 +32,7 @@ class Customers
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCust
     ) {
-        parent::__construct($manObj);
+        parent::__construct(self::class);
         $this->repoCust = $repoCust;
     }
 
