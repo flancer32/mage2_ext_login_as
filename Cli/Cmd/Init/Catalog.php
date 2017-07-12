@@ -28,12 +28,11 @@ class Catalog
     protected $subLink;
 
     public function __construct(
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Category $subCategory,
         \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Product $subProduct,
         \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Link $subLink
     ) {
-        parent::__construct($manObj);
+        parent::__construct(self::class);
         $this->subCategory = $subCategory;
         $this->subProduct = $subProduct;
         $this->subLink = $subLink;
@@ -49,6 +48,7 @@ class Catalog
     protected function execute(InputInterface $input, OutputInterface $output)
     {
         $output->writeln('<info>Create test categories & products for \'Flancer32_LoginAs\' module.<info>');
+        $this->checkAreaCode();
         $ctx = new \Flancer32\Lib\Data();
         $this->subCategory->exec($ctx);
         $this->subProduct->exec($ctx);

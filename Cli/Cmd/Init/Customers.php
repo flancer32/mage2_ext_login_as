@@ -22,6 +22,9 @@ class Customers
     const DEF_CUST_02_FIRST = 'John';
     const DEF_CUST_02_LAST = 'Doe';
 
+    /** @var \Magento\Framework\ObjectManagerInterface */
+    protected $manObj;
+
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
     protected $repoCust;
 
@@ -29,7 +32,8 @@ class Customers
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCust
     ) {
-        parent::__construct($manObj);
+        parent::__construct(self::class);
+        $this->manObj = $manObj;
         $this->repoCust = $repoCust;
     }
 
@@ -42,6 +46,8 @@ class Customers
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $this->checkAreaCode();
+
         /** @var \Magento\Customer\Api\Data\CustomerInterface $cust */
         $cust = $this->manObj->create(\Magento\Customer\Api\Data\CustomerInterface::class);
         $cust->setEmail(self::DEF_CUST_01_EMAIL);
