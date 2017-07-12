@@ -25,11 +25,10 @@ class Cleanup
     protected $hlpConfig;
 
     public function __construct(
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Flancer32\LoginAs\Helper\Config $hlpConfig,
         \Flancer32\LoginAs\Service\ICleanup $callCleanup
     ) {
-        parent::__construct($manObj);
+        parent::__construct(self::class);
         $this->hlpConfig = $hlpConfig;
         $this->callCleanup = $callCleanup;
     }
