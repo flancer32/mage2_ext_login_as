@@ -13,7 +13,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Create test customers for development deployment.
  */
 class Customers
-    extends \Symfony\Component\Console\Command\Command
+    extends \Flancer32\LoginAs\Cli\Cmd\Base
 {
     const DEF_CUST_01_EMAIL = 'alex@flancer64.com';
     const DEF_CUST_01_FIRST = 'Alex';
