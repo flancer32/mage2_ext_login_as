@@ -6,11 +6,11 @@
 
 namespace Flancer32\LoginAs\Cli\Cmd\Init;
 
+use Flancer32\LoginAs\Cli\Cmd\Init\Users\Check as SubCheck;
+use Flancer32\LoginAs\Cli\Cmd\Init\Users\Create as SubCreate;
+use Flancer32\LoginAs\Config as Cfg;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create as SubCreate;
-use \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check as SubCheck;
-use \Flancer32\LoginAs\Config as Cfg;
 
 /**
  * Create test admin users for development deployment.
@@ -59,11 +59,10 @@ class Users
     ];
 
     public function __construct(
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create $subCreate,
         \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check $subCheck
     ) {
-        parent::__construct($manObj);
+        parent::__construct(self::class);
         $this->subCreate = $subCreate;
         $this->subCheck = $subCheck;
     }

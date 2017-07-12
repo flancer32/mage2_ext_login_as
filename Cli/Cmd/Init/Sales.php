@@ -8,9 +8,6 @@ namespace Flancer32\LoginAs\Cli\Cmd\Init;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use \Flancer32\LoginAs\Config as Cfg;
-use \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Category as SubCategory;
-use \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Product as SubProduct;
 
 /**
  * Create sale order.
@@ -22,10 +19,9 @@ class Sales
     protected $subCreate;
 
     public function __construct(
-        \Magento\Framework\ObjectManagerInterface $manObj,
         \Flancer32\LoginAs\Cli\Cmd\Init\Sales\Create $subCreate
     ) {
-        parent::__construct($manObj);
+        parent::__construct(self::class);
         $this->subCreate = $subCreate;
     }
 

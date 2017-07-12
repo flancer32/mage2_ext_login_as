@@ -33,6 +33,7 @@ class Customers
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCust
     ) {
         parent::__construct(self::class);
+        $this->manObj = $manObj;
         $this->repoCust = $repoCust;
     }
 
