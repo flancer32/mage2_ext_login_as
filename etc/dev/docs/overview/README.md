@@ -2,6 +2,6 @@
 
 * [Configuration](./config.md);
 
-* [Usage](./Usage.md);
+* [Usage](./usage.md);
 
 * [Controle](./controle.md);
