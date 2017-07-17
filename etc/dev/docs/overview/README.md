@@ -4,4 +4,4 @@
 
 * [Usage](./usage.md);
 
-* [Controle](./controle.md);
+* [Control](control.md);

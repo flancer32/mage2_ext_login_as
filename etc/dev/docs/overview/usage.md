@@ -1,11 +1,13 @@
-# Use on Customers Grid
+# Usage
+
+## Customer Form
+
+![orders](usage/usage_3.png)
+
+## Customers Grid
 
 ![customers](usage/usage_1.png)
 
-## Use on Sales Orders Grid
+## Sales Orders Grid
 
 ![orders](usage/usage_2.png)
-
-## Use on Customer Form
-
-![orders](usage/usage_3.png)
