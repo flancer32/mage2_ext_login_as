@@ -1,6 +1,3 @@
-# Configuration
-
-See "**Stores / Configuration / Customers / Login As**":
 
 ## UI Controls
 
