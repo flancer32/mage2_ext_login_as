@@ -1,6 +1,6 @@
 # Overview
 
-* [Configuration options](./config.md);
+* [Configuration](./config.md);
 
 * [Usage](./Usage.md);
 
