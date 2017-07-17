@@ -2,6 +2,6 @@
 
 * [Configuration options](./config.md);
 
-* [Login As customer](./LoginAs.md);
+* [Usage](./Usage.md);
 
-* [Logs](./Logs.md);
+* [Controle](./controle.md);
