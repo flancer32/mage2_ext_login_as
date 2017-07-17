@@ -1,6 +1,6 @@
 # Configuration
 
-See "**Stores / Configuration / Customers / Login As**":
+See "Stores / Configuration / Customers / Login As"
 
 ## UI Controls
 
