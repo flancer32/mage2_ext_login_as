@@ -10,7 +10,7 @@ This extension adds ability for backend users (adminhtml) to log in as customers
 * Login button on [customer form](etc/dev/docs/screenshots/usage.md#customer-form);
 * Login links on "[Customers](etc/dev/docs/screenshots/usage.md)" & "[Sale Orders](etc/dev/docs/screenshots/usage.md)" grids;
 * Login [events log](etc/dev/docs/screenshots/control.md);
-* [ACL configuration](etc/dev/docs/screenshots/config/acl_config/acl_config.md), [UI Controls](etc/dev/docs/screenshots/config/acl_config/acl_config.md) , [Logs Cleanup](etc/dev/docs/screenshots/config/acl_config/acl_config.md#logs-cleanup) 
+* [ACL configuration](etc/dev/docs/screenshots/config/acl_config/acl_config.md), [UI Controls](etc/dev/docs/screenshots/config/ui_controls/ui_controls.md) , [Logs Cleanup](etc/dev/docs/screenshots/config/logs_cleanup/logs_cleanup.md) 
 
 
 ### Demo
