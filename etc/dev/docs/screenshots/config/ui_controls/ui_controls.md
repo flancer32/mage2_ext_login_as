@@ -1,4 +1,4 @@
-#UI controls
+# UI controls
 
 See "Stores / Configuration / Login As / UI controls"
 

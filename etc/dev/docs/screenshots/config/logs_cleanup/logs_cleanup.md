@@ -1,4 +1,4 @@
-#Logs Cleanup
+# Logs Cleanup
 
 See stores / configuration / Login As / Logs Cleanup
 
