@@ -1,5 +1,10 @@
 # Configuration
 
+
+## ACL Configuration
+
+![acl_configuration](./config/acl_configuration.png)
+
 See "Stores / Configuration / Customers / Login As"
 
 ## UI Controls
