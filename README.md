@@ -7,7 +7,6 @@
 This extension adds ability for backend users (adminhtml) to log in as customers (frontend).
 
 ### Features
-(etc/dev/docs/screenshots/README.md):
 * Login button on [customer form](etc/dev/docs/screenshots/usage.md#customer-form);
 * Login links on "[Customers](etc/dev/docs/screenshots/usage.md)" & "[Sale Orders](etc/dev/docs/screenshots/usage.md)" grids;
 * Login [events log](etc/dev/docs/screenshots/control.md);
