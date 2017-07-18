@@ -1,6 +1,6 @@
 # Overview
 
-* [Configuration](./config.md);
+* [Configuration](config/acl_config/acl_config.md);
 
 * [Usage](./usage.md);
 
