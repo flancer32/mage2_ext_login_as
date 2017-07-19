@@ -1,7 +1,6 @@
-# Control
-
+# Events Log
 ## Logged As Customer
 
 See "Customers / Logged As"
 
-![logs](control/logged_as.png)
+![logs](logged_as.png)
