@@ -1,5 +1,4 @@
-# Control
-
+# Events Log
 ## Logged As Customer
 
 See "Customers / Logged As"
