@@ -4,4 +4,4 @@
 
 * [Usage](./usage.md);
 
-* [ControlUI Controlsevents log](control.md);
+* [ControlUI Controlsevents log](control/control.md);
