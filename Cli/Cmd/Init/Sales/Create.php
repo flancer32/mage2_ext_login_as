@@ -39,8 +39,8 @@ class Create
         \Magento\Store\Model\StoreManagerInterface $manStore,
         \Magento\Quote\Model\QuoteManagement\Proxy $manQuote,
         \Magento\Quote\Model\QuoteFactory $factQuote,
-        \Magento\Customer\Api\CustomerRepositoryInterface $repoCustomer,
-        \Magento\Catalog\Api\ProductRepositoryInterface $repoProduct
+        \Magento\Customer\Api\CustomerRepositoryInterface\Proxy $repoCustomer,
+        \Magento\Catalog\Api\ProductRepositoryInterface\Proxy\Proxy $repoProduct
     ) {
         $this->manObj = $manObj;
         $this->manStore = $manStore;

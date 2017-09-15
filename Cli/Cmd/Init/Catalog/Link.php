@@ -26,8 +26,8 @@ class Link
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Magento\Catalog\Api\ProductRepositoryInterface $repoProd,
-        \Magento\Catalog\Api\CategoryLinkRepositoryInterface $repoCatLink
+        \Magento\Catalog\Api\ProductRepositoryInterface\Proxy $repoProd,
+        \Magento\Catalog\Api\CategoryLinkRepositoryInterface\Proxy $repoCatLink
     ) {
         $this->manObj = $manObj;
         $this->repoProd = $repoProd;

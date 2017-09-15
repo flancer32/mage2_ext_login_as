@@ -30,7 +30,7 @@ class Customers
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Magento\Customer\Api\CustomerRepositoryInterface $repoCust
+        \Magento\Customer\Api\CustomerRepositoryInterface\Proxy $repoCust
     ) {
         parent::__construct(self::class);
         $this->manObj = $manObj;

@@ -33,8 +33,8 @@ class Product
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Catalog\Api\AttributeSetRepositoryInterface $repoAttrSet,
-        \Magento\Catalog\Api\ProductRepositoryInterface $repoProd,
-        \Magento\CatalogInventory\Api\StockItemRepositoryInterface $repoStockItem
+        \Magento\Catalog\Api\ProductRepositoryInterface\Proxy $repoProd,
+        \Magento\CatalogInventory\Api\StockItemRepositoryInterface\Proxy $repoStockItem
     ) {
         $this->manObj = $manObj;
         $this->repoAttrSet = $repoAttrSet;
