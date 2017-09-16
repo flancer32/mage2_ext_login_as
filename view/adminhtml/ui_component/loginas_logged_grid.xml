@@ -36,8 +36,9 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Log ID</item>
-                    <item name="sortOrder" xsi:type="number">100</item>
                     <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sortable" xsi:type="boolean">true</item>
+                    <item name="sorting" xsi:type="string">desc</item>
                 </item>
             </argument>
         </column>
@@ -45,7 +46,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Customer</item>
-                    <item name="sortOrder" xsi:type="number">110</item>
                     <item name="filter" xsi:type="string">text</item>
                 </item>
             </argument>
@@ -54,7 +54,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Customer ID</item>
-                    <item name="sortOrder" xsi:type="number">120</item>
                     <item name="filter" xsi:type="string">textRange</item>
                 </item>
             </argument>
@@ -63,7 +62,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">User</item>
-                    <item name="sortOrder" xsi:type="number">130</item>
                     <item name="filter" xsi:type="string">text</item>
                 </item>
             </argument>
@@ -72,7 +70,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">User ID</item>
-                    <item name="sortOrder" xsi:type="number">140</item>
                     <item name="filter" xsi:type="string">textRange</item>
                 </item>
             </argument>
@@ -81,7 +78,6 @@
             <argument name="data" xsi:type="array">
                 <item name="config" xsi:type="array">
                     <item name="label" xsi:type="string" translate="true">Logged At</item>
-                    <item name="sortOrder" xsi:type="number">150</item>
                     <item name="filter" xsi:type="string">dateRange</item>
                 </item>
             </argument>
