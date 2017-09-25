@@ -43,7 +43,6 @@ class Index
         /* load customer and initiate session */
         $customer = $this->repoCust->getById($custId);
         $this->session->setCustomerDataAsLoggedIn($customer);
-        $this->session->regenerateId();
         /* remove used redirection from active registry */
         $this->repoActive->deleteById($key);
         /* log 'login as' event */

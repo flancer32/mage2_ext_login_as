@@ -30,7 +30,7 @@ class Category
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
-        \Magento\Catalog\Model\Category\Tree $modTree,
+        \Magento\Catalog\Model\Category\Tree\Proxy $modTree,
         \Magento\Catalog\Api\CategoryRepositoryInterface $repoCategory
     ) {
         $this->manObj = $manObj;

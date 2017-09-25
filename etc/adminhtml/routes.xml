@@ -3,7 +3,8 @@
         xsi:noNamespaceSchemaLocation="urn:magento:framework:App/etc/routes.xsd">
     <router id="admin">
 
-        <route id="fl32_login_as_route" frontName="loginas">
+        <!-- Route ID should be equal to front name: https://github.com/magento/magento2/issues/7557 -->
+        <route id="loginas" frontName="loginas">
             <module name="Flancer32_LoginAs"/>
         </route>
 
