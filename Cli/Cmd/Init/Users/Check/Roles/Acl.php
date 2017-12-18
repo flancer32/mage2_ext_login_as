@@ -6,7 +6,7 @@
 
 namespace Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles;
 
-use \Flancer32\LoginAs\Config as Cfg;
+use Flancer32\LoginAs\Config as Cfg;
 
 /**
  * Refresh ACL rules for LoginAs Roles.
@@ -31,7 +31,8 @@ class Acl
     public function __construct(
         \Magento\Framework\Acl\Builder $aclBuilder,
         \Flancer32\Lib\Repo\Repo\IGeneric $repoGeneric
-    ) {
+    )
+    {
         $this->aclBuilder = $aclBuilder;
         $this->repoGeneric = $repoGeneric;
     }
@@ -108,14 +109,19 @@ class Acl
     protected function getAllowedForLoginAs()
     {
         return [
+            'Magento_AdminNotification::adminnotification',
+            'Magento_AdminNotification::adminnotification_remove',
+            'Magento_AdminNotification::mark_as_read',
+            'Magento_AdminNotification::show_list',
+            'Magento_AdminNotification::show_toolbar',
             'Magento_Backend::admin',
             'Magento_Backend::stores',
             'Magento_Backend::stores_settings',
             'Magento_Config::config',
             'Magento_Customer::customer',
             'Magento_Customer::manage',
-            'Magento_Sales::actions_view',
             'Magento_Sales::actions',
+            'Magento_Sales::actions_view',
             'Magento_Sales::sales',
             'Magento_Sales::sales_operation',
             'Magento_Sales::sales_order',
@@ -132,9 +138,14 @@ class Acl
     protected function getAllowedForLogs()
     {
         return [
+            'Magento_AdminNotification::adminnotification',
+            'Magento_AdminNotification::adminnotification_remove',
+            'Magento_AdminNotification::mark_as_read',
+            'Magento_AdminNotification::show_list',
+            'Magento_AdminNotification::show_toolbar',
             'Magento_Backend::admin',
-            'Magento_Customer::manage',
             'Magento_Customer::customer',
+            'Magento_Customer::manage',
             Cfg::ACL_RULE_LOGS
         ];
     }
