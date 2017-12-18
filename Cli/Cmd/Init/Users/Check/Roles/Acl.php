@@ -31,14 +31,12 @@ class Acl
     public function __construct(
         \Magento\Framework\Acl\Builder $aclBuilder,
         \Flancer32\Lib\Repo\Repo\IGeneric $repoGeneric
-    )
-    {
+    ) {
         $this->aclBuilder = $aclBuilder;
         $this->repoGeneric = $repoGeneric;
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx)
-    {
+    public function exec(\Flancer32\Lib\Data $ctx) {
         /* get working variables from context */
         $roles = $ctx->get(self::CTX_ROLES_MAP);
 
@@ -71,8 +69,7 @@ class Acl
      * @param $roleCode
      * @return string[]
      */
-    protected function getAllowed($roleCode)
-    {
+    protected function getAllowed($roleCode) {
         switch ($roleCode) {
             case Cfg::ACL_ROLE_FULL:
                 $result = $this->getAllowedForFull();
@@ -87,13 +84,34 @@ class Acl
         return $result;
     }
 
+    protected function getAllowedCommon() {
+        return [
+            'Magento_AdminNotification::adminnotification',
+            'Magento_AdminNotification::adminnotification_remove',
+            'Magento_AdminNotification::mark_as_read',
+            'Magento_AdminNotification::show_list',
+            'Magento_AdminNotification::show_toolbar',
+            'Magento_Backend::admin',
+            'Magento_Backend::marketing',
+            'Magento_Backend::marketing_communications',
+            'Magento_Backend::marketing_user_content',
+            'Magento_Backend::stores',
+            'Magento_Backend::stores_settings',
+            'Magento_Config::config',
+            'Magento_Customer::customer',
+            'Magento_Customer::manage',
+            'Magento_Newsletter::newsletter',
+            'Magento_Newsletter::subscriber',
+            'Magento_Review::reviews_all'
+        ];
+    }
+
     /**
      * Get allowed ACL resources for 'Full Access' Role.
      *
      * @return string[]
      */
-    protected function getAllowedForFull()
-    {
+    protected function getAllowedForFull() {
         $allowedLogs = $this->getAllowedForLogs();
         $allowedLoginAs = $this->getAllowedForLoginAs();
         $result = array_merge($allowedLogs, $allowedLoginAs);
@@ -106,20 +124,9 @@ class Acl
      *
      * @return string[]
      */
-    protected function getAllowedForLoginAs()
-    {
-        return [
-            'Magento_AdminNotification::adminnotification',
-            'Magento_AdminNotification::adminnotification_remove',
-            'Magento_AdminNotification::mark_as_read',
-            'Magento_AdminNotification::show_list',
-            'Magento_AdminNotification::show_toolbar',
-            'Magento_Backend::admin',
-            'Magento_Backend::stores',
-            'Magento_Backend::stores_settings',
-            'Magento_Config::config',
-            'Magento_Customer::customer',
-            'Magento_Customer::manage',
+    protected function getAllowedForLoginAs() {
+        $allowedCommon= $this->getAllowedCommon();
+        $allowedThis = [
             'Magento_Sales::actions',
             'Magento_Sales::actions_view',
             'Magento_Sales::sales',
@@ -128,6 +135,9 @@ class Acl
             Cfg::ACL_RULE_CONFIG,
             Cfg::ACL_RULE_LOGIN_AS
         ];
+        $result = array_merge($allowedCommon, $allowedThis);
+        $result = array_unique($result);
+        return $result;
     }
 
     /**
@@ -135,19 +145,14 @@ class Acl
      *
      * @return string[]
      */
-    protected function getAllowedForLogs()
-    {
-        return [
-            'Magento_AdminNotification::adminnotification',
-            'Magento_AdminNotification::adminnotification_remove',
-            'Magento_AdminNotification::mark_as_read',
-            'Magento_AdminNotification::show_list',
-            'Magento_AdminNotification::show_toolbar',
-            'Magento_Backend::admin',
-            'Magento_Customer::customer',
-            'Magento_Customer::manage',
+    protected function getAllowedForLogs() {
+        $allowedCommon= $this->getAllowedCommon();
+        $allowedThis = [
             Cfg::ACL_RULE_LOGS
         ];
+        $result = array_merge($allowedCommon, $allowedThis);
+        $result = array_unique($result);
+        return $result;
     }
 
     /**
@@ -157,8 +162,7 @@ class Acl
      * @param string[] $resources
      * @param string $permission
      */
-    protected function repoAddRules($roleId, $resources, $permission)
-    {
+    protected function repoAddRules($roleId, $resources, $permission) {
         $entity = Cfg::ENTITY_AUTH_RULE;
         $bind = [
             Cfg::E_AUTH_RULE_A_ROLE_ID => (int)$roleId,
@@ -175,8 +179,7 @@ class Acl
      *
      * @param int $roleId
      */
-    protected function repoCleanForRole($roleId)
-    {
+    protected function repoCleanForRole($roleId) {
         $entity = Cfg::ENTITY_AUTH_RULE;
         $where = Cfg::E_AUTH_RULE_A_ROLE_ID . '=' . (int)$roleId;
         $this->repoGeneric->deleteEntity($entity, $where);
