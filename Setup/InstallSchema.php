@@ -10,13 +10,13 @@ namespace Flancer32\LoginAs\Setup;
 class InstallSchema
     implements \Magento\Framework\Setup\InstallSchemaInterface
 {
-    /** @var \Flancer32\Lib\Repo\Setup\Dem\Tool */
-    protected $toolDem;
+    /** @var \Flancer32\Lib\Repo\Api\Helper\Dem */
+    private $hlpDem;
 
     public function __construct(
-        \Flancer32\Lib\Repo\Setup\Dem\Tool $toolDem
+        \Flancer32\Lib\Repo\Api\Helper\Dem $hlpDem
     ) {
-        $this->toolDem = $toolDem;
+        $this->hlpDem = $hlpDem;
     }
 
     public function install(
@@ -29,22 +29,22 @@ class InstallSchema
         $installer->endSetup();
     }
 
-    protected function processDem()
+    private function processDem()
     {
         /** Read and parse JSON schema. */
         $pathToFile = __DIR__ . '/../etc/dem.json';
         $pathToNode = '/dBEAR/package/Flancer32/package/LoginAs';
-        $demPackage = $this->toolDem->readDemPackage($pathToFile, $pathToNode);
+        $demPackage = $this->hlpDem->readDemPackage($pathToFile, $pathToNode);
 
         /* Active */
         $entityAlias = \Flancer32\LoginAs\Repo\Data\Entity\Active::ENTITY_NAME;
         $demEntity = $demPackage->get('/entity/Active');
-        $this->toolDem->createEntity($entityAlias, $demEntity);
+        $this->hlpDem->createEntity($entityAlias, $demEntity);
 
         /* Log */
         $entityAlias = \Flancer32\LoginAs\Repo\Data\Entity\Log::ENTITY_NAME;
         $demEntity = $demPackage->get('/entity/Log');
-        $this->toolDem->createEntity($entityAlias, $demEntity);
+        $this->hlpDem->createEntity($entityAlias, $demEntity);
 
     }
 }
