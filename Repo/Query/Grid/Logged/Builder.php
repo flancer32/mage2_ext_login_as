@@ -18,7 +18,7 @@ class Builder
     const AS_TBL_CUSTOMER = 'cust';
     const AS_TBL_LOG = 'log';
 
-    public function build(\Flancer32\Lib\Repo\Fw\Db\Select $source = null)
+    public function build(\Flancer32\Lib\Repo\Api\App\Repo\Select $source = null)
     {
         // TODO: Implement build() method.
     }
