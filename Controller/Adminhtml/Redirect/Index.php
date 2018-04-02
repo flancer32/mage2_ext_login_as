@@ -55,6 +55,7 @@ class Index
         /* get store ID for the customer or use default store */
         $customer = $this->repoCust->getById($custId);
         $storeId = $customer->getStoreId();
+        if ($storeId == Cfg::STORE_ID_ADMIN) $storeId = Cfg::STORE_ID_DEFAULT;
         $url = $this->hlpUrl;
         $url->setScope($storeId);
         $goto = $url->getUrl($route, [\Flancer32\LoginAs\Controller\Redirect\Index::REQ_PARAM_KEY => $keySaved]);

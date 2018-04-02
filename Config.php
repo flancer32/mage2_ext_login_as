@@ -80,4 +80,7 @@ class Config
      */
     const ROUTE_NAME_ADMIN_LOGINAS = 'loginas';
     const ROUTE_NAME_FRONT_LOGINAS = 'loginas';
+
+    const STORE_ID_ADMIN = 0;
+    const STORE_ID_DEFAULT = 1;
 }
