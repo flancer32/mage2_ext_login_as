@@ -42,7 +42,7 @@
                       "entity": {"completeAlias": "customer_entity"},
                       "aliases": ["entity_id"]
                     },
-                    "action": {"delete": "restrict", "update": "restrict"}
+                    "action": {"delete": "cascade", "update": "cascade"}
                   },
                   "toAdminUser": {
                     "own": {"aliases": ["user_ref"]},
@@ -50,7 +50,7 @@
                       "entity": {"completeAlias": "admin_user"},
                       "aliases": ["user_id"]
                     },
-                    "action": {"delete": "restrict", "update": "restrict"}
+                    "action": {"delete": "cascade", "update": "cascade"}
                   }
                 }
               },
@@ -93,7 +93,7 @@
                       "entity": {"completeAlias": "customer_entity"},
                       "aliases": ["entity_id"]
                     },
-                    "action": {"delete": "restrict", "update": "restrict"}
+                    "action": {"delete": "cascade", "update": "cascade"}
                   },
                   "toAdminUser": {
                     "own": {"aliases": ["user_ref"]},
@@ -101,7 +101,7 @@
                       "entity": {"completeAlias": "admin_user"},
                       "aliases": ["user_id"]
                     },
-                    "action": {"delete": "restrict", "update": "restrict"}
+                    "action": {"delete": "cascade", "update": "cascade"}
                   }
                 }
               }
