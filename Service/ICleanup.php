@@ -15,5 +15,5 @@ interface ICleanup
      * @param \Flancer32\LoginAs\Service\Cleanup\Request $request
      * @return \Flancer32\LoginAs\Service\Cleanup\Response
      */
-    public function execute(\Flancer32\LoginAs\Service\Cleanup\Request $request);
+    public function execute($request);
 }

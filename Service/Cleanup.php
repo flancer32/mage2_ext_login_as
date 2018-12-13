@@ -5,22 +5,26 @@
 
 namespace Flancer32\LoginAs\Service;
 
-use \Flancer32\LoginAs\Repo\Data\Entity\Log as ELog;
-use Flancer32\LoginAs\Repo\Data\Entity\Active as EActive;
+use Flancer32\Base\App\Repo\Query\Expression as AnExpress;
+use Flancer32\LoginAs\Api\Repo\Data\Log as ELog;
+use Flancer32\LoginAs\Api\Repo\Data\Transition as ETrans;
+use Flancer32\LoginAs\Helper\Config as HlpCfg;
+use Flancer32\LoginAs\Service\Cleanup\Request as ARequest;
+use Flancer32\LoginAs\Service\Cleanup\Response as AResponse;
 
 class Cleanup
     implements ICleanup
 {
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $conn;
+    /** @var \Flancer32\LoginAs\Api\Repo\Dao\Log */
+    protected $daoLog;
+    /** @var  \Flancer32\LoginAs\Api\Repo\Dao\Transition */
+    protected $daoTrans;
     /** @var \Flancer32\LoginAs\Helper\Config */
     protected $hlpConfig;
     /** @var \Psr\Log\LoggerInterface */
     protected $logger;
-    /** @var  \Flancer32\LoginAs\Repo\Entity\IActive */
-    protected $repoActive;
-    /** @var \Flancer32\LoginAs\Repo\Entity\ILog */
-    protected $repoLog;
     /** @var \Magento\Framework\App\ResourceConnection */
     protected $resource;
 
@@ -28,15 +32,15 @@ class Cleanup
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\App\ResourceConnection $resource,
         \Flancer32\LoginAs\Helper\Config $hlpConfig,
-        \Flancer32\LoginAs\Repo\Entity\IActive $repoActive,
-        \Flancer32\LoginAs\Repo\Entity\ILog $repoLog
+        \Flancer32\LoginAs\Api\Repo\Dao\Transition $daoTrans,
+        \Flancer32\LoginAs\Api\Repo\Dao\Log $repoLog
     ) {
         $this->logger = $logger;
         $this->resource = $resource;
         $this->conn = $resource->getConnection();
         $this->hlpConfig = $hlpConfig;
-        $this->repoActive = $repoActive;
-        $this->repoLog = $repoLog;
+        $this->daoTrans = $daoTrans;
+        $this->daoLog = $repoLog;
     }
 
     /**
@@ -51,9 +55,9 @@ class Cleanup
         $date = date('YmdHis', $time);
         $quoted = $this->conn->quote($date);
         /* add backquotes for `key` named attribute */
-        $expr = 'STRCMP(`' . EActive::A_KEY . '`, ' . $quoted . ') < 0'; // '???' < 20170509010100
-        $where = new \Flancer32\Lib\Repo\Repo\Query\Expression($expr);
-        $result = $this->repoActive->delete($where);
+        $expr = 'STRCMP(`' . ETrans::KEY . '`, ' . $quoted . ') < 0'; // '???' < 20170509010100
+        $where = new AnExpress($expr);
+        $result = $this->daoTrans->deleteSet($where);
         return $result;
     }
 
@@ -70,21 +74,22 @@ class Cleanup
         $this->logger->debug("Clean up 'LoginAs' logs older than $date.");
         /* remove old logs */
         $quoted = $this->conn->quote($date);
-        $where = ELog::A_DATE . '<=' . $quoted;
-        $result = $this->repoLog->delete($where);
+        $where = ELog::DATE . '<=' . $quoted;
+        $result = $this->daoLog->deleteSet($where);
         $this->logger->debug("Total '$result' records are cleand up from 'LoginAs' log.");
         return $result;
     }
 
-    public function execute(\Flancer32\LoginAs\Service\Cleanup\Request $request)
+    public function execute($request)
     {
-        $result = new \Flancer32\LoginAs\Service\Cleanup\Response();
+        assert($request instanceof ARequest);
         $days = (int)$request->daysToLeave;
         if ($days <= 0) {
             $days = $this->hlpConfig->getLogsCleanupDaysOld();
-        } elseif ($days < \Flancer32\LoginAs\Helper\Config::DEF_LOGS_CLEANUP_MIN_DAYS) {
-            $days = \Flancer32\LoginAs\Helper\Config::DEF_LOGS_CLEANUP_MIN_DAYS;
+        } elseif ($days < HlpCfg::DEF_LOGS_CLEANUP_MIN_DAYS) {
+            $days = HlpCfg::DEF_LOGS_CLEANUP_MIN_DAYS;
         }
+        $result = new AResponse();
         $result->deletedActive = $this->cleanActive();
         $result->deletedLog = $this->cleanLog($days);
         return $result;

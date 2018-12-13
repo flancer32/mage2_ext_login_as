@@ -2,34 +2,33 @@
 
 namespace Flancer32\LoginAs\Controller\Redirect;
 
-/**
- *
- */
+use Flancer32\LoginAs\Api\Repo\Data\Log as ELog;
+
 class Index
     extends \Magento\Framework\App\Action\Action
 {
     const REQ_PARAM_KEY = 'key';
-    /** @var \Flancer32\LoginAs\Repo\Entity\IActive */
-    protected $repoActive;
+    /** @var \Flancer32\LoginAs\Api\Repo\Dao\Log */
+    private $daoLog;
+    /** @var \Flancer32\LoginAs\Api\Repo\Dao\Transition */
+    private $daoTrans;
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
-    protected $repoCust;
-    /** @var \Flancer32\LoginAs\Repo\Entity\ILog */
-    protected $repoLog;
+    private $repoCust;
     /** @var \Magento\Customer\Model\Session */
-    protected $session;
+    private $session;
 
     public function __construct(
         \Magento\Framework\App\Action\Context $context,
+        \Magento\Customer\Model\Session $session,
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCust,
-        \Flancer32\LoginAs\Repo\Entity\IActive $repoActive,
-        \Flancer32\LoginAs\Repo\Entity\ILog $repoLog,
-        \Magento\Customer\Model\Session $session
+        \Flancer32\LoginAs\Api\Repo\Dao\Transition $daoTrans,
+        \Flancer32\LoginAs\Api\Repo\Dao\Log $daoLog
     ) {
         parent::__construct($context);
-        $this->repoCust = $repoCust;
-        $this->repoActive = $repoActive;
-        $this->repoLog = $repoLog;
         $this->session = $session;
+        $this->repoCust = $repoCust;
+        $this->daoTrans = $daoTrans;
+        $this->daoLog = $daoLog;
     }
 
     public function execute()
@@ -37,22 +36,22 @@ class Index
         /* collect redirection parameters */
         $key = $this->_request->getParam(self::REQ_PARAM_KEY);
         /* get active redirection and extract customer attributes */
-        $entity = $this->repoActive->getById($key);
+        $entity = $this->daoTrans->getOne($key);
         $custId = $entity->getCustomerRef();
         $userId = $entity->getUserRef();
         /* load customer and initiate session */
         $customer = $this->repoCust->getById($custId);
         $this->session->setCustomerDataAsLoggedIn($customer);
         /* remove used redirection from active registry */
-        $this->repoActive->deleteById($key);
+        $this->daoTrans->deleteOne($key);
         /* log 'login as' event */
         $date = gmdate('Y-m-d H:i:s');
         $local = date('Y-m-d H:i:s');
-        $log = new \Flancer32\LoginAs\Repo\Data\Entity\Log();
+        $log = new ELog();
         $log->setCustomerRef($custId);
         $log->setUserRef($userId);
         $log->setDate($date);
-        $this->repoLog->create($log);
+        $this->daoLog->create($log);
         /* redirect authenticated customer to the homepage */
         $resultRedirect = $this->resultRedirectFactory->create();
         $resultRedirect->setPath('customer/account');

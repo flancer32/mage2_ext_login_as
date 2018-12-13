@@ -12,8 +12,8 @@ interface Transition
     extends \Flancer32\Base\Api\Repo\Dao\Entity
 {
     const ENTITY_CLASS = Entity::class;
-const ENTITY_NAME = 'fl32_loginas_trans';
-        const ENTITY_PK = [Entity::KEY]; // table name
+    const ENTITY_NAME = 'fl32_loginas_trans';
+    const ENTITY_PK = [Entity::KEY]; // table name
 
     /**
      * @param Entity $data

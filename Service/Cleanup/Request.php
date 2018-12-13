@@ -9,7 +9,7 @@ namespace Flancer32\LoginAs\Service\Cleanup;
  * @property int $daysToLeave number of days to leave in log.
  */
 class Request
-    extends \Flancer32\Lib\Data
+    extends \Magento\Framework\DataObject
 {
 
 }

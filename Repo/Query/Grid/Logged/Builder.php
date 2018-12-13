@@ -5,11 +5,12 @@
 
 namespace Flancer32\LoginAs\Repo\Query\Grid\Logged;
 
-use \Flancer32\LoginAs\Config as Cfg;
-use \Flancer32\LoginAs\Repo\Data\Entity\Log As Log;
+use Flancer32\Base\App\Repo\Query\Expression as AnExpress;
+use Flancer32\LoginAs\Api\Repo\Dao\Log as DaoLog;
+use Flancer32\LoginAs\Api\Repo\Data\Log as ELog;
+use Flancer32\LoginAs\Config as Cfg;
 
 class Builder
-    implements \Flancer32\Lib\Repo\Repo\Query\IBuilder
 {
     /**
      * Tables aliases.
@@ -17,11 +18,6 @@ class Builder
     const AS_TBL_ADMIN = 'adm'; // default connection
     const AS_TBL_CUSTOMER = 'cust';
     const AS_TBL_LOG = 'log';
-
-    public function build(\Flancer32\Lib\Repo\Api\App\Repo\Select $source = null)
-    {
-        // TODO: Implement build() method.
-    }
 
     /**
      * Attributes aliases.
@@ -46,12 +42,12 @@ class Builder
         $this->conn = $resource->getConnection();
     }
 
-    public function getCountQuery(\Flancer32\Lib\Repo\Repo\Query\IBuilder $qbuild = null)
+    public function getCountQuery()
     {
-        $result = $this->getSelectQuery($qbuild);
+        $result = $this->getSelectQuery();
         $columns = $result->getPart('columns');
-        $exp = 'COUNT(' . self::AS_TBL_LOG . '.' . \Flancer32\LoginAs\Repo\Data\Entity\Log::A_ID . ')';
-        $expTotal = new \Flancer32\Lib\Repo\Repo\Query\Expression($exp);
+        $exp = 'COUNT(' . self::AS_TBL_LOG . '.' . ELog::ID . ')';
+        $expTotal = new AnExpress($exp);
         $colTotal = [
             self::AS_TBL_LOG,
             $expTotal,
@@ -63,31 +59,31 @@ class Builder
         return $result;
     }
 
-    public function getSelectQuery(\Flancer32\Lib\Repo\Repo\Query\IBuilder $qbuild = null)
+    public function getSelectQuery()
     {
         $asAdm = self::AS_TBL_ADMIN;
         $asCust = self::AS_TBL_CUSTOMER;
         $asLog = self::AS_TBL_LOG;
         $result = $this->conn->select();
         /* SELECT FROM fl32_loginas_log */
-        $tbl = $this->resource->getTableName(Log::ENTITY_NAME);
+        $tbl = $this->resource->getTableName(DaoLog::ENTITY_NAME);
         $as = $asLog;
         $cols = [
-            self::A_ID => Log::A_ID,
-            self::A_ID_CUST => Log::A_CUST_REF,
-            self::A_ID_ADMIN => Log::A_USER_REF,
-            self::A_DATE_LOGGED => Log::A_DATE
+            self::A_ID => ELog::ID,
+            self::A_ID_CUST => ELog::CUSTOMER_REF,
+            self::A_ID_ADMIN => ELog::USER_REF,
+            self::A_DATE_LOGGED => ELog::DATE
         ];
         $result->from([$as => $tbl], $cols);
         /* LEFT JOIN customer_entity */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_CUSTOMER);
         $as = $asCust;
-        $on = $asCust . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asLog . '.' . Log::A_CUST_REF;
+        $on = $asCust . '.' . Cfg::E_CUSTOMER_A_ENTITY_ID . '=' . $asLog . '.' . ELog::CUSTOMER_REF;
         $first = $as . '.' . Cfg::E_CUSTOMER_A_FIRSTNAME;
         $last = $as . '.' . Cfg::E_CUSTOMER_A_LASTNAME;
         $email = $as . '.' . Cfg::E_CUSTOMER_A_EMAIL;
         $expValue = "CONCAT($first, ' ', $last, ' <', $email, '>')";
-        $exp = new \Flancer32\Lib\Repo\Repo\Query\Expression($expValue);
+        $exp = new AnExpress($expValue);
         $cols = [
             self::A_ID_CUST => Cfg::E_CUSTOMER_A_ENTITY_ID,
             self::A_CUSTOMER => $exp
@@ -96,12 +92,12 @@ class Builder
         /* LEFT JOIN admin_user */
         $tbl = $this->resource->getTableName(Cfg::ENTITY_ADMIN_USER);
         $as = $asAdm;
-        $on = $asAdm . '.' . Cfg::E_ADMIN_USER_A_USER_ID . '=' . $asLog . '.' . Log::A_USER_REF;
+        $on = $asAdm . '.' . Cfg::E_ADMIN_USER_A_USER_ID . '=' . $asLog . '.' . ELog::USER_REF;
         $first = $as . '.' . Cfg::E_ADMIN_USER_A_FIRSTNAME;
         $last = $as . '.' . Cfg::E_ADMIN_USER_A_LASTNAME;
         $email = $as . '.' . Cfg::E_ADMIN_USER_A_EMAIL;
         $expValue = "CONCAT($first, ' ', $last, ' <', $email, '>')";
-        $exp = new \Flancer32\Lib\Repo\Repo\Query\Expression($expValue);
+        $exp = new AnExpress($expValue);
         $cols = [
             self::A_ID_ADMIN => Cfg::E_ADMIN_USER_A_USER_ID,
             self::A_ADMIN => $exp

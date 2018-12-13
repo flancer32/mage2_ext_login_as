@@ -2,51 +2,54 @@
 
 namespace Flancer32\LoginAs\Controller\Adminhtml\Redirect;
 
+use Flancer32\LoginAs\Api\Repo\Data\Transition as ETrans;
 use Flancer32\LoginAs\Config as Cfg;
-
+use \Flancer32\LoginAs\Controller\Redirect\Index as CtrlRedir;
 /**
- * Register admin user's redirection request in 'active' registry.
+ * Register admin user's redirection request in 'transition' registry.
  */
 class Index
     extends \Magento\Backend\App\Action
 {
     const REQ_PARAM_ID = 'id';
+
+    /** @var \Flancer32\LoginAs\Api\Repo\Dao\Transition */
+    private $daoTrans;
     /** @var \Magento\Framework\Url */
-    protected $hlpUrl;
+    private $hlpUrl;
     /** @var \Magento\Store\Model\StoreManagerInterface */
-    protected $manStore;
-    /** @var \Flancer32\LoginAs\Repo\Entity\IActive */
-    protected $repoActive;
+    private $manStore;
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
-    protected $repoCust;
+    private $repoCust;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Store\Model\StoreManagerInterface $manStore,
         \Magento\Framework\Url $factUrl,
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCust,
-        \Flancer32\LoginAs\Repo\Entity\IActive $repoActive
+        \Flancer32\LoginAs\Api\Repo\Dao\Transition $daoTrans
     ) {
         parent::__construct($context);
         $this->manStore = $manStore;
         $this->hlpUrl = $factUrl;
         $this->repoCust = $repoCust;
-        $this->repoActive = $repoActive;
+        $this->daoTrans = $daoTrans;
     }
 
     public function execute()
     {
         /* collect redirection parameters and registry activity */
         $custId = $this->_request->getParam(self::REQ_PARAM_ID);
+        /** @var \Magento\Backend\Model\Auth\Credential\StorageInterface $user */
         $user = $this->_auth->getUser();
         $userId = $user->getUserId();
         $key = $this->generateKey($custId, $userId);
-        $entity = new \Flancer32\LoginAs\Repo\Data\Entity\Active();
+        $entity = new ETrans();
         $entity->setCustomerRef($custId);
         $entity->setUserRef($userId);
         $entity->setKey($key);
-        $this->repoActive->create($entity);
-        $saved = $this->repoActive->getById($key);
+        $this->daoTrans->create($entity);
+        $saved = $this->daoTrans->getOne($key);
         /* redirect to frontend using search key for the activity */
         $keySaved = $saved->getKey();
         /* redirect admin user to the front redirector */
@@ -58,7 +61,7 @@ class Index
         if ($storeId == Cfg::STORE_ID_ADMIN) $storeId = Cfg::STORE_ID_DEFAULT;
         $url = $this->hlpUrl;
         $url->setScope($storeId);
-        $goto = $url->getUrl($route, [\Flancer32\LoginAs\Controller\Redirect\Index::REQ_PARAM_KEY => $keySaved]);
+        $goto = $url->getUrl($route, [CtrlRedir::REQ_PARAM_KEY => $keySaved]);
         $resultRedirect->setUrl($goto);
         return $resultRedirect;
     }
