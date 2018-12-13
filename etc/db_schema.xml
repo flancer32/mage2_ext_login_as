@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+
+    <table name="fl32_loginas_log" resource="default" engine="innodb"
+           comment="Login events registry.">
+        <column name="id" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="true"
+                comment="Log item ID"/>
+        <column name="customer_ref" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="References to logged in customer."/>
+        <column name="user_ref" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="References to logged in admin user."/>
+        <column name="date" xsi:type="datetime" on_update="false" nullable="false" default="CURRENT_TIMESTAMP"
+                comment="Login event data."/>
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="id"/>
+        </constraint>
+        <constraint referenceId="FL32_LOGINAS_LOG_CUSTOMER_REF_CUSTOMER_ENTITY" xsi:type="foreign"
+                    table="fl32_loginas_log" column="customer_ref"
+                    referenceTable="customer_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint referenceId="FL32_LOGINAS_LOG_USER_REF_ADMIN_USER" xsi:type="foreign"
+                    table="fl32_loginas_log" column="user_ref"
+                    referenceTable="admin_user" referenceColumn="user_id"
+                    onDelete="CASCADE"/>
+    </table>
+</schema>

@@ -10,9 +10,7 @@
       "email": "alex@flancer64.com"
     }
   ],
-  "require": {
-    "flancer32/mage2_ext_repo": "^0.1.5"
-  },
+  "require": {},
   "autoload": {
     "files": [
       "registration.php"

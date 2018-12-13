@@ -2,6 +2,13 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
 
+    <!-- ******* -->
+    <!-- API DAO -->
+    <!-- ******* -->
+    <preference for="Flancer32\LoginAs\Api\Repo\Dao\Log"
+                type="Flancer32\LoginAs\Repo\Dao\Log"/>
+
+
     <!-- ********************** -->
     <!-- Console (CLI Commands) -->
     <!-- ********************** -->

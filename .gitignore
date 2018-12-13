@@ -2,11 +2,3 @@
 /.buildpath
 /.project
 /atlassian-ide-plugin.xml
-/composer.lock
-/deploy_cfg.sh
-/vendor/
-/work/
-/config.live.sh
-/config.pilot.sh
-/config.test.sh
-/config.work.sh

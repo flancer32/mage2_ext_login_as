@@ -4,7 +4,11 @@
  *
  * User: Alex Gusev <alex@flancer64.com>
  */
-use Flancer32\LoginAs\Config as Cfg;
+
 use Magento\Framework\Component\ComponentRegistrar as Registrar;
 
-Registrar::register(Registrar::MODULE, Cfg::MODULE, __DIR__);
+Registrar::register(
+    \Magento\Framework\Component\ComponentRegistrar::MODULE,
+    \Flancer32\LoginAs\Config::MODULE,
+    __DIR__
+);

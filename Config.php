@@ -25,7 +25,6 @@ class Config
     const ACL_RULE_CONFIG = 'Flancer32_LoginAs::config';
     const ACL_RULE_LOGIN_AS = 'Flancer32_LoginAs::login';
     const ACL_RULE_LOGS = 'Flancer32_LoginAs::logs';
-
     /**$#- */
 
     /**#@+
@@ -71,10 +70,14 @@ class Config
      * Adminhtml menu items.
      */
     const MENU_CUSTOMER_LOGGED_AS = self::ACL_CUSTOMER_LOGGED_AS;
+
     /**
      * This module's name.
      */
-    const MODULE = 'Flancer32_LoginAs';
+    const MODULE = self::MODULE_VENDOR . '_' . self::MODULE_PACKAGE;
+    const MODULE_PACKAGE = 'LoginAs';
+    const MODULE_VENDOR = 'Flancer32';
+
     /**
      * Magento routes.
      */
