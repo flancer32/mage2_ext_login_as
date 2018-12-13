@@ -10,7 +10,9 @@
       "email": "alex@flancer64.com"
     }
   ],
-  "require": {},
+  "require": {
+    "flancer32/mage2_ext_base":"dev-master as 1.0.1"
+  },
   "autoload": {
     "files": [
       "registration.php"
