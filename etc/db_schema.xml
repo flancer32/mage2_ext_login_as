@@ -24,4 +24,24 @@
                     referenceTable="admin_user" referenceColumn="user_id"
                     onDelete="CASCADE"/>
     </table>
+    <table name="fl32_loginas_trans" resource="default" engine="innodb"
+           comment="Transitions registry for login as events.">
+        <column name="key" xsi:type="varchar" length="46" nullable="false" identity="true"
+                comment="String key for admin to customer transition data."/>
+        <column name="customer_ref" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="References to logged in customer."/>
+        <column name="user_ref" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false"
+                comment="References to logged in admin user."/>
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="key"/>
+        </constraint>
+        <constraint referenceId="FL32_LOGINAS_TRANS_CUSTOMER_REF_CUSTOMER_ENTITY" xsi:type="foreign"
+                    table="fl32_loginas_log" column="customer_ref"
+                    referenceTable="customer_entity" referenceColumn="entity_id"
+                    onDelete="CASCADE"/>
+        <constraint referenceId="FL32_LOGINAS_TRANS_USER_REF_ADMIN_USER" xsi:type="foreign"
+                    table="fl32_loginas_log" column="user_ref"
+                    referenceTable="admin_user" referenceColumn="user_id"
+                    onDelete="CASCADE"/>
+    </table>
 </schema>
