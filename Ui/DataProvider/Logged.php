@@ -11,9 +11,9 @@ class Logged
 {
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
     protected $conn;
-    /** @var \Flancer32\Lib\Repo\Helper\Data\Adapter\ClauseSet\ApiSearchCriteria */
+    /** @var \Flancer32\Base\App\Ui\DataProvider\Adapter\ApiSearchCriteria */
     protected $hlpAdpClauses;
-    /** @var \Flancer32\Lib\Repo\Helper\Repo\Query\ClauseSet\Processor */
+    /** @var \Flancer32\Base\App\Repo\Query\ClauseSet\Processor */
     protected $hlpClauseProc;
     /** @var \Flancer32\LoginAs\Repo\Query\Grid\Logged\Builder */
     protected $qbldGrid;
@@ -28,8 +28,8 @@ class Logged
         \Magento\Framework\App\RequestInterface $request,
         \Magento\Framework\Api\FilterBuilder $filterBuilder,
         \Magento\Framework\UrlInterface $url,
-        \Flancer32\Lib\Repo\Helper\Data\Adapter\ClauseSet\ApiSearchCriteria $hlpAdpClauses,
-        \Flancer32\Lib\Repo\Helper\Repo\Query\ClauseSet\Processor $hlpClauseProc,
+        \Flancer32\Base\App\Ui\DataProvider\Adapter\ApiSearchCriteria $hlpAdpClauses,
+        \Flancer32\Base\App\Repo\Query\ClauseSet\Processor $hlpClauseProc,
         \Flancer32\LoginAs\Repo\Query\Grid\Logged\Builder $qbldGrid
     ) {
         $primaryFieldName = 'id';

@@ -36,7 +36,7 @@ class Sales
     {
         $output->writeln('<info>Create test sale orders for \'Flancer32_LoginAs\' module.<info>');
         $this->checkAreaCode();
-        $ctx = new \Flancer32\Lib\Data();
+        $ctx = new \Magento\Framework\DataObject();
         $this->subCreate->exec($ctx);
         $output->writeln('<info>Command is completed.<info>');
     }

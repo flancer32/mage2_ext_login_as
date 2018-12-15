@@ -25,10 +25,10 @@ class Check
         $this->subRoles = $subRoles;
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx)
+    public function exec($ctx)
     {
         /* create execution context and process Roles checking */
-        $ctxRoles = new \Flancer32\Lib\Data();
+        $ctxRoles = new \Magento\Framework\DataObject();
         $this->subRoles->exec($ctxRoles);
         $result = $ctxRoles->get(SubRoles::RES_ROLES_MAP);
 

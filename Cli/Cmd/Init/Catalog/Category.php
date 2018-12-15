@@ -55,7 +55,7 @@ class Category
         return $result;
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx)
+    public function exec($ctx)
     {
         $isDemoCatFound = false;
         $rootNode = $this->modTree->getRootNode();

@@ -98,7 +98,7 @@ class Product
         $this->repoStockItem->save($stockItem);
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx)
+    public function exec($ctx)
     {
         $found = null;
         try {

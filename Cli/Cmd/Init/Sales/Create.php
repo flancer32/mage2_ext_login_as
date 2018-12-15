@@ -50,7 +50,7 @@ class Create
         $this->repoProduct = $repoProduct;
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx)
+    public function exec($ctx)
     {
         $store = $this->manStore->getStore();
         /* create empty quote */

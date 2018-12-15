@@ -48,7 +48,7 @@ class Acl
         $this->conn->insert($table, $bind);
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx)
+    public function exec($ctx)
     {
         /* get working variables from context */
         $roles = $ctx->get(self::CTX_ROLES_MAP);

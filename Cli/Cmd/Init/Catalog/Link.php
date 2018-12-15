@@ -35,7 +35,7 @@ class Link
     }
 
 
-    public function exec(\Flancer32\Lib\Data $ctx)
+    public function exec($ctx)
     {
         /* get working variables from context */
         $catId = $ctx->get(self::CTX_CAT_ID);

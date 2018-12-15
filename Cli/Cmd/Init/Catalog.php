@@ -49,7 +49,7 @@ class Catalog
     {
         $output->writeln('<info>Create test categories & products for \'Flancer32_LoginAs\' module.<info>');
         $this->checkAreaCode();
-        $ctx = new \Flancer32\Lib\Data();
+        $ctx = new \Magento\Framework\DataObject();
         $this->subCategory->exec($ctx);
         $this->subProduct->exec($ctx);
         $this->subLink->exec($ctx);

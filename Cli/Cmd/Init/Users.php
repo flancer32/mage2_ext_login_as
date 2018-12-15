@@ -78,7 +78,7 @@ class Users
     {
         $output->writeln('<info>Create tests users and roles for \'Flancer32_LoginAs\' module.<info>');
         /* check ACL Roles and get IDs (create context for process) */
-        $ctx = new \Flancer32\Lib\Data();
+        $ctx = new \Magento\Framework\DataObject();
         $this->subCheck->exec($ctx);
         /* get result from context */
         $mapRoles = $ctx->get(SubCheck::RES_ROLES);
@@ -90,7 +90,7 @@ class Users
             $roleId = $mapRoles[$user[self::A_ROLE]];
             $output->writeln("Create user '$username'...");
             /* create context for process */
-            $ctx = new \Flancer32\Lib\Data();
+            $ctx = new \Magento\Framework\DataObject();
             $ctx->set(SubCreate::OPT_USER_NAME, $username);
             $ctx->set(SubCreate::OPT_PASSWORD, $user[self::A_PASSWORD]);
             $ctx->set(SubCreate::OPT_EMAIL, $user[self::A_EMAIL]);

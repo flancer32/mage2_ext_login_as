@@ -26,7 +26,7 @@
     </table>
     <table name="fl32_loginas_trans" resource="default" engine="innodb"
            comment="Transitions registry for login as events.">
-        <column name="key" xsi:type="varchar" length="46" nullable="false" identity="true"
+        <column name="key" xsi:type="varchar" length="46" nullable="false"
                 comment="String key for admin to customer transition data."/>
         <column name="customer_ref" xsi:type="int" padding="10" unsigned="true" nullable="false" identity="false"
                 comment="References to logged in customer."/>

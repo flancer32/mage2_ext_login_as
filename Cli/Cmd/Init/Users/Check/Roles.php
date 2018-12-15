@@ -53,7 +53,7 @@ class Roles
         return $result;
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx)
+    public function exec($ctx)
     {
         $result = [];
         $roleColl = $this->modRole->getCollection();
@@ -80,7 +80,7 @@ class Roles
         $result = array_merge($result, $created);
 
         /* walk through roles and check ACL resources assigned */
-        $ctxAcl = new \Flancer32\Lib\Data([SubAcl::CTX_ROLES_MAP => $result]);
+        $ctxAcl = new \Magento\Framework\DataObject([SubAcl::CTX_ROLES_MAP => $result]);
         $this->subAcl->exec($ctxAcl);
 
         /* save result to context */
