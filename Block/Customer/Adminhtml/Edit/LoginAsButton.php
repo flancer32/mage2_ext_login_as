@@ -3,17 +3,17 @@
 namespace Flancer32\LoginAs\Block\Customer\Adminhtml\Edit;
 
 use Flancer32\LoginAs\Config as Cfg;
-
+use \Flancer32\LoginAs\Controller\Adminhtml\Redirect\Index as CntrlRedirect;
 class LoginAsButton
     extends \Magento\Customer\Block\Adminhtml\Edit\GenericButton
     implements \Magento\Framework\View\Element\UiComponent\Control\ButtonProviderInterface
 {
     /** @var \Magento\Framework\AuthorizationInterface */
-    protected $authorization;
+    private $authorization;
     /** @var \Magento\Customer\Api\AccountManagementInterface */
-    protected $customerAccountManagement;
+    private $customerAccountManagement;
     /** @var \Flancer32\LoginAs\Helper\Config */
-    protected $hlpCfg;
+    private $hlpCfg;
 
     public function __construct(
         \Magento\Backend\Block\Widget\Context $context,
@@ -56,6 +56,6 @@ class LoginAsButton
     {
         $route = Cfg::ROUTE_NAME_ADMIN_LOGINAS . '/redirect/';
         $id = $this->getCustomerId();
-        return $this->getUrl($route, [\Flancer32\LoginAs\Controller\Adminhtml\Redirect\Index::REQ_PARAM_ID => $id]);
+        return $this->getUrl($route, [CntrlRedirect::REQ_PARAM_ID => $id]);
     }
 }

@@ -11,9 +11,12 @@ use Flancer32\LoginAs\Api\Repo\Data\Transition as Entity;
 interface Transition
     extends \Flancer32\Base\Api\Repo\Dao\Entity
 {
+    /** Entity class name to construct data objects in result set */
     const ENTITY_CLASS = Entity::class;
+    /** Database table name */
     const ENTITY_NAME = 'fl32_loginas_trans';
-    const ENTITY_PK = [Entity::KEY]; // table name
+    /** Primary key attributes. */
+    const ENTITY_PK = [Entity::KEY];
 
     /**
      * @param Entity $data

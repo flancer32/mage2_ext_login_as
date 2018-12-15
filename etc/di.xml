@@ -7,6 +7,8 @@
     <!-- ******* -->
     <preference for="Flancer32\LoginAs\Api\Repo\Dao\Log"
                 type="Flancer32\LoginAs\Repo\Dao\Log"/>
+    <preference for="Flancer32\LoginAs\Api\Repo\Dao\Transition"
+                type="Flancer32\LoginAs\Repo\Dao\Transition"/>
 
 
     <!-- ********************** -->

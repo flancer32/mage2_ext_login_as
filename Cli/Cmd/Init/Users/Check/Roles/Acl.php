@@ -19,24 +19,37 @@ class Acl
     const CTX_ROLES_MAP = 'roles';
     const PERM_ALLOW = 'allow';
     const PERM_DENY = 'deny';
+
     /** @var \Magento\Framework\Acl\Builder */
-    protected $aclBuilder;
-    /** @var \Magento\Framework\AuthorizationInterface */
-    protected $authorization;
-    /** @var \Flancer32\Lib\Repo\Repo\IGeneric */
-    protected $repoGeneric;
-    /** @var \Magento\Framework\Authorization\RoleLocatorInterface */
-    protected $roleLocator;
+    private $aclBuilder;
+    /** @var \Magento\Framework\DB\Adapter\AdapterInterface */
+    private $conn;
+    /** @var \Magento\Framework\App\ResourceConnection */
+    private $resource;
 
     public function __construct(
         \Magento\Framework\Acl\Builder $aclBuilder,
-        \Flancer32\Lib\Repo\Repo\IGeneric $repoGeneric
+        \Magento\Framework\App\ResourceConnection $resource
     ) {
         $this->aclBuilder = $aclBuilder;
-        $this->repoGeneric = $repoGeneric;
+        $this->resource = $resource;
+        $this->conn = $resource->getConnection();
     }
 
-    public function exec(\Flancer32\Lib\Data $ctx) {
+    private function addAuthRule($roleId, $resourceId, $permission)
+    {
+        $entity = Cfg::ENTITY_AUTH_RULE;
+        $table = $this->resource->getTableName($entity);
+        $bind = [
+            Cfg::E_AUTH_RULE_A_ROLE_ID => (int)$roleId,
+            Cfg::E_AUTH_RULE_A_PERMISSION => $permission,
+            Cfg::E_AUTH_RULE_A_RESOURCE_ID => $resourceId
+        ];
+        $this->conn->insert($table, $bind);
+    }
+
+    public function exec(\Flancer32\Lib\Data $ctx)
+    {
         /* get working variables from context */
         $roles = $ctx->get(self::CTX_ROLES_MAP);
 
@@ -69,7 +82,8 @@ class Acl
      * @param $roleCode
      * @return string[]
      */
-    protected function getAllowed($roleCode) {
+    private function getAllowed($roleCode)
+    {
         switch ($roleCode) {
             case Cfg::ACL_ROLE_FULL:
                 $result = $this->getAllowedForFull();
@@ -84,7 +98,8 @@ class Acl
         return $result;
     }
 
-    protected function getAllowedCommon() {
+    private function getAllowedCommon()
+    {
         return [
             'Magento_AdminNotification::adminnotification',
             'Magento_AdminNotification::adminnotification_remove',
@@ -111,7 +126,8 @@ class Acl
      *
      * @return string[]
      */
-    protected function getAllowedForFull() {
+    private function getAllowedForFull()
+    {
         $allowedLogs = $this->getAllowedForLogs();
         $allowedLoginAs = $this->getAllowedForLoginAs();
         $result = array_merge($allowedLogs, $allowedLoginAs);
@@ -124,8 +140,9 @@ class Acl
      *
      * @return string[]
      */
-    protected function getAllowedForLoginAs() {
-        $allowedCommon= $this->getAllowedCommon();
+    private function getAllowedForLoginAs()
+    {
+        $allowedCommon = $this->getAllowedCommon();
         $allowedThis = [
             'Magento_Sales::actions',
             'Magento_Sales::actions_view',
@@ -145,8 +162,9 @@ class Acl
      *
      * @return string[]
      */
-    protected function getAllowedForLogs() {
-        $allowedCommon= $this->getAllowedCommon();
+    private function getAllowedForLogs()
+    {
+        $allowedCommon = $this->getAllowedCommon();
         $allowedThis = [
             Cfg::ACL_RULE_LOGS
         ];
@@ -162,15 +180,10 @@ class Acl
      * @param string[] $resources
      * @param string $permission
      */
-    protected function repoAddRules($roleId, $resources, $permission) {
-        $entity = Cfg::ENTITY_AUTH_RULE;
-        $bind = [
-            Cfg::E_AUTH_RULE_A_ROLE_ID => (int)$roleId,
-            Cfg::E_AUTH_RULE_A_PERMISSION => $permission
-        ];
+    private function repoAddRules($roleId, $resources, $permission)
+    {
         foreach ($resources as $resource) {
-            $bind[Cfg::E_AUTH_RULE_A_RESOURCE_ID] = $resource;
-            $this->repoGeneric->addEntity($entity, $bind);
+            $this->addAuthRule($roleId, $resource, $permission);
         }
     }
 
@@ -179,9 +192,11 @@ class Acl
      *
      * @param int $roleId
      */
-    protected function repoCleanForRole($roleId) {
+    private function repoCleanForRole($roleId)
+    {
         $entity = Cfg::ENTITY_AUTH_RULE;
+        $table = $this->resource->getTableName($entity);
         $where = Cfg::E_AUTH_RULE_A_ROLE_ID . '=' . (int)$roleId;
-        $this->repoGeneric->deleteEntity($entity, $where);
+        $this->conn->delete($table, $where);
     }
 }

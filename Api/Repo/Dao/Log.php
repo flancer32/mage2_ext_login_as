@@ -11,8 +11,11 @@ use Flancer32\LoginAs\Api\Repo\Data\Log as Entity;
 interface Log
     extends \Flancer32\Base\Api\Repo\Dao\Entity
 {
+    /** Entity class name to construct data objects in result set. */
     const ENTITY_CLASS = Entity::class;
+    /** Database table name. */
     const ENTITY_NAME = 'fl32_loginas_log';
+    /** Primary key attributes. */
     const ENTITY_PK = [Entity::ID];
 
     /**

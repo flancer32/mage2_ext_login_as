@@ -4,7 +4,7 @@ namespace Flancer32\LoginAs\Controller\Adminhtml\Redirect;
 
 use Flancer32\LoginAs\Api\Repo\Data\Transition as ETrans;
 use Flancer32\LoginAs\Config as Cfg;
-use \Flancer32\LoginAs\Controller\Redirect\Index as CtrlRedir;
+use \Flancer32\LoginAs\Controller\Redirect\Index as CtrlFront;
 /**
  * Register admin user's redirection request in 'transition' registry.
  */
@@ -61,7 +61,7 @@ class Index
         if ($storeId == Cfg::STORE_ID_ADMIN) $storeId = Cfg::STORE_ID_DEFAULT;
         $url = $this->hlpUrl;
         $url->setScope($storeId);
-        $goto = $url->getUrl($route, [CtrlRedir::REQ_PARAM_KEY => $keySaved]);
+        $goto = $url->getUrl($route, [CtrlFront::REQ_PARAM_KEY => $keySaved]);
         $resultRedirect->setUrl($goto);
         return $resultRedirect;
     }
