@@ -1,39 +1,30 @@
 <?php
-
 /**
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Flancer32\LoginAs\Cli\Cmd\Init\Catalog;
-
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create as SubCreate;
-use \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check as SubCheck;
-use \Flancer32\LoginAs\Config as Cfg;
+namespace Flancer32\LoginAs\Cli\Cmd\Init\Catalog\A;
 
 /**
  * Create category for development/demo instances.
  */
 class Category
 {
-    /** Context variable to return ID of the found/created demo category. */
-    const CTX_CAT_ID = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog::CTX_CAT_ID;
     /** Name of the demo category.  */
-    const DEF_CAT_NAME = 'Demo';
-    /** @var   \Magento\Framework\ObjectManagerInterface */
-    protected $manObj;
+    private const DEF_CAT_NAME = 'Demo';
+    /** @var \Magento\Catalog\Model\CategoryFactory */
+    private $factCat;
     /** @var  \Magento\Catalog\Model\Category\Tree */
-    protected $modTree;
+    private $modTree;
     /** @var   \Magento\Catalog\Api\CategoryRepositoryInterface */
-    protected $repoCategory;
+    private $repoCategory;
 
     public function __construct(
-        \Magento\Framework\ObjectManagerInterface $manObj,
+        \Magento\Catalog\Model\CategoryFactory $factCat,
         \Magento\Catalog\Model\Category\Tree\Proxy $modTree,
         \Magento\Catalog\Api\CategoryRepositoryInterface $repoCategory
     ) {
-        $this->manObj = $manObj;
+        $this->factCat = $factCat;
         $this->modTree = $modTree;
         $this->repoCategory = $repoCategory;
     }
@@ -43,11 +34,12 @@ class Category
      *
      * @param string $name
      * @return int ID of the created category
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
      */
     public function createMageCategory($name)
     {
         /** @var  $category \Magento\Catalog\Api\Data\CategoryInterface */
-        $category = $this->manObj->create(\Magento\Catalog\Api\Data\CategoryInterface::class);
+        $category = $this->factCat->create();
         $category->setName($name);
         $category->setIsActive(true);
         $saved = $this->repoCategory->save($category);
@@ -55,7 +47,13 @@ class Category
         return $result;
     }
 
-    public function exec($ctx)
+    /**
+     * Find demo category or create new one.
+     *
+     * @return int
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     */
+    public function exec()
     {
         $isDemoCatFound = false;
         $rootNode = $this->modTree->getRootNode();
@@ -65,12 +63,12 @@ class Category
             $name = $child->getName();
             if ($name == self::DEF_CAT_NAME) {
                 $isDemoCatFound = true;
-                $catId = $child->getId();
+                $result = $child->getId();
             }
         }
         if (!$isDemoCatFound) {
-            $catId = $this->createMageCategory(self::DEF_CAT_NAME);
+            $result = $this->createMageCategory(self::DEF_CAT_NAME);
         }
-        $ctx->set(self::CTX_CAT_ID, $catId);
+        return $result;
     }
 }

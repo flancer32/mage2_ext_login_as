@@ -4,57 +4,67 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Flancer32\LoginAs\Cli\Cmd\Init\Catalog;
+namespace Flancer32\LoginAs\Cli\Cmd\Init\Catalog\A;
 
-use Magento\Catalog\Api\Data\ProductInterface;
+use Magento\Catalog\Model\Product\Attribute\Source\Status as ProdStatus;
+use Magento\Catalog\Model\Product\Type as ProdType;
 
 /**
  * Create product for development/demo instances.
  */
 class Product
 {
-    /** Context variable to return ID of the found/created demo product. */
-    const CTX_PROD_ID = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog::CTX_PROD_ID;
     /** attributes of the demo product.  */
-    const DEF_PROD_NAME = 'Demo Product';
-    const DEF_PROD_PRICE = '12.34';
-    const DEF_PROD_QTY = 1024;
-    const DEF_PROD_SKU = 'demo001';
-    const DEF_PROD_WEIGHT = '0.5';
-    /** @var   \Magento\Framework\ObjectManagerInterface */
-    protected $manObj;
+    private const DEF_PROD_NAME = 'Demo Product';
+    private const DEF_PROD_PRICE = '12.34';
+    private const DEF_PROD_QTY = 1024;
+    public const DEF_PROD_SKU = 'demo001';
+    private const DEF_PROD_WEIGHT = '0.5';
+
+    /** @var \Magento\Framework\Api\Search\SearchCriteriaInterfaceFactory */
+    private $factCrit;
+    /** @var \Magento\CatalogInventory\Api\StockItemCriteriaInterfaceFactory */
+    private $factCritStockItem;
+    /** @var \Magento\Catalog\Api\Data\ProductInterfaceFactory */
+    private $factProd;
     /** @var \Magento\Catalog\Api\AttributeSetRepositoryInterface */
-    protected $repoAttrSet;
+    private $repoAttrSet;
     /** @var \Magento\Catalog\Api\ProductRepositoryInterface */
-    protected $repoProd;
+    private $repoProd;
     /** @var \Magento\CatalogInventory\Api\StockItemRepositoryInterface */
-    protected $repoStockItem;
+    private $repoStockItem;
 
     public function __construct(
-        \Magento\Framework\ObjectManagerInterface $manObj,
+        \Magento\Framework\Api\Search\SearchCriteriaInterfaceFactory $factCrit,
+        \Magento\CatalogInventory\Api\StockItemCriteriaInterfaceFactory $factCritStockItem,
+        \Magento\Catalog\Api\Data\ProductInterfaceFactory $factProd,
         \Magento\Catalog\Api\AttributeSetRepositoryInterface $repoAttrSet,
         \Magento\Catalog\Api\ProductRepositoryInterface\Proxy $repoProd,
         \Magento\CatalogInventory\Api\StockItemRepositoryInterface\Proxy $repoStockItem
     ) {
-        $this->manObj = $manObj;
+        $this->factCrit = $factCrit;
+        $this->factCritStockItem = $factCritStockItem;
+        $this->factProd = $factProd;
         $this->repoAttrSet = $repoAttrSet;
         $this->repoProd = $repoProd;
         $this->repoStockItem = $repoStockItem;
     }
 
-
     /**
      * Create simple product.
      *
      * @return int ID of the created product.
+     * @throws \Magento\Framework\Exception\CouldNotSaveException
+     * @throws \Magento\Framework\Exception\InputException
+     * @throws \Magento\Framework\Exception\StateException
      */
-    protected function createProduct()
+    private function createProduct()
     {
         /**
          * Retrieve attribute set ID.
          */
         /** @var \Magento\Framework\Api\SearchCriteriaInterface $crit */
-        $crit = $this->manObj->create(\Magento\Framework\Api\SearchCriteriaInterface::class);
+        $crit = $this->factCrit->create();
         /** @var \Magento\Eav\Model\Entity\Attribute\Set $attrSet */
         $list = $this->repoAttrSet->getList($crit);
         $items = $list->getItems();
@@ -63,15 +73,15 @@ class Product
         /**
          * Create simple product.
          */
-        /** @var  $product ProductInterface */
-        $product = $this->manObj->create(\Magento\Catalog\Api\Data\ProductInterface::class);
+        /** @var  $product \Magento\Catalog\Model\Product */
+        $product = $this->factProd->create();
         $product->setSku(self::DEF_PROD_SKU);
         $product->setName(self::DEF_PROD_NAME);
-        $product->setStatus(\Magento\Catalog\Model\Product\Attribute\Source\Status::STATUS_ENABLED);
+        $product->setStatus(ProdStatus::STATUS_ENABLED);
         $product->setPrice(self::DEF_PROD_PRICE);
         $product->setWeight(self::DEF_PROD_WEIGHT);
         $product->setAttributeSetId($attrSetId);
-        $product->setTypeId(\Magento\Catalog\Model\Product\Type::TYPE_SIMPLE);
+        $product->setTypeId(ProdType::TYPE_SIMPLE);
         $product->setUrlKey(self::DEF_PROD_SKU); // use SKU as URL Key
         $saved = $this->repoProd->save($product);
         $prodId = $saved->getId();
@@ -84,10 +94,10 @@ class Product
      *
      * @param int $prodId
      */
-    protected function createStockItem($prodId)
+    private function createStockItem($prodId)
     {
         /** @var \Magento\CatalogInventory\Api\StockItemCriteriaInterface $crit */
-        $crit = $this->manObj->create(\Magento\CatalogInventory\Api\StockItemCriteriaInterface::class);
+        $crit = $this->factCritStockItem->create();
         $crit->setProductsFilter($prodId);
         $found = $this->repoStockItem->getList($crit);
         $items = $found->getItems();
@@ -98,19 +108,19 @@ class Product
         $this->repoStockItem->save($stockItem);
     }
 
-    public function exec($ctx)
+    public function exec()
     {
         $found = null;
         try {
             $found = $this->repoProd->get(self::DEF_PROD_SKU, true);
-            $prodId = $found->getId();
+            $result = $found->getId();
         } catch (\Magento\Framework\Exception\NoSuchEntityException $e) {
             /* do nothing */
         }
         if (!$found) {
-            $prodId = $this->createProduct();
-            $this->createStockItem($prodId);
+            $result = $this->createProduct();
+            $this->createStockItem($result);
         }
-        $ctx->set(self::CTX_PROD_ID, $prodId);
+        return $result;
     }
 }

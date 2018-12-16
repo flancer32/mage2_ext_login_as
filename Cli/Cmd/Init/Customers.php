@@ -13,8 +13,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Create test customers for development deployment.
  */
 class Customers
-    extends \Flancer32\LoginAs\Cli\Cmd\Base
+    extends \Flancer32\Base\App\Cli\Base
 {
+    private const DESC = 'Create test customers for \'Flancer32_LoginAs\' module.';
+    private const NAME = 'fl32:init:customers';
+
     const DEF_CUST_01_EMAIL = 'alex@flancer64.com';
     const DEF_CUST_01_FIRST = 'Alex';
     const DEF_CUST_01_LAST = 'Gusev';
@@ -23,31 +26,22 @@ class Customers
     const DEF_CUST_02_LAST = 'Doe';
 
     /** @var \Magento\Framework\ObjectManagerInterface */
-    protected $manObj;
+    private $manObj;
 
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
-    protected $repoCust;
+    private $repoCust;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
         \Magento\Customer\Api\CustomerRepositoryInterface\Proxy $repoCust
     ) {
-        parent::__construct(self::class);
+        parent::__construct(self::NAME, self::DESC);
         $this->manObj = $manObj;
         $this->repoCust = $repoCust;
     }
 
-    protected function configure()
-    {
-        parent::configure();
-        $this->setName('fl32:init:customers');
-        $this->setDescription("Create test customers for 'Flancer32_LoginAs' module.");
-    }
-
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->checkAreaCode();
-
         /** @var \Magento\Customer\Api\Data\CustomerInterface $cust */
         $cust = $this->manObj->create(\Magento\Customer\Api\Data\CustomerInterface::class);
         $cust->setEmail(self::DEF_CUST_01_EMAIL);

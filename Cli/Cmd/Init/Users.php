@@ -16,8 +16,11 @@ use Symfony\Component\Console\Output\OutputInterface;
  * Create test admin users for development deployment.
  */
 class Users
-    extends \Flancer32\LoginAs\Cli\Cmd\Base
+    extends \Flancer32\Base\App\Cli\Base
 {
+    private const DESC = 'Create test users for \'Flancer32_LoginAs\' module.';
+    private const NAME = 'fl32:init:users';
+
     const A_EMAIL = 'email';
     const A_NAME_FIRST = 'first';
     const A_NAME_LAST = 'last';
@@ -59,19 +62,12 @@ class Users
     ];
 
     public function __construct(
-        \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create $subCreate,
-        \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check $subCheck
+        \Flancer32\LoginAs\Cli\Cmd\Init\Users\Create $aCreate,
+        \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check $aCheck
     ) {
-        parent::__construct(self::class);
-        $this->subCreate = $subCreate;
-        $this->subCheck = $subCheck;
-    }
-
-    protected function configure()
-    {
-        parent::configure();
-        $this->setName('fl32:init:users');
-        $this->setDescription("Create test users for 'Flancer32_LoginAs' module.");
+        parent::__construct(self::NAME, self::DESC);
+        $this->subCreate = $aCreate;
+        $this->subCheck = $aCheck;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)

@@ -20,7 +20,7 @@ class Create
     const DEF_ADDR_ZIP = '1010';
     const DEF_CUST_EMAIL = \Flancer32\LoginAs\Cli\Cmd\Init\Customers::DEF_CUST_01_EMAIL;
     const DEF_PROD_QTY = 2;
-    const DEF_PROD_SKU = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\Product::DEF_PROD_SKU;
+    const DEF_PROD_SKU = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\A\Product::DEF_PROD_SKU;
     /** @var \Magento\Quote\Model\QuoteFactory */
     protected $factQuote;
     /** @var \Magento\Framework\ObjectManagerInterface */
