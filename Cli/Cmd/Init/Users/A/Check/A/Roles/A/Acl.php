@@ -4,7 +4,7 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles;
+namespace Flancer32\LoginAs\Cli\Cmd\Init\Users\A\Check\A\Roles\A;
 
 use Flancer32\LoginAs\Config as Cfg;
 
@@ -16,9 +16,8 @@ class Acl
     /**
      * Input roles data ([roleCode=>roleId, ...]).
      */
-    const CTX_ROLES_MAP = 'roles';
-    const PERM_ALLOW = 'allow';
-    const PERM_DENY = 'deny';
+    private const PERM_ALLOW = 'allow';
+    private const PERM_DENY = 'deny';
 
     /** @var \Magento\Framework\Acl\Builder */
     private $aclBuilder;
@@ -48,11 +47,8 @@ class Acl
         $this->conn->insert($table, $bind);
     }
 
-    public function exec($ctx)
+    public function exec($roles)
     {
-        /* get working variables from context */
-        $roles = $ctx->get(self::CTX_ROLES_MAP);
-
         /* load Magento ACL and get all available rules/resource */
         $acl = $this->aclBuilder->getAcl();
         $all = $acl->getResources();

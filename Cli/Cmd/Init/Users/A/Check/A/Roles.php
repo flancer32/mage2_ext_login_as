@@ -4,42 +4,43 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Flancer32\LoginAs\Cli\Cmd\Init\Users\Check;
+namespace Flancer32\LoginAs\Cli\Cmd\Init\Users\A\Check\A;
 
-use \Flancer32\LoginAs\Config as Cfg;
-use \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles\Acl as SubAcl;
+use Flancer32\LoginAs\Config as Cfg;
 
 /**
  * Get existing ACL Roles and create new ones if required.
  */
 class Roles
 {
-    const RES_ROLES_MAP = 'rolesMap';
-    const ROLE_TYPE_GROUP = 'G';
+    private const RES_ROLES_MAP = 'rolesMap';
+    private const ROLE_TYPE_GROUP = 'G';
 
     /** @var \Magento\Authorization\Model\Role */
-    protected $modRole;
+    private $modRole;
 
-    protected $roles = [
+    private $roles = [
         Cfg::ACL_ROLE_FULL => 'Flancer32 LoginAs Full Access',
         Cfg::ACL_ROLE_LOGIN => 'Flancer32 LoginAs Login Only',
         Cfg::ACL_ROLE_LOGS => 'Flancer32 LoginAs Logs Only'
     ];
-    /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles\Acl */
-    protected $subAcl;
+    /** @var \Flancer32\LoginAs\Cli\Cmd\Init\Users\A\Check\A\Roles\A\Acl */
+    private $anAcl;
 
     public function __construct(
         \Magento\Authorization\Model\Role $modRole,
-        \Flancer32\LoginAs\Cli\Cmd\Init\Users\Check\Roles\Acl $subAcl
+        \Flancer32\LoginAs\Cli\Cmd\Init\Users\A\Check\A\Roles\A\Acl $anAcl
     ) {
         $this->modRole = $modRole;
-        $this->subAcl = $subAcl;
+        $this->anAcl = $anAcl;
     }
 
     /**
      * @param array $rolesToCreate [$roleName => $roleCode, ...]
+     * @return array
+     * @throws \Magento\Framework\Exception\AlreadyExistsException
      */
-    protected function createMissedRoles($rolesToCreate)
+    private function createMissedRoles($rolesToCreate)
     {
         $result = [];
         foreach ($rolesToCreate as $roleName => $roleCode) {
@@ -53,14 +54,14 @@ class Roles
         return $result;
     }
 
-    public function exec($ctx)
+    public function exec()
     {
         $result = [];
         $roleColl = $this->modRole->getCollection();
         $items = $roleColl->getItems();
         /* compose array with Roles to create */
         $rolesToCreate = array_flip($this->roles);
-        /* walk through exisitng roles and collect data */
+        /* walk through existing roles and collect data */
         /** @var \Magento\Authorization\Model\Role\Interceptor $item */
         foreach ($items as $item) {
             $type = $item->getRoleType();
@@ -80,10 +81,8 @@ class Roles
         $result = array_merge($result, $created);
 
         /* walk through roles and check ACL resources assigned */
-        $ctxAcl = new \Magento\Framework\DataObject([SubAcl::CTX_ROLES_MAP => $result]);
-        $this->subAcl->exec($ctxAcl);
+        $this->anAcl->exec($result);
 
-        /* save result to context */
-        $ctx->set(self::RES_ROLES_MAP, $result);
+        return $result;
     }
 }

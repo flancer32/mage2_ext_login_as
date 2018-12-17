@@ -3,36 +3,37 @@
  * User: Alex Gusev <alex@flancer64.com>
  */
 
-namespace Flancer32\LoginAs\Cli\Cmd\Init\Sales;
+namespace Flancer32\LoginAs\Cli\Cmd\Init\Sales\A;
 
 /**
  * Simple process that creates new sale order.
  */
 class Create
 {
-    const DEF_ADDR_CITY = 'Riga';
-    const DEF_ADDR_COUNTRY = 'LV';
-    const DEF_ADDR_FIRST = \Flancer32\LoginAs\Cli\Cmd\Init\Customers::DEF_CUST_01_FIRST;
-    const DEF_ADDR_LAST = \Flancer32\LoginAs\Cli\Cmd\Init\Customers::DEF_CUST_01_LAST;
-    const DEF_ADDR_PHONE = '+37129181801';
-    const DEF_ADDR_REGION = '362';
-    const DEF_ADDR_STREET = 'Street';
-    const DEF_ADDR_ZIP = '1010';
-    const DEF_CUST_EMAIL = \Flancer32\LoginAs\Cli\Cmd\Init\Customers::DEF_CUST_01_EMAIL;
-    const DEF_PROD_QTY = 2;
-    const DEF_PROD_SKU = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\A\Product::DEF_PROD_SKU;
+    private const DEF_ADDR_CITY = 'Riga';
+    private const DEF_ADDR_COUNTRY = 'LV';
+    private const DEF_ADDR_FIRST = \Flancer32\LoginAs\Cli\Cmd\Init\Customers::DEF_CUST_01_FIRST;
+    private const DEF_ADDR_LAST = \Flancer32\LoginAs\Cli\Cmd\Init\Customers::DEF_CUST_01_LAST;
+    private const DEF_ADDR_PHONE = '+37129181801';
+    private const DEF_ADDR_REGION = '362';
+    private const DEF_ADDR_STREET = 'Street';
+    private const DEF_ADDR_ZIP = '1010';
+    private const DEF_CUST_EMAIL = \Flancer32\LoginAs\Cli\Cmd\Init\Customers::DEF_CUST_01_EMAIL;
+    private const DEF_PROD_QTY = 2;
+    private const DEF_PROD_SKU = \Flancer32\LoginAs\Cli\Cmd\Init\Catalog\A\Product::DEF_PROD_SKU;
+
     /** @var \Magento\Quote\Model\QuoteFactory */
-    protected $factQuote;
+    private $factQuote;
     /** @var \Magento\Framework\ObjectManagerInterface */
-    protected $manObj;
+    private $manObj;
     /** @var \Magento\Quote\Model\QuoteManagement */
-    protected $manQuote;
+    private $manQuote;
     /** @var \Magento\Store\Model\StoreManagerInterface */
-    protected $manStore;
+    private $manStore;
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
-    protected $repoCustomer;
+    private $repoCustomer;
     /** @var \Magento\Catalog\Api\ProductRepositoryInterface */
-    protected $repoProduct;
+    private $repoProduct;
 
     public function __construct(
         \Magento\Framework\ObjectManagerInterface $manObj,
@@ -50,7 +51,7 @@ class Create
         $this->repoProduct = $repoProduct;
     }
 
-    public function exec($ctx)
+    public function exec()
     {
         $store = $this->manStore->getStore();
         /* create empty quote */
@@ -111,6 +112,6 @@ class Create
         $order = $this->manQuote->submit($quote);
         $order->setEmailSent(0);
         $orderId = $order->getId();
-
+        return $orderId;
     }
 }

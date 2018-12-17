@@ -6,9 +6,6 @@
 
 namespace Flancer32\LoginAs\Cli\Cmd\Init;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Create test customers for development deployment.
  */
@@ -40,8 +37,11 @@ class Customers
         $this->repoCust = $repoCust;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(
+        \Symfony\Component\Console\Input\InputInterface $input,
+        \Symfony\Component\Console\Output\OutputInterface $output)
     {
+        $output->writeln("<info>Command '" . $this->getName() . "':<info>");
         /** @var \Magento\Customer\Api\Data\CustomerInterface $cust */
         $cust = $this->manObj->create(\Magento\Customer\Api\Data\CustomerInterface::class);
         $cust->setEmail(self::DEF_CUST_01_EMAIL);
@@ -55,7 +55,7 @@ class Customers
         $cust->setLastname(self::DEF_CUST_02_LAST);
         $this->repoCust->save($cust);
 
-        $output->writeln('<info>Command is completed.<info>');
+        $output->writeln('<info>Command \'' . $this->getName() . '\' is completed.<info>');
     }
 
 }

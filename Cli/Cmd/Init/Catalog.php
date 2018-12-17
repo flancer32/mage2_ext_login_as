@@ -6,9 +6,6 @@
 
 namespace Flancer32\LoginAs\Cli\Cmd\Init;
 
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-
 /**
  * Create categories and products inside.
  */
@@ -36,13 +33,15 @@ class Catalog
         $this->aLink = $aLink;
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(
+        \Symfony\Component\Console\Input\InputInterface $input,
+        \Symfony\Component\Console\Output\OutputInterface $output)
     {
-        $output->writeln('<info>Create test categories & products for \'Flancer32_LoginAs\' module.<info>');
+        $output->writeln("<info>Command '" . $this->getName() . "':<info>");
         $catId = $this->aCategory->exec();
         $prodId = $this->aProduct->exec();
         $this->aLink->exec($catId, $prodId);
-        $output->writeln('<info>Command is completed.<info>');
+        $output->writeln('<info>Command \'' . $this->getName() . '\' is completed.<info>');
     }
 
 }

@@ -11,6 +11,7 @@
     }
   ],
   "require": {
+    "php": "^7.1",
     "flancer32/mage2_ext_base":"dev-master as 1.0.1"
   },
   "autoload": {
