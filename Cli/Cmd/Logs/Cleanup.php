@@ -15,9 +15,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Cleanup
     extends \Flancer32\Base\App\Cli\Base
 {
-    const OPT_DAYS_DEFAULT = '0';
-    const OPT_DAYS_NAME = 'days';
-    const OPT_DAYS_SHORTCUT = 'd';
+    private const DESC = 'Clean up "Login As" logs older then XX days (Options: -d XX, default: from config).';
+    private const NAME = 'fl32:logs:cleanup';
+    private const OPT_DAYS_DEFAULT = '0';
+    private const OPT_DAYS_NAME = 'days';
+    private const OPT_DAYS_SHORTCUT = 'd';
+
     /** @var \Flancer32\LoginAs\Service\ICleanup */
     private $callCleanup;
     /** @var \Flancer32\LoginAs\Helper\Config */
@@ -27,7 +30,7 @@ class Cleanup
         \Flancer32\LoginAs\Helper\Config $hlpConfig,
         \Flancer32\LoginAs\Service\ICleanup $callCleanup
     ) {
-        parent::__construct(self::class);
+        parent::__construct(self::NAME, self::DESC);
         $this->hlpConfig = $hlpConfig;
         $this->callCleanup = $callCleanup;
     }
@@ -35,8 +38,6 @@ class Cleanup
     protected function configure()
     {
         parent::configure();
-        $this->setName('fl32:logs:cleanup');
-        $this->setDescription("Clean up \"Login As\" logs older then XX days (Options: -d XX, default: from config).");
         $this->addOption(
             self::OPT_DAYS_NAME,
             self::OPT_DAYS_SHORTCUT,
