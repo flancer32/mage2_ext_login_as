@@ -31,8 +31,8 @@ class Sales
         \Symfony\Component\Console\Output\OutputInterface $output)
     {
         $output->writeln("<info>Command '" . $this->getName() . "':<info>");
-        $ctx = new \Magento\Framework\DataObject();
-        $this->aCreate->exec($ctx);
+        $this->checkAreaCode();
+        $this->aCreate->exec();
         $output->writeln('<info>Command \'' . $this->getName() . '\' is completed.<info>');
     }
 

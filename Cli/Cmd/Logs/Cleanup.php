@@ -8,21 +8,20 @@ namespace Flancer32\LoginAs\Cli\Cmd\Logs;
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use \Flancer32\LoginAs\Config as Cfg;
 
 /**
  * Clean up "Login As" logs.
  */
 class Cleanup
-    extends \Flancer32\LoginAs\Cli\Cmd\Base
+    extends \Flancer32\Base\App\Cli\Base
 {
     const OPT_DAYS_DEFAULT = '0';
     const OPT_DAYS_NAME = 'days';
     const OPT_DAYS_SHORTCUT = 'd';
     /** @var \Flancer32\LoginAs\Service\ICleanup */
-    protected $callCleanup;
+    private $callCleanup;
     /** @var \Flancer32\LoginAs\Helper\Config */
-    protected $hlpConfig;
+    private $hlpConfig;
 
     public function __construct(
         \Flancer32\LoginAs\Helper\Config $hlpConfig,
@@ -57,6 +56,7 @@ class Cleanup
             $days = \Flancer32\LoginAs\Helper\Config::DEF_LOGS_CLEANUP_MIN_DAYS;
         }
         $output->writeln("<info>Clean up \"Login As\" logs older then '$days' days.<info>");
+        $this->checkAreaCode();
         $req = new \Flancer32\LoginAs\Service\Cleanup\Request();
         $req->daysToLeave = $days;
         /** @var \Flancer32\LoginAs\Service\Cleanup\Response $resp */

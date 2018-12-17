@@ -74,6 +74,7 @@ class Users
         \Symfony\Component\Console\Output\OutputInterface $output)
     {
         $output->writeln("<info>Command '" . $this->getName() . "':<info>");
+        $this->checkAreaCode();
         /* check ACL Roles and get IDs (create context for process) */
         $mapRoles = $this->aCheck->exec();
 

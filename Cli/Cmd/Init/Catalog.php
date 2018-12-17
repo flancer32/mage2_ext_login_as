@@ -38,6 +38,7 @@ class Catalog
         \Symfony\Component\Console\Output\OutputInterface $output)
     {
         $output->writeln("<info>Command '" . $this->getName() . "':<info>");
+        $this->checkAreaCode();
         $catId = $this->aCategory->exec();
         $prodId = $this->aProduct->exec();
         $this->aLink->exec($catId, $prodId);

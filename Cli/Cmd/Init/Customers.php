@@ -42,6 +42,7 @@ class Customers
         \Symfony\Component\Console\Output\OutputInterface $output)
     {
         $output->writeln("<info>Command '" . $this->getName() . "':<info>");
+        $this->checkAreaCode();
         /** @var \Magento\Customer\Api\Data\CustomerInterface $cust */
         $cust = $this->manObj->create(\Magento\Customer\Api\Data\CustomerInterface::class);
         $cust->setEmail(self::DEF_CUST_01_EMAIL);
