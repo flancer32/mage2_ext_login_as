@@ -43,12 +43,4 @@
                 sortOrder="512" disabled="false"/>
     </type>
 
-
-    <!-- ******** -->
-    <!-- Services -->
-    <!-- ******** -->
-    <preference
-            for="\Flancer32\LoginAs\Service\ICleanup"
-            type="\Flancer32\LoginAs\Service\Cleanup"/>
-
 </config>

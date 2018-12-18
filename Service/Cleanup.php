@@ -12,41 +12,64 @@ use Flancer32\LoginAs\Helper\Config as HlpCfg;
 use Flancer32\LoginAs\Service\Cleanup\Request as ARequest;
 use Flancer32\LoginAs\Service\Cleanup\Response as AResponse;
 
+/**
+ * Clean Up "LoginAs" logs.
+ *
+ * This is module's internal service and has no public interface.
+ */
 class Cleanup
-    implements ICleanup
 {
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $conn;
+    private $conn;
     /** @var \Flancer32\LoginAs\Api\Repo\Dao\Log */
-    protected $daoLog;
+    private $daoLog;
     /** @var  \Flancer32\LoginAs\Api\Repo\Dao\Transition */
-    protected $daoTrans;
+    private $daoTrans;
     /** @var \Flancer32\LoginAs\Helper\Config */
-    protected $hlpConfig;
+    private $hlpConfig;
     /** @var \Psr\Log\LoggerInterface */
-    protected $logger;
+    private $logger;
     /** @var \Magento\Framework\App\ResourceConnection */
-    protected $resource;
+    private $resource;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\App\ResourceConnection $resource,
-        \Flancer32\LoginAs\Helper\Config $hlpConfig,
         \Flancer32\LoginAs\Api\Repo\Dao\Transition $daoTrans,
-        \Flancer32\LoginAs\Api\Repo\Dao\Log $repoLog
+        \Flancer32\LoginAs\Api\Repo\Dao\Log $repoLog,
+        \Flancer32\LoginAs\Helper\Config $hlpConfig
     ) {
         $this->logger = $logger;
         $this->resource = $resource;
         $this->conn = $resource->getConnection();
-        $this->hlpConfig = $hlpConfig;
         $this->daoTrans = $daoTrans;
         $this->daoLog = $repoLog;
+        $this->hlpConfig = $hlpConfig;
     }
 
     /**
-     * Clean up active registry records older than 3 days.
+     * Clean up log records.
+     *
+     * @param int $days clean logs older than $days
+     * @return int number of cleaned records
      */
-    protected function cleanActive()
+    private function cleanLog($days)
+    {
+        $time = strtotime("-$days day");
+        $date = date('Y-m-d H:i:s', $time);
+        $this->logger->debug("Clean up 'LoginAs' logs older than $date.");
+        /* remove old logs */
+        $quoted = $this->conn->quote($date);
+        $where = ELog::DATE . '<=' . $quoted;
+        $result = $this->daoLog->deleteSet($where);
+        $this->logger->debug("Total '$result' records are cleand up from 'LoginAs' log.");
+        return $result;
+    }
+
+    /**
+     * Clean up transitions registry records older than 3 days.
+     */
+    private function cleanTransition()
     {
         $time = strtotime("-3 days");
         $datePrint = date('Y-m-d H:i:s', $time);
@@ -61,25 +84,6 @@ class Cleanup
         return $result;
     }
 
-    /**
-     * Clean up log records.
-     *
-     * @param int $days clean logs older than $days
-     * @return int number of cleaned records
-     */
-    protected function cleanLog($days)
-    {
-        $time = strtotime("-$days day");
-        $date = date('Y-m-d H:i:s', $time);
-        $this->logger->debug("Clean up 'LoginAs' logs older than $date.");
-        /* remove old logs */
-        $quoted = $this->conn->quote($date);
-        $where = ELog::DATE . '<=' . $quoted;
-        $result = $this->daoLog->deleteSet($where);
-        $this->logger->debug("Total '$result' records are cleand up from 'LoginAs' log.");
-        return $result;
-    }
-
     public function execute($request)
     {
         assert($request instanceof ARequest);
@@ -90,7 +94,7 @@ class Cleanup
             $days = HlpCfg::DEF_LOGS_CLEANUP_MIN_DAYS;
         }
         $result = new AResponse();
-        $result->deletedActive = $this->cleanActive();
+        $result->deletedTransition = $this->cleanTransition();
         $result->deletedLog = $this->cleanLog($days);
         return $result;
     }

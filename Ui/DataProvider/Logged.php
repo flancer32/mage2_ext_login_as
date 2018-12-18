@@ -10,15 +10,15 @@ class Logged
     extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
 {
     /** @var  \Magento\Framework\DB\Adapter\AdapterInterface */
-    protected $conn;
+    private $conn;
     /** @var \Flancer32\Base\App\Ui\DataProvider\Adapter\ApiSearchCriteria */
-    protected $hlpAdpClauses;
+    private $hlpAdpClauses;
     /** @var \Flancer32\Base\App\Repo\Query\ClauseSet\Processor */
-    protected $hlpClauseProc;
+    private  $hlpClauseProc;
     /** @var \Flancer32\LoginAs\Repo\Query\Grid\Logged\Builder */
-    protected $qbldGrid;
+    private  $qGrid;
     /** @var \Magento\Framework\App\ResourceConnection */
-    protected $resource;
+    private  $resource;
 
     public function __construct(
         $name,
@@ -30,7 +30,7 @@ class Logged
         \Magento\Framework\UrlInterface $url,
         \Flancer32\Base\App\Ui\DataProvider\Adapter\ApiSearchCriteria $hlpAdpClauses,
         \Flancer32\Base\App\Repo\Query\ClauseSet\Processor $hlpClauseProc,
-        \Flancer32\LoginAs\Repo\Query\Grid\Logged\Builder $qbldGrid
+        \Flancer32\LoginAs\Repo\Query\Grid\Logged\Builder $qGrid
     ) {
         $primaryFieldName = 'id';
         $requestFieldName = 'id';
@@ -56,7 +56,7 @@ class Logged
         $this->conn = $resource->getConnection();
         $this->hlpAdpClauses = $hlpAdpClauses;
         $this->hlpClauseProc = $hlpClauseProc;
-        $this->qbldGrid = $qbldGrid;
+        $this->qGrid = $qGrid;
     }
 
     public function getData()
@@ -65,11 +65,11 @@ class Logged
         $criteria = $this->getSearchCriteria();
         $clauses = $this->hlpAdpClauses->getClauseSet($criteria);
 
-        $qTotal = $this->qbldGrid->getCountQuery();
+        $qTotal = $this->qGrid->getCountQuery();
         $this->hlpClauseProc->exec($qTotal, $clauses, true);
         $totals = $this->conn->fetchOne($qTotal);
 
-        $qItems = $this->qbldGrid->getSelectQuery();
+        $qItems = $this->qGrid->getSelectQuery();
         $this->hlpClauseProc->exec($qItems, $clauses);
         $items = $this->conn->fetchAll($qItems);
         $result = [

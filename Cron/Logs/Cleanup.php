@@ -10,21 +10,21 @@ namespace Flancer32\LoginAs\Cron\Logs;
  */
 class Cleanup
 {
-    /** @var \Flancer32\LoginAs\Service\ICleanup */
-    protected $callCleanup;
+    /** @var \Flancer32\LoginAs\Service\Cleanup */
+    private $servCleanup;
     /** @var \Flancer32\LoginAs\Helper\Config */
-    protected $hlpConfig;
+    private $hlpConfig;
     /** @var \Psr\Log\LoggerInterface */
-    protected $logger;
+    private $logger;
 
     public function __construct(
         \Psr\Log\LoggerInterface $logger,
         \Flancer32\LoginAs\Helper\Config $hlpConfig,
-        \Flancer32\LoginAs\Service\ICleanup $callCleanup
+        \Flancer32\LoginAs\Service\Cleanup $servCleanup
     ) {
         $this->logger = $logger;
         $this->hlpConfig = $hlpConfig;
-        $this->callCleanup = $callCleanup;
+        $this->servCleanup = $servCleanup;
     }
 
     public function execute()
@@ -32,11 +32,11 @@ class Cleanup
         $enabled = $this->hlpConfig->getLogsCleanupEnabled();
         if ($enabled) {
             $req = new \Flancer32\LoginAs\Service\Cleanup\Request();
-            $resp = $this->callCleanup->execute($req);
-            $delAct = $resp->deletedActive;
+            $resp = $this->servCleanup->execute($req);
             $delLog = $resp->deletedLog;
+            $delTrans = $resp->deletedTransition;
             if ($delLog > 0) {
-                $this->logger->warning("Total '$delLog' log and '$delAct' active records are cleaned from 'LoginAs' tables by cron.");
+                $this->logger->warning("Total '$delLog' log and '$delTrans' transition records are cleaned from 'LoginAs' tables by cron.");
             }
         }
     }

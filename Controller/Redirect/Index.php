@@ -7,7 +7,7 @@ use Flancer32\LoginAs\Api\Repo\Data\Log as ELog;
 class Index
     extends \Magento\Framework\App\Action\Action
 {
-    const REQ_PARAM_KEY = 'key';
+    public const REQ_PARAM_KEY = 'key';
     /** @var \Flancer32\LoginAs\Api\Repo\Dao\Log */
     private $daoLog;
     /** @var \Flancer32\LoginAs\Api\Repo\Dao\Transition */

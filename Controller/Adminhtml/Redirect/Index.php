@@ -4,34 +4,35 @@ namespace Flancer32\LoginAs\Controller\Adminhtml\Redirect;
 
 use Flancer32\LoginAs\Api\Repo\Data\Transition as ETrans;
 use Flancer32\LoginAs\Config as Cfg;
-use \Flancer32\LoginAs\Controller\Redirect\Index as CtrlFront;
+use Flancer32\LoginAs\Controller\Redirect\Index as CtrlFront;
+
 /**
  * Register admin user's redirection request in 'transition' registry.
  */
 class Index
     extends \Magento\Backend\App\Action
 {
-    const REQ_PARAM_ID = 'id';
+    public const REQ_PARAM_ID = 'id';
 
     /** @var \Flancer32\LoginAs\Api\Repo\Dao\Transition */
     private $daoTrans;
-    /** @var \Magento\Framework\Url */
-    private $hlpUrl;
     /** @var \Magento\Store\Model\StoreManagerInterface */
     private $manStore;
     /** @var \Magento\Customer\Api\CustomerRepositoryInterface */
     private $repoCust;
+    /** @var \Magento\Framework\Url */
+    private $url;
 
     public function __construct(
         \Magento\Backend\App\Action\Context $context,
+        \Magento\Framework\Url $url,
         \Magento\Store\Model\StoreManagerInterface $manStore,
-        \Magento\Framework\Url $factUrl,
         \Magento\Customer\Api\CustomerRepositoryInterface $repoCust,
         \Flancer32\LoginAs\Api\Repo\Dao\Transition $daoTrans
     ) {
         parent::__construct($context);
+        $this->url = $url;
         $this->manStore = $manStore;
-        $this->hlpUrl = $factUrl;
         $this->repoCust = $repoCust;
         $this->daoTrans = $daoTrans;
     }
@@ -59,7 +60,7 @@ class Index
         $customer = $this->repoCust->getById($custId);
         $storeId = $customer->getStoreId();
         if ($storeId == Cfg::STORE_ID_ADMIN) $storeId = Cfg::STORE_ID_DEFAULT;
-        $url = $this->hlpUrl;
+        $url = $this->url;
         $url->setScope($storeId);
         $goto = $url->getUrl($route, [CtrlFront::REQ_PARAM_KEY => $keySaved]);
         $resultRedirect->setUrl($goto);
@@ -67,13 +68,13 @@ class Index
     }
 
     /**
-     * Generate unique key to get redirection data as customer.
+     * Generate unique key to get redirection data from frontend as customer.
      *
-     * @param $custId
-     * @param $userId
+     * @param int $custId
+     * @param int $userId
      * @return string
      */
-    protected function generateKey($custId, $userId)
+    private function generateKey($custId, $userId)
     {
         $now = date('YmdHis');
         $rand = rand();

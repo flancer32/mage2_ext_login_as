@@ -21,18 +21,18 @@ class Cleanup
     private const OPT_DAYS_NAME = 'days';
     private const OPT_DAYS_SHORTCUT = 'd';
 
-    /** @var \Flancer32\LoginAs\Service\ICleanup */
-    private $callCleanup;
     /** @var \Flancer32\LoginAs\Helper\Config */
     private $hlpConfig;
+    /** @var \Flancer32\LoginAs\Service\Cleanup */
+    private $servCleanup;
 
     public function __construct(
         \Flancer32\LoginAs\Helper\Config $hlpConfig,
-        \Flancer32\LoginAs\Service\ICleanup $callCleanup
+        \Flancer32\LoginAs\Service\Cleanup $servCleanup
     ) {
         parent::__construct(self::NAME, self::DESC);
         $this->hlpConfig = $hlpConfig;
-        $this->callCleanup = $callCleanup;
+        $this->servCleanup = $servCleanup;
     }
 
     protected function configure()
@@ -56,15 +56,17 @@ class Cleanup
         } elseif ($days < \Flancer32\LoginAs\Helper\Config::DEF_LOGS_CLEANUP_MIN_DAYS) {
             $days = \Flancer32\LoginAs\Helper\Config::DEF_LOGS_CLEANUP_MIN_DAYS;
         }
+        $output->writeln("<info>Command '" . $this->getName() . "':<info>");
         $output->writeln("<info>Clean up \"Login As\" logs older then '$days' days.<info>");
         $this->checkAreaCode();
         $req = new \Flancer32\LoginAs\Service\Cleanup\Request();
         $req->daysToLeave = $days;
         /** @var \Flancer32\LoginAs\Service\Cleanup\Response $resp */
-        $resp = $this->callCleanup->execute($req);
-        $delActive = $resp->deletedActive;
+        $resp = $this->servCleanup->execute($req);
+        $delActive = $resp->deletedTransition;
         $delLog = $resp->deletedLog;
-        $output->writeln("<info>Command is completed. Total '$delLog' log records and '$delActive' active records are deleted.<info>");
+        $output->writeln('<info>Command \'' . $this->getName() . '\' is completed.<info>');
+        $output->writeln("<info>Total '$delLog' log records and '$delActive' active records are deleted.<info>");
     }
 
 }
