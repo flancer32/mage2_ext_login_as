@@ -3,7 +3,7 @@
   "description": "'Login As' module for Magento 2.",
   "type": "magento2-module",
   "homepage": "https://github.com/flancer32/mage2_ext_login_as",
-  "license": "MIT",
+  "license": "GPL-3.0-only",
   "authors": [
     {
       "name": "Alex Gusev",
