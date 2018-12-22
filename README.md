@@ -6,6 +6,14 @@
 
 This extension adds ability for backend users (adminhtml) to log in as customers (frontend).
 
+Attention: module version 0.2.x is not compatible with Magento versions before 2.3.x.
+
+```
+$ composer require flancer32/mage2_ext_login_as:"^0.1.0"    # for Magento <2.3.x
+$ composer require flancer32/mage2_ext_login_as:            # for Magento >=2.3.x
+```
+
+
 ### Features
 * Login button on [customer form](etc/dev/docs/screenshots/usage/customer_form/customer_form.md);
 * Login links on "[Customers](etc/dev/docs/screenshots/usage/customers/customers.md)" & "[Sale Orders](etc/dev/docs/screenshots/usage/sale_orders/sale_orders.md)" grids;
