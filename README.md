@@ -10,7 +10,7 @@ Attention: module version 0.2.x is not compatible with Magento versions before 2
 
 ```
 $ composer require flancer32/mage2_ext_login_as:"^0.1.0"    # for Magento <2.3.x
-$ composer require flancer32/mage2_ext_login_as:            # for Magento >=2.3.x
+$ composer require flancer32/mage2_ext_login_as             # for Magento >=2.3.x
 ```
 
 
