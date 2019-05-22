@@ -1,0 +1,47 @@
+{
+  "fl32_loginas_act": {
+    "column": {
+      "customer_ref": true,
+      "user_ref": true,
+      "key": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "FL32_LOGINAS_ACT_CUSTOMER_REF_CUSTOMER_ENTITY_ENTITY_ID": true,
+      "FL32_LOGINAS_ACT_USER_REF_ADMIN_USER_USER_ID": true
+    },
+    "index": {
+      "FL32_LOGINAS_ACT_CUSTOMER_REF_CUSTOMER_ENTITY_ENTITY_ID": true,
+      "FL32_LOGINAS_ACT_USER_REF_ADMIN_USER_USER_ID": true
+    }
+  },
+  "fl32_loginas_log": {
+    "column": {
+      "id": true,
+      "customer_ref": true,
+      "user_ref": true,
+      "date": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "FL32_LOGINAS_LOG_CUSTOMER_REF_CUSTOMER_ENTITY_ENTITY_ID": true,
+      "FL32_LOGINAS_LOG_USER_REF_ADMIN_USER_USER_ID": true
+    },
+    "index": {
+      "FL32_LOGINAS_LOG_CUSTOMER_REF_CUSTOMER_ENTITY_ENTITY_ID": true,
+      "FL32_LOGINAS_LOG_USER_REF_ADMIN_USER_USER_ID": true
+    }
+  },
+  "fl32_loginas_trans": {
+    "column": {
+      "key": true,
+      "customer_ref": true,
+      "user_ref": true
+    },
+    "constraint": {
+      "PRIMARY": true,
+      "FL32_LOGINAS_TRANS_CUSTOMER_REF_CUSTOMER_ENTITY_ENTITY_ID": true,
+      "FL32_LOGINAS_TRANS_USER_REF_ADMIN_USER_USER_ID": true
+    }
+  }
+}
