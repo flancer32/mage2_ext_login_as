@@ -15,7 +15,7 @@ class Builder
     /**
      * Tables aliases.
      */
-    const AS_TBL_ADMIN = 'adm'; // default connection
+    const AS_TBL_ADMIN = 'adm';
     const AS_TBL_CUSTOMER = 'cust';
     const AS_TBL_LOG = 'log';
 
@@ -85,7 +85,6 @@ class Builder
         $expValue = "CONCAT($first, ' ', $last, ' <', $email, '>')";
         $exp = new AnExpress($expValue);
         $cols = [
-            self::A_ID_CUST => Cfg::E_CUSTOMER_A_ENTITY_ID,
             self::A_CUSTOMER => $exp
         ];
         $result->joinLeft([$as => $tbl], $on, $cols);
@@ -99,7 +98,6 @@ class Builder
         $expValue = "CONCAT($first, ' ', $last, ' <', $email, '>')";
         $exp = new AnExpress($expValue);
         $cols = [
-            self::A_ID_ADMIN => Cfg::E_ADMIN_USER_A_USER_ID,
             self::A_ADMIN => $exp
         ];
         $result->joinLeft([$as => $tbl], $on, $cols);
