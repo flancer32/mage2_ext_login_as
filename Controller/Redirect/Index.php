@@ -42,6 +42,7 @@ class Index
         /* load customer and initiate session */
         $customer = $this->repoCust->getById($custId);
         $this->session->setCustomerDataAsLoggedIn($customer);
+        $this->session->setCustomerGroupId($customer->getGroupId());
         /* remove used redirection from active registry */
         $this->daoTrans->deleteOne($key);
         /* log 'login as' event */
