@@ -87,7 +87,7 @@ class Cleanup
     public function execute($request)
     {
         assert($request instanceof ARequest);
-        $days = (int)$request->daysToLeave;
+        $days = isset($request->daysToLeave) ? (int)$request->daysToLeave : 0;
         if ($days <= 0) {
             $days = $this->hlpConfig->getLogsCleanupDaysOld();
         } elseif ($days < HlpCfg::DEF_LOGS_CLEANUP_MIN_DAYS) {
