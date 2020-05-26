@@ -1,3 +1,0 @@
-# Customers
-
-![customers](customers.png)
